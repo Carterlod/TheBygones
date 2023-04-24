@@ -103,7 +103,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Rim_Brightness: 10
-    - _Rim_Power: 0.5
+    - _Rim_Power: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
