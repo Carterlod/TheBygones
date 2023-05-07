@@ -1,0 +1,117 @@
+fileFormatVersion: 2
+guid: 562c41f1215b56a408b6c15bb4fc71b8
+timeCreated: 1509511664
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Euro_v3_wet_clothes
+    100002: //RootNode
+    100004: Euro_v4_roof_floor
+    100006: Wet_clothes_v1_bridge_fence
+    100008: Wet_clothes_v1_ceiling
+    100010: Wet_clothes_v1_floor
+    100012: Euro_v4_ceiling
+    100014: Euro_v4_tile_floor
+    100016: Euro_v4_bridge_fence
+    400000: Euro_v3_wet_clothes
+    400002: //RootNode
+    400004: Euro_v4_roof_floor
+    400006: Wet_clothes_v1_bridge_fence
+    400008: Wet_clothes_v1_ceiling
+    400010: Wet_clothes_v1_floor
+    400012: Euro_v4_ceiling
+    400014: Euro_v4_tile_floor
+    400016: Euro_v4_bridge_fence
+    2300000: Euro_v3_wet_clothes
+    2300002: //RootNode
+    2300004: Euro_v4_roof_floor
+    2300006: Wet_clothes_v1_bridge_fence
+    2300008: Wet_clothes_v1_ceiling
+    2300010: Wet_clothes_v1_floor
+    2300012: Euro_v4_ceiling
+    2300014: Euro_v4_tile_floor
+    2300016: Euro_v4_bridge_fence
+    3300000: Euro_v3_wet_clothes
+    3300002: //RootNode
+    3300004: Euro_v4_roof_floor
+    3300006: Wet_clothes_v1_bridge_fence
+    3300008: Wet_clothes_v1_ceiling
+    3300010: Wet_clothes_v1_floor
+    3300012: Euro_v4_ceiling
+    3300014: Euro_v4_tile_floor
+    3300016: Euro_v4_bridge_fence
+    4300000: Euro_v4
+    4300002: Euro_v4_roof_floor
+    4300004: Wet_clothes_v1_floor
+    4300006: Wet_clothes_v1_ceiling
+    4300008: Euro_v3_wet_clothes
+    4300010: Wet_clothes_v1_bridge_fence
+    4300012: Euro_v4_tile_floor
+    4300014: Euro_v4_ceiling
+    4300016: Euro_v4_bridge_fence
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
