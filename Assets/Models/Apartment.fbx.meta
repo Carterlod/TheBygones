@@ -9,6 +9,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: GlassBottle
     second: {fileID: 2100000, guid: cddb2a1b56a529b45bac130428ca71c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_Door
+    second: {fileID: 2100000, guid: f4dc8c847e6a65544ad414c6d5d40f0c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_LivingRoomCurtain
+    second: {fileID: 2100000, guid: e78a0f9ded7802640bda270123a629ab, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
