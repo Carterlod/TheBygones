@@ -17,6 +17,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: obj_Doorbell
+    second: {fileID: 2100000, guid: df3f46e89d8a71b4db532d27739e2f0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: obj_LivingRoomCurtain
     second: {fileID: 2100000, guid: e78a0f9ded7802640bda270123a629ab, type: 2}
   materials:
