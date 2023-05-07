@@ -3,7 +3,17 @@ guid: 451818fc55641fc418da6febb9ccc5ad
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_CanOfBeans
+    second: {fileID: 2100000, guid: bc67e28f76b4b244c91d05fe260ff496, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_TeaCup
+    second: {fileID: 2100000, guid: 78d8ccc25f25c284a92481b450527421, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

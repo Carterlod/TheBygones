@@ -38,11 +38,11 @@ public class Blinking : MonoBehaviour
 
     IEnumerator BlinkRoutine()
     {
-        Debug.Log("Starting new routine");
+        //Debug.Log("Starting new routine");
         while(t < blinkDuration)
         {
             t += Time.deltaTime;
-            Debug.Log("t = " + t);
+            //Debug.Log("t = " + t);
             eyeRenderer.SetBlendShapeWeight(blinkBlendShapeIndex, curve.Evaluate(t/blinkDuration));
             yield return null;
         }
