@@ -1,76 +1,174 @@
 fileFormatVersion: 2
 guid: 562c41f1215b56a408b6c15bb4fc71b8
-timeCreated: 1509511664
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: Euro_v3_wet_clothes
-    100002: //RootNode
-    100004: Euro_v4_roof_floor
-    100006: Wet_clothes_v1_bridge_fence
-    100008: Wet_clothes_v1_ceiling
-    100010: Wet_clothes_v1_floor
-    100012: Euro_v4_ceiling
-    100014: Euro_v4_tile_floor
-    100016: Euro_v4_bridge_fence
-    400000: Euro_v3_wet_clothes
-    400002: //RootNode
-    400004: Euro_v4_roof_floor
-    400006: Wet_clothes_v1_bridge_fence
-    400008: Wet_clothes_v1_ceiling
-    400010: Wet_clothes_v1_floor
-    400012: Euro_v4_ceiling
-    400014: Euro_v4_tile_floor
-    400016: Euro_v4_bridge_fence
-    2300000: Euro_v3_wet_clothes
-    2300002: //RootNode
-    2300004: Euro_v4_roof_floor
-    2300006: Wet_clothes_v1_bridge_fence
-    2300008: Wet_clothes_v1_ceiling
-    2300010: Wet_clothes_v1_floor
-    2300012: Euro_v4_ceiling
-    2300014: Euro_v4_tile_floor
-    2300016: Euro_v4_bridge_fence
-    3300000: Euro_v3_wet_clothes
-    3300002: //RootNode
-    3300004: Euro_v4_roof_floor
-    3300006: Wet_clothes_v1_bridge_fence
-    3300008: Wet_clothes_v1_ceiling
-    3300010: Wet_clothes_v1_floor
-    3300012: Euro_v4_ceiling
-    3300014: Euro_v4_tile_floor
-    3300016: Euro_v4_bridge_fence
-    4300000: Euro_v4
-    4300002: Euro_v4_roof_floor
-    4300004: Wet_clothes_v1_floor
-    4300006: Wet_clothes_v1_ceiling
-    4300008: Euro_v3_wet_clothes
-    4300010: Wet_clothes_v1_bridge_fence
-    4300012: Euro_v4_tile_floor
-    4300014: Euro_v4_ceiling
-    4300016: Euro_v4_bridge_fence
-    9500000: //RootNode
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Euro_v3_wet_clothes
+  - first:
+      1: 100002
+    second: //RootNode
+  - first:
+      1: 100004
+    second: Euro_v4_roof_floor
+  - first:
+      1: 100006
+    second: Wet_clothes_v1_bridge_fence
+  - first:
+      1: 100008
+    second: Wet_clothes_v1_ceiling
+  - first:
+      1: 100010
+    second: Wet_clothes_v1_floor
+  - first:
+      1: 100012
+    second: Euro_v4_ceiling
+  - first:
+      1: 100014
+    second: Euro_v4_tile_floor
+  - first:
+      1: 100016
+    second: Euro_v4_bridge_fence
+  - first:
+      4: 400000
+    second: Euro_v3_wet_clothes
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: Euro_v4_roof_floor
+  - first:
+      4: 400006
+    second: Wet_clothes_v1_bridge_fence
+  - first:
+      4: 400008
+    second: Wet_clothes_v1_ceiling
+  - first:
+      4: 400010
+    second: Wet_clothes_v1_floor
+  - first:
+      4: 400012
+    second: Euro_v4_ceiling
+  - first:
+      4: 400014
+    second: Euro_v4_tile_floor
+  - first:
+      4: 400016
+    second: Euro_v4_bridge_fence
+  - first:
+      23: 2300000
+    second: Euro_v3_wet_clothes
+  - first:
+      23: 2300002
+    second: //RootNode
+  - first:
+      23: 2300004
+    second: Euro_v4_roof_floor
+  - first:
+      23: 2300006
+    second: Wet_clothes_v1_bridge_fence
+  - first:
+      23: 2300008
+    second: Wet_clothes_v1_ceiling
+  - first:
+      23: 2300010
+    second: Wet_clothes_v1_floor
+  - first:
+      23: 2300012
+    second: Euro_v4_ceiling
+  - first:
+      23: 2300014
+    second: Euro_v4_tile_floor
+  - first:
+      23: 2300016
+    second: Euro_v4_bridge_fence
+  - first:
+      33: 3300000
+    second: Euro_v3_wet_clothes
+  - first:
+      33: 3300002
+    second: //RootNode
+  - first:
+      33: 3300004
+    second: Euro_v4_roof_floor
+  - first:
+      33: 3300006
+    second: Wet_clothes_v1_bridge_fence
+  - first:
+      33: 3300008
+    second: Wet_clothes_v1_ceiling
+  - first:
+      33: 3300010
+    second: Wet_clothes_v1_floor
+  - first:
+      33: 3300012
+    second: Euro_v4_ceiling
+  - first:
+      33: 3300014
+    second: Euro_v4_tile_floor
+  - first:
+      33: 3300016
+    second: Euro_v4_bridge_fence
+  - first:
+      43: 4300000
+    second: Euro_v4
+  - first:
+      43: 4300002
+    second: Euro_v4_roof_floor
+  - first:
+      43: 4300004
+    second: Wet_clothes_v1_floor
+  - first:
+      43: 4300006
+    second: Wet_clothes_v1_ceiling
+  - first:
+      43: 4300008
+    second: Euro_v3_wet_clothes
+  - first:
+      43: 4300010
+    second: Wet_clothes_v1_bridge_fence
+  - first:
+      43: 4300012
+    second: Euro_v4_tile_floor
+  - first:
+      43: 4300014
+    second: Euro_v4_ceiling
+  - first:
+      43: 4300016
+    second: Euro_v4_bridge_fence
+  - first:
+      95: 9500000
+    second: //RootNode
+  externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -78,25 +176,47 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
     importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: 1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -106,11 +226,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

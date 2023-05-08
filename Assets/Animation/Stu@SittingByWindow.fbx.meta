@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: SittingByWindow
+      name: Stu@SittingByWindow
       takeName: Scene
       internalID: -623603649343465320
       firstFrame: 1
-      lastFrame: 60
+      lastFrame: 300
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
