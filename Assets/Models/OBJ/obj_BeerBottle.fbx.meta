@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8cfda5b63c72ab44db54e29ab16d085d
+guid: c7f12ed97d7fe674e80a96a9164779d9
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: obj_GroceryBag
-    second: {fileID: 2100000, guid: 067a38fc727b141439ed06819c74c581, type: 2}
+      name: obj_BeerBottle
+    second: {fileID: 2100000, guid: 6fcfcc96c899dab48a4a71055e48d6fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_BeerBottleBeer
+    second: {fileID: 2100000, guid: 239e2aaaa239d12449877aaa925cecbc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
