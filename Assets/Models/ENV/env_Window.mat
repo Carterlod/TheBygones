@@ -12,6 +12,7 @@ Material:
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _DETAIL_MULX2
+  - _SPECULARHIGHLIGHTS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 6
@@ -92,21 +93,21 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.221
     - _DetailAlbedoMapScale: 1
-    - _DetailNormalMapScale: 0.045
+    - _DetailNormalMapScale: 0.07
     - _DstBlend: 10
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Metallic: 0.214
+    - _Metallic: 0.76
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.911
+    - _Smoothness: 0.93
     - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _Surface: 1
     - _UVSec: 0

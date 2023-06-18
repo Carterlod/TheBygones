@@ -32,6 +32,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: env_Chrome
+    second: {fileID: 2100000, guid: efe36c5419914b64986f8c3054094f39, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: env_ClothesLine
     second: {fileID: 2100000, guid: 5b3a4cb0fb5d0504d8bad748dd966547, type: 2}
   - first:
@@ -74,6 +79,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: obj_Bathtub
     second: {fileID: 2100000, guid: 71f920d7ae0c0a74b81a23df9cdb3ab0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_BathtubTray
+    second: {fileID: 2100000, guid: efe36c5419914b64986f8c3054094f39, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -137,13 +147,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: obj_Radiator
+    second: {fileID: 2100000, guid: c9c52762ca40e834a84eb743d13c1fd0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: obj_Refridgerator
     second: {fileID: 2100000, guid: ff98c8f42d6a5be49bc4abb48e0db3a8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: obj_Spoon
+    second: {fileID: 2100000, guid: efe36c5419914b64986f8c3054094f39, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_ToiletPaperHolder
+    second: {fileID: -4549759531869168144, guid: b66fc5f02f01da14194c29815099e06f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: obj_WallOutlet
     second: {fileID: 2100000, guid: 73e30bfd23f72e843a8dde2b50fe92c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_WaterHeater
+    second: {fileID: 2100000, guid: 47cdba741c5cc7446b6cd26a31123745, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
