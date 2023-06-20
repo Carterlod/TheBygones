@@ -26,7 +26,7 @@ public class Interactor : MonoBehaviour
             if (hit2.collider.gameObject.layer == layerMask)
             {
                 interactIcon.SetActive(true);
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     hit2.collider.gameObject.GetComponent<Interactable>().Interact();
                 }

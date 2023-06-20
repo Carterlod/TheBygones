@@ -67,6 +67,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: env_WallBrick
+    second: {fileID: 2100000, guid: e608a087cead2ad43b7df0e3668f4579, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: env_Window
     second: {fileID: 2100000, guid: c3349cc32a0e33b458ac1c9b9b85e12a, type: 2}
   - first:
