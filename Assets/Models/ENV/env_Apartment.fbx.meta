@@ -57,6 +57,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: env_KitchenFloorStrip
+    second: {fileID: 2100000, guid: 19c28845fbc2b1441bf276a34b3ff51e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: env_Toilet
     second: {fileID: 2100000, guid: 5cba26f9f630ffd4a99ac5d356dc8f78, type: 2}
   - first:

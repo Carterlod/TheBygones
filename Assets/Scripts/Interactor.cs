@@ -7,6 +7,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] GameObject cam;
     [SerializeField] GameObject interactIcon;
     int layerMask;
+    
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public class Interactor : MonoBehaviour
         
         
         RaycastHit hit2;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, 1.3f))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, 2f))
         {
             if (hit2.collider.gameObject.layer == layerMask)
             {
