@@ -7,30 +7,37 @@ using TMPro;
 public class DialogueBoxes : MonoBehaviour
 {
     [Header("Box")]
-    public Camera cam;
-    public Transform character;
-    public Canvas canvas;
-    public float margin = 10f;
-    public Image box;
-    public Vector3 liftedPos;
+    private Camera cam;
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private float margin = 10f;
+    [SerializeField] private Image box;
+    private Vector3 liftedPos;
+
 
     [Header("Pointer")]
-    public Image point;
+    [SerializeField] private Image point;
 
     [Header("NameSlot")]
-    private NPC npc;
-    [SerializeField] TMP_Text nameSlot;
+    public NPC npc;
+    public TMP_Text nameSlot;
+
+    [Header("DialogueSlot")]
+    public TMP_Text dialogueSlot;
 
     private void Start()
     {
-        npc = character.GetComponentInParent<NPC>();
-        nameSlot.text = npc.characterName;
+        cam = Camera.main;
+        canvas = canvas.rootCanvas;
+        
+        //nameSlot.text = npc.characterName;
+
+
     }
 
     private void Update()
     {
         RectTransform m_rect = box.GetComponent<RectTransform>();
-        m_rect.position = cam.WorldToScreenPoint(character.position);
+        m_rect.position = cam.WorldToScreenPoint(npc.characterHead.position);
         liftedPos = box.rectTransform.position;
         liftedPos.y += 300;
         ClampToWindow(liftedPos, m_rect, canvas.GetComponent<RectTransform>());
