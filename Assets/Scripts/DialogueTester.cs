@@ -37,7 +37,6 @@ public class DialogueTester : MonoBehaviour
         {
             if (!conversationInProgress)
             {
-                dialogueBox.gameObject.SetActive(true);
                 conversationInProgress = true;
             }
             AdvanceDialogue();
@@ -45,6 +44,8 @@ public class DialogueTester : MonoBehaviour
     }
     public void AdvanceDialogue()
     {
+        dialogueBox.gameObject.SetActive(false);
+
         if (dialogueStep >= lineOfDialogue.Length)
         {
             conversationInProgress = false;
@@ -74,14 +75,16 @@ public class DialogueTester : MonoBehaviour
             speakingNPC = nigel;
         }
         dialogueBox.npc = speakingNPC;
-        //dialogueBox.gameObject.transform.position = speakingNPC.characterHead.position;
+        
 
         dialogueBox.nameSlot.text = speakingNPC.characterName;
         dialogueBox.dialogueSlot.text = lineOfDialogue[dialogueStep].line;
 
         dialogueStep += 1;
 
-        
+        dialogueBox.gameObject.SetActive(true);
+
+
 
     }
 

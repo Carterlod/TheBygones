@@ -36,11 +36,16 @@ public class DialogueBoxes : MonoBehaviour
 
     private void Update()
     {
-        RectTransform m_rect = box.GetComponent<RectTransform>();
-        m_rect.position = cam.WorldToScreenPoint(npc.characterHead.position);
-        liftedPos = box.rectTransform.position;
+        if(npc == null)
+        {
+            return;
+        }
+        RectTransform this_rect = gameObject.GetComponent<RectTransform>();
+        //RectTransform bg_rect = box.GetComponent<RectTransform>();
+        this_rect.position = cam.WorldToScreenPoint(npc.characterHead.position);
+        liftedPos = this_rect.position;
         liftedPos.y += 300;
-        ClampToWindow(liftedPos, m_rect, canvas.GetComponent<RectTransform>());
+        ClampToWindow(liftedPos, this_rect, canvas.GetComponent<RectTransform>());
 
     }
     void ClampToWindow(Vector3 m_dialogueBoxPos, RectTransform panelRectTransform, RectTransform parentRectTransform)
