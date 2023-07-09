@@ -13,7 +13,13 @@ public class DialogueTester : MonoBehaviour
     private int dialogueStep = 0;
     private bool conversationInProgress = false;
     private bool conversationFinished = false;
+    public bool highjackCamera = false;
+    [SerializeField] NPC speakingNPC;
+    [SerializeField] Transform camLookAtTarget;
+    [SerializeField] float camPivotDuration = 1;
 
+    [SerializeField] FirstPersonController player;
+    [SerializeField] Camera cam;
     public enum Characters { Stu, Ted, Mick, Nigel};
 
     [System.Serializable]
@@ -29,6 +35,10 @@ public class DialogueTester : MonoBehaviour
     {
         dialogueStep = 0;
         dialogueBox.gameObject.SetActive(false);
+        cam = player.playerCamera;
+   
+
+
     }
 
     private void Update()
@@ -41,6 +51,11 @@ public class DialogueTester : MonoBehaviour
             }
             AdvanceDialogue();
         }
+        if(speakingNPC != null)
+        {
+            //cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, camLookAtTarget.rotation, Time.deltaTime * camPivotDuration) ;
+            camLookAtTarget.LookAt(speakingNPC.characterHead.transform.position);
+        }
     }
     public void AdvanceDialogue()
     {
@@ -52,10 +67,10 @@ public class DialogueTester : MonoBehaviour
             //conversationFinished = true;
             dialogueStep = 0;
             dialogueBox.gameObject.SetActive(false);
+            
             return;
         }
 
-        NPC speakingNPC;
         Characters speakingCharacter = lineOfDialogue[dialogueStep].character;
 
         if (speakingCharacter == Characters.Stu)
@@ -75,17 +90,35 @@ public class DialogueTester : MonoBehaviour
             speakingNPC = nigel;
         }
         dialogueBox.npc = speakingNPC;
-        
 
         dialogueBox.nameSlot.text = speakingNPC.characterName;
         dialogueBox.dialogueSlot.text = lineOfDialogue[dialogueStep].line;
+        dialogueBox.gameObject.SetActive(true);
 
         dialogueStep += 1;
 
-        dialogueBox.gameObject.SetActive(true);
+        if (highjackCamera)
+        {
+            StartCoroutine(PivotCamTowardCharacter());
+        }
+    }
 
+    IEnumerator PivotCamTowardCharacter()
+    {
 
-
+        player.cameraCanMove = false;
+        float t = 0;
+        Quaternion initialRot = cam.transform.rotation;
+        while(t < camPivotDuration)
+        {
+            t += Time.deltaTime;
+            camLookAtTarget.LookAt(speakingNPC.characterHead.transform.position);
+            cam.transform.rotation = Quaternion.Lerp(initialRot, camLookAtTarget.rotation, t/camPivotDuration);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        player.cameraCanMove = true;
+        yield return null;
     }
 
 

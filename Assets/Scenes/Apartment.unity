@@ -250,7 +250,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 1
-  m_LookAt: {fileID: 1945477833}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 70
@@ -797,11 +797,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cca19527904f4a4f9dbe1a283368500, type: 3}
---- !u!137 &55954499 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -1580910865068827344, guid: 57343ec8f99ff9e4c866b2ad7844624f, type: 3}
-  m_PrefabInstance: {fileID: 749487157}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &60116585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1902,6 +1897,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4459864850019384740, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864850019384740, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: sprintFOV
       value: 90
       objectReference: {fileID: 0}
@@ -2630,6 +2629,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8cfda5b63c72ab44db54e29ab16d085d, type: 3}
   m_PrefabInstance: {fileID: 236404259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &181775561 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5888321566376298446, guid: 57343ec8f99ff9e4c866b2ad7844624f, type: 3}
+  m_PrefabInstance: {fileID: 749487157}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &184221657
 GameObject:
@@ -21232,6 +21236,12 @@ MonoBehaviour:
   mick: {fileID: 1803371441}
   nigel: {fileID: 453983847}
   dialogueBox: {fileID: 1664296322}
+  highjackCamera: 1
+  speakingNPC: {fileID: 0}
+  camLookAtTarget: {fileID: 1996240392}
+  camPivotDuration: 1
+  player: {fileID: 1572026081}
+  cam: {fileID: 2093071433}
   lineOfDialogue:
   - line: What's the appeal of buttons?
     character: 1
@@ -21587,6 +21597,12 @@ MonoBehaviour:
   mick: {fileID: 581410098}
   nigel: {fileID: 2129518458}
   dialogueBox: {fileID: 1664296322}
+  highjackCamera: 0
+  speakingNPC: {fileID: 0}
+  camLookAtTarget: {fileID: 0}
+  camPivotDuration: 1
+  player: {fileID: 0}
+  cam: {fileID: 0}
   lineOfDialogue:
   - line: Oy, Ted?
     character: 0
@@ -31270,6 +31286,12 @@ MonoBehaviour:
   mick: {fileID: 1803371441}
   nigel: {fileID: 453983847}
   dialogueBox: {fileID: 1664296322}
+  highjackCamera: 0
+  speakingNPC: {fileID: 0}
+  camLookAtTarget: {fileID: 0}
+  camPivotDuration: 1
+  player: {fileID: 0}
+  cam: {fileID: 0}
   lineOfDialogue:
   - line: 'What chord was that? '
     character: 1
@@ -32877,37 +32899,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fdbb511eaf5d314d8b4aa037f3ccbfd, type: 3}
---- !u!1 &1945477832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1945477833}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1945477833
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945477832}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -0, z: 0.235}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2093071429}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1945490932 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1863359777818400441, guid: 57343ec8f99ff9e4c866b2ad7844624f, type: 3}
@@ -32925,7 +32916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cc46cf392482e489d404cf75bc45b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeRenderer: {fileID: 55954499}
+  eyeRenderer: {fileID: 181775561}
   blinkDuration: 0.2
   delayTilNextBlink: 3
   blinkBlendShapeIndex: 0
@@ -38303,6 +38294,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1996240391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1996240392}
+  m_Layer: 0
+  m_Name: CameraLookAtTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1996240392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996240391}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 832435360}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2003972291
 GameObject:
   m_ObjectHideFlags: 0
@@ -39649,7 +39671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2137232989
 Transform:
   m_ObjectHideFlags: 0
