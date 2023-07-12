@@ -10,7 +10,8 @@ public class DialogueBoxes : MonoBehaviour
     private Camera cam;
     [SerializeField] private Canvas canvas;
     [SerializeField] private float margin = 10f;
-    [SerializeField] private Image box;
+    [SerializeField] private GameObject box;
+    [SerializeField] private GameObject thotBox;
     private Vector3 liftedPos;
 
 
@@ -86,6 +87,20 @@ public class DialogueBoxes : MonoBehaviour
         {
             newPointerScale.x = 1;
             point.transform.localScale = newPointerScale;
+        }
+    }
+
+    public void UpdateBoxArt(bool outLoud)
+    {
+        box.SetActive(outLoud);
+        thotBox.SetActive(!outLoud);
+        if (outLoud)
+        {
+            dialogueSlot.color = Color.white;
+        }
+        else
+        {
+            dialogueSlot.color = Color.black;
         }
     }
 }

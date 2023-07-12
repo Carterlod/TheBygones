@@ -9,9 +9,9 @@ public class TitleCards : MonoBehaviour
 {
     public Image m_Image;
 
-    public TMP_Text m_Text1;
+    public TMP_Text[] m_Text1;
 
-    public TMP_Text m_Text2;
+    //public TMP_Text m_Text2;
 
     public player m_player;
 
@@ -34,8 +34,8 @@ public class TitleCards : MonoBehaviour
         Color col = m_Image.color;
         m_Image.color = new Color(col.r, col.b, col.g, 1);
         m_Image.gameObject.SetActive(true);
-        m_Text1.gameObject.SetActive(false);
-        m_Text2.gameObject.SetActive(false);
+        m_Text1[0].gameObject.SetActive(false);
+        //m_Text1[2].gameObject.SetActive(false);
         m_player.PausePlayer();
         
 
@@ -62,14 +62,14 @@ public class TitleCards : MonoBehaviour
     {   
         yield return new WaitForSeconds(textOnDelay);
         
-        m_Text1.gameObject.SetActive(true);
+        m_Text1[0].gameObject.SetActive(true);
 
         yield return new WaitForSeconds(cardDuration);
-        m_Text1.gameObject.SetActive(false);
-        m_Text2.gameObject.SetActive(true);
+        m_Text1[0].gameObject.SetActive(false);
+        m_Text1[1].gameObject.SetActive(true);
         
         yield return new WaitForSeconds(2);
-        m_Text2.gameObject.SetActive(false);
+        m_Text1[1].gameObject.SetActive(false);
         m_Image.gameObject.SetActive(false);
         m_player.UnpausePlayer();
        

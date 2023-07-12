@@ -27,6 +27,7 @@ public class DialogueTester : MonoBehaviour
     {
         public string line;
         public Characters character;
+        public bool thought = false;
     }
 
     public CharacterLine[] lineOfDialogue;
@@ -93,6 +94,8 @@ public class DialogueTester : MonoBehaviour
 
         dialogueBox.nameSlot.text = speakingNPC.characterName;
         dialogueBox.dialogueSlot.text = lineOfDialogue[dialogueStep].line;
+        dialogueBox.UpdateBoxArt(!lineOfDialogue[dialogueStep].thought);
+
         dialogueBox.gameObject.SetActive(true);
 
         dialogueStep += 1;
