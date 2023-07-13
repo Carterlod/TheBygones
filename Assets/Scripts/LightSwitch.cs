@@ -18,6 +18,7 @@ public class LightSwitch : MonoBehaviour
         speaker = GetComponent<AudioSource>();
         updateArt(on);
         on = true ? light.enabled = true : light.enabled = false;
+        
     }
     public void Interact()
     {
