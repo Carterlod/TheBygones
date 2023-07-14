@@ -237,10 +237,12 @@ public class FirstPersonController : MonoBehaviour
                 if (!isZoomed)
                 {
                     isZoomed = true;
+                    crosshairObject.gameObject.SetActive(false);
                 }
                 else
                 {
                     isZoomed = false;
+                    crosshairObject.gameObject.SetActive(true);
                 }
             }
 
@@ -251,10 +253,12 @@ public class FirstPersonController : MonoBehaviour
                 if(Input.GetKeyDown(zoomKey))
                 {
                     isZoomed = true;
+                    crosshairObject.gameObject.SetActive(false);
                 }
                 else if(Input.GetKeyUp(zoomKey))
                 {
                     isZoomed = false;
+                    crosshairObject.gameObject.SetActive(true);
                 }
             }
 
