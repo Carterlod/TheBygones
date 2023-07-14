@@ -35,8 +35,8 @@ public class FirstPersonController : MonoBehaviour
     public Color crosshairColor = Color.white;
 
     // Internal Variables
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+    public float yaw = 0.0f;
+    public float pitch = 0.0f;
     private Image crosshairObject;
 
     #region Camera Zoom Variables
