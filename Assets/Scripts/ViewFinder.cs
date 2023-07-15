@@ -20,6 +20,9 @@ public class ViewFinder : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] Camera screenshotCamera;
     [SerializeField] AudioClip takePicture;
+    [SerializeField] GameObject picturePrint;
+    [SerializeField] Texture2D pictureTexture;
+    [SerializeField] GameObject shutter;
     
 
     private void Start()
@@ -92,7 +95,23 @@ public class ViewFinder : MonoBehaviour
 
     void SaveCameraView(Camera cam)
     {
-        //ScreenCapture.CaptureScreenshot(Application.dataPath + "/screenshots/" + DateTime.Now.ToString("yyy-MM-dd HH-mm-ss") + ".png");
+        /*
+
+        string dir = Application.dataPath + "/screenshots/";
+        var files = new System.IO.DirectoryInfo(dir).GetFiles("*.png");
+        foreach (var file in files)
+        {
+            //if(file.CreationTime < )
+            if(file)
+            {
+                files[99].Delete();
+            }
+        }
+        
+  
+        */
+
+        StartCoroutine(ShutterRoutine());
         AudioSource asrc = GetComponent<AudioSource>();
         asrc.PlayOneShot(takePicture);
         
@@ -100,14 +119,27 @@ public class ViewFinder : MonoBehaviour
         cam.targetTexture = screenTexture;
         RenderTexture.active = screenTexture;
         cam.Render();
+        picturePrint.GetComponent<Renderer>().material.mainTexture = screenTexture;
+
+        /*
         Texture2D renderedTexture = new Texture2D(Screen.width, Screen.height);
         renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        RenderTexture.active = null;
         byte[] byteArray = renderedTexture.EncodeToPNG();
+        RenderTexture.active = null;
         System.IO.File.WriteAllBytes(Application.dataPath + "/screenshots/" + DateTime.Now.ToString("yyy-MM-dd HH-mm-ss") + ".png", byteArray);
+        //renderedTexture.wrapMode = TextureWrapMode.Clamp;
+        
 
         UnityEditor.AssetDatabase.Refresh();
+        */
+    }
 
+    IEnumerator ShutterRoutine()
+    {
+        shutter.SetActive(true);
+        yield return new WaitForSeconds(.1f);
+        shutter.SetActive(false);
+        yield return null;
     }
 
 }
