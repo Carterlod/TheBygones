@@ -13,7 +13,7 @@ public class TitleCards : MonoBehaviour
 
     //public TMP_Text m_Text2;
 
-    public player m_player;
+    public PlayerSettings m_player;
 
     [System.Serializable]
     public class TitleCard
@@ -41,7 +41,6 @@ public class TitleCards : MonoBehaviour
         m_Text.gameObject.SetActive(false);
         //m_Text1[2].gameObject.SetActive(false);
         m_player.PausePlayer();
-        
 
         StartCoroutine(IntroCardSoundFade());
         StartCoroutine(IntroCardVisuals());
@@ -78,6 +77,7 @@ public class TitleCards : MonoBehaviour
         }
         m_player.UnpausePlayer();
         m_Image.gameObject.SetActive(false);
+
         yield return null;
     }
 

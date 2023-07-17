@@ -37,6 +37,8 @@ public class DialogueTester : MonoBehaviour
 
     [SerializeField] UnityEvent conversationEndEvent;
 
+    
+
     private void Start()
     {
         dialogueStep = 0;
@@ -49,7 +51,7 @@ public class DialogueTester : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !conversationFinished)
+        if (Input.GetKeyDown(KeyCode.Space) && !conversationFinished && PlayerSettings.i.dialogueAdvanceable)
         {
             if (!conversationInProgress)
             {

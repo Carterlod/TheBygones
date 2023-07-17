@@ -14,6 +14,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] bool showNames = false;
     public bool allowed = true;
     [SerializeField] float distance = 2;
+    
 
     
 
