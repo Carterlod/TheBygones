@@ -65,7 +65,6 @@ public class LightSwitch : MonoBehaviour
             speaker.PlayOneShot(clipOff);
         }
         updateArt(on);
-        Debug.Log("ran TurnOff on " + gameObject);
     }
     private void updateArt(bool on)
     {
