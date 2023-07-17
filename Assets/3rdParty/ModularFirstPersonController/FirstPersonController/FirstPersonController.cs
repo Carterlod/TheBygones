@@ -112,7 +112,7 @@ public class FirstPersonController : MonoBehaviour
     public float speedReduction = .5f;
 
     // Internal Variables
-    private bool isCrouched = false;
+    public bool isCrouched = false;
     private Vector3 originalScale;
 
     #endregion
@@ -485,9 +485,11 @@ public class FirstPersonController : MonoBehaviour
     {
         // Stands player up to full height
         // Brings walkSpeed back up to original speed
+        // !! Customized this to move the Joint transform down instead of scaling the character !!
         if(isCrouched)
         {
-            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+            joint.localPosition = jointOriginalPos;
+            //transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
             walkSpeed /= speedReduction;
 
             isCrouched = false;
@@ -496,14 +498,21 @@ public class FirstPersonController : MonoBehaviour
         // Reduces walkSpeed
         else
         {
-            transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+            //transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+           
+            float heightAdjustment = jointOriginalPos.y + -.5f;
+            joint.localPosition = new Vector3(jointOriginalPos.x, heightAdjustment, jointOriginalPos.z);
             walkSpeed *= speedReduction;
 
             isCrouched = true;
         }
     }
 
+
     private void HeadBob()
+    /// <summary>
+    /// my changes to how crouching works (moving the "joint" transform instead of scaling the character) will probably conflict with this section 
+    /// </summary>
     {
         if(isWalking)
         {

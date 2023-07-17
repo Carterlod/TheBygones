@@ -10,8 +10,8 @@ public class DialogueBoxes : MonoBehaviour
     private Camera cam;
     [SerializeField] private Canvas canvas;
     [SerializeField] private float margin = 10f;
-    [SerializeField] private GameObject box;
-    [SerializeField] private GameObject thotBox;
+    [SerializeField] private GameObject spokenBox;
+    [SerializeField] private GameObject thoughtBox;
     private Vector3 liftedPos;
 
 
@@ -92,8 +92,8 @@ public class DialogueBoxes : MonoBehaviour
 
     public void UpdateBoxArt(bool outLoud)
     {
-        box.SetActive(outLoud);
-        thotBox.SetActive(!outLoud);
+        spokenBox.SetActive(outLoud);
+        thoughtBox.SetActive(!outLoud);
         if (outLoud)
         {
             dialogueSlot.color = Color.white;

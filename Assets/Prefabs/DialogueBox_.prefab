@@ -342,8 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   margin: 10
-  box: {fileID: 6162258252567159088}
-  thotBox: {fileID: 5358066008059896191}
+  spokenBox: {fileID: 6162258252567159088}
+  thoughtBox: {fileID: 5358066008059896191}
   point: {fileID: 4188475459101789579}
   npc: {fileID: 0}
   nameSlot: {fileID: 6982323088567728589}

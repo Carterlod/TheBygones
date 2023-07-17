@@ -9,13 +9,19 @@ public class TitleCards : MonoBehaviour
 {
     public Image m_Image;
 
-    public TMP_Text[] m_Text1;
+    public TMP_Text m_Text;
 
     //public TMP_Text m_Text2;
 
     public player m_player;
 
-
+    [System.Serializable]
+    public class TitleCard
+    {
+        public string text;
+        public float durationOverride;
+    }
+    public TitleCard[] titleCards;
     //public AudioListener listener;
 
     [SerializeField] private float textOnDelay = 0.5f;
@@ -25,16 +31,14 @@ public class TitleCards : MonoBehaviour
     
     
 
-    private void OnEnable()
-    {
-        AudioListener.volume = 0;
-    }
+    
     private void Start()
     {
+        
         Color col = m_Image.color;
         m_Image.color = new Color(col.r, col.b, col.g, 1);
         m_Image.gameObject.SetActive(true);
-        m_Text1[0].gameObject.SetActive(false);
+        m_Text.gameObject.SetActive(false);
         //m_Text1[2].gameObject.SetActive(false);
         m_player.PausePlayer();
         
@@ -45,6 +49,7 @@ public class TitleCards : MonoBehaviour
 
     IEnumerator IntroCardSoundFade()
     {
+        AudioListener.volume = 0;
         yield return new WaitForSeconds(soundFadeDelay);
 
         float t = 0;
@@ -61,18 +66,18 @@ public class TitleCards : MonoBehaviour
     IEnumerator IntroCardVisuals()
     {   
         yield return new WaitForSeconds(textOnDelay);
-        
-        m_Text1[0].gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(cardDuration);
-        m_Text1[0].gameObject.SetActive(false);
-        m_Text1[1].gameObject.SetActive(true);
-        
-        yield return new WaitForSeconds(2);
-        m_Text1[1].gameObject.SetActive(false);
-        m_Image.gameObject.SetActive(false);
+        foreach(TitleCard card in titleCards)
+        {
+            m_Text.text = card.text;
+            m_Text.gameObject.SetActive(true);
+            yield return new WaitForSeconds(cardDuration + card.durationOverride);
+            m_Text.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            yield return null;
+        }
         m_player.UnpausePlayer();
-       
+        m_Image.gameObject.SetActive(false);
         yield return null;
     }
 

@@ -12,30 +12,34 @@ public class ViewFinder : MonoBehaviour
     [SerializeField] RectTransform tilter;
     [SerializeField] Rigidbody rb;
     [SerializeField] private RectTransform tilterTarget;
-    [SerializeField] float adjustSpeed = .1f;
-    [SerializeField] float yawTiltAngle = 10;
-    [SerializeField] float pitchTiltAngle = 30;
+    [SerializeField] float pitchTilt = 10;
+    [SerializeField] float yawTilt = 30;
     [SerializeField] float yawDeadzone = 0.1f;
     [SerializeField] float pitchDeadzone = 0.1f;
+    [SerializeField] float adjustSpeed = 0.1f;
+    [SerializeField] float shutterVisualDuration = 0.1f;
     [SerializeField] Camera mainCamera;
     [SerializeField] Camera screenshotCamera;
     [SerializeField] AudioClip takePicture;
     [SerializeField] GameObject picturePrint;
     [SerializeField] Texture2D pictureTexture;
     [SerializeField] GameObject shutter;
+    private FirstPersonController player;
     
 
     private void Start()
     {
         controller = GetComponentInParent<FirstPersonController>();
+        player = GetComponentInParent<FirstPersonController>();
         //tilterTarget.rotation = tilter.rotation;
     }
 
     private void Update()
     {
+        
+
         cameraActive = controller.isZoomed;
 
-        //if(cameraActive && Input.GetMouseButtonDown(0))
         if (cameraActive && Input.GetMouseButtonDown(0))
         {
             SaveCameraView(screenshotCamera);
@@ -55,18 +59,16 @@ public class ViewFinder : MonoBehaviour
         float yawTarget = 0;
         float pitchTarget = 0;
 
-        //Debug.Log("mouse X = " + Input.GetAxis("Mouse X") + "mouse y = " + Input.GetAxis("Mouse Y"));
-
-        tilterTarget.rotation = Quaternion.Euler(0, 0, 0);
+        tilterTarget.localRotation = Quaternion.Euler(0, 0, 0);
 
         // Set X
         if (Input.GetAxis("Mouse X") > yawDeadzone)
         {
-            pitchTarget = pitchTiltAngle ;
+            pitchTarget = yawTilt ;
         }
         else if (Input.GetAxis("Mouse X") < -yawDeadzone)
         {
-            pitchTarget = -pitchTiltAngle;
+            pitchTarget = -yawTilt;
             
         }
         else
@@ -77,24 +79,27 @@ public class ViewFinder : MonoBehaviour
         //Set Y
         if (Input.GetAxis("Mouse Y") > pitchDeadzone)
         {
-            yawTarget = -yawTiltAngle;
+            yawTarget = -pitchTilt;
         }
         else if (Input.GetAxis("Mouse Y") < -pitchDeadzone)
         {
-            yawTarget = yawTiltAngle;
+            yawTarget = pitchTilt ;
         }
         else
         {
             yawTarget = 0;
         }
 
-        tilterTarget.rotation = Quaternion.Euler(yawTarget, pitchTarget, 0);
+        tilterTarget.localRotation = Quaternion.Euler(yawTarget, pitchTarget, 0);
 
-        tilter.rotation = Quaternion.Lerp(tilter.rotation, tilterTarget.rotation, Time.deltaTime * adjustSpeed);
+        
+
+        tilter.localRotation = Quaternion.Lerp(tilter.localRotation, tilterTarget.localRotation, Time.deltaTime * adjustSpeed);
     }
 
     void SaveCameraView(Camera cam)
     {
+        // I was trying to figure out a way to find the oldest screenshot in the foler, but gave up here
         /*
 
         string dir = Application.dataPath + "/screenshots/";
@@ -119,25 +124,27 @@ public class ViewFinder : MonoBehaviour
         cam.targetTexture = screenTexture;
         RenderTexture.active = screenTexture;
         cam.Render();
-        picturePrint.GetComponent<Renderer>().material.mainTexture = screenTexture;
+        picturePrint.GetComponent<Renderer>().material.mainTexture = screenTexture; //applies render to "photo" object in scene
 
-        /*
+
+        // This saves the renered screenshot to a folder
+        
         Texture2D renderedTexture = new Texture2D(Screen.width, Screen.height);
         renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         byte[] byteArray = renderedTexture.EncodeToPNG();
         RenderTexture.active = null;
         System.IO.File.WriteAllBytes(Application.dataPath + "/screenshots/" + DateTime.Now.ToString("yyy-MM-dd HH-mm-ss") + ".png", byteArray);
-        //renderedTexture.wrapMode = TextureWrapMode.Clamp;
+        
         
 
         UnityEditor.AssetDatabase.Refresh();
-        */
+        
     }
 
     IEnumerator ShutterRoutine()
     {
         shutter.SetActive(true);
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(shutterVisualDuration);
         shutter.SetActive(false);
         yield return null;
     }

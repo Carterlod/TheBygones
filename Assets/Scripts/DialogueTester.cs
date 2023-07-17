@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogueTester : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class DialogueTester : MonoBehaviour
     [SerializeField] Camera cam;
     public enum Characters { Stu, Ted, Mick, Nigel};
 
+    private ConversationSwitcher convoSwitcher;
+
     [System.Serializable]
     public class CharacterLine
     {
@@ -32,15 +35,17 @@ public class DialogueTester : MonoBehaviour
 
     public CharacterLine[] lineOfDialogue;
 
+    [SerializeField] UnityEvent conversationEndEvent;
+
     private void Start()
     {
         dialogueStep = 0;
         dialogueBox.gameObject.SetActive(false);
         cam = player.playerCamera;
-   
-
-
+        convoSwitcher = GetComponentInParent<ConversationSwitcher>();
     }
+
+   
 
     private void Update()
     {
@@ -65,9 +70,14 @@ public class DialogueTester : MonoBehaviour
         if (dialogueStep >= lineOfDialogue.Length)
         {
             conversationInProgress = false;
-            //conversationFinished = true;
+            conversationFinished = true;
             dialogueStep = 0;
             dialogueBox.gameObject.SetActive(false);
+            convoSwitcher.IncrementConvo();
+            if(conversationEndEvent != null)
+            {
+                conversationEndEvent.Invoke();
+            }
             
             return;
         }
