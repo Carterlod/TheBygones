@@ -53357,8 +53357,8 @@ MonoBehaviour:
   tilter: {fileID: 712036081}
   rb: {fileID: 1572026087}
   tilterTarget: {fileID: 1049191288}
-  pitchTilt: 8
-  yawTilt: 5
+  pitchTilt: 15
+  yawTilt: 10
   yawDeadzone: 0.1
   pitchDeadzone: 0.1
   adjustSpeed: 10
