@@ -13,13 +13,14 @@ public class AudioRandomStartTime : MonoBehaviour
         src = gameObject.GetComponent<AudioSource>();
         clip = src.clip;
         maxVol = src.volume;
+        if(src.clip != null)
+        {
+            src.time = (Random.Range(0, clip.length));
+            StartCoroutine(FadeUp());
+        }
     }
 
-    private void Start()
-    {
-        src.time = (Random.Range(0, clip.length));
-        StartCoroutine(FadeUp());
-    }
+    
     IEnumerator FadeUp()
     {
         src.volume = 0;

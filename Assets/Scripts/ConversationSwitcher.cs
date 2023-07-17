@@ -12,8 +12,10 @@ public class ConversationSwitcher : MonoBehaviour
     private void Start()
     {
         activeConvo = 0;
+    }
+    public void BeginFirstConversation()
+    {
         converstaions[activeConvo].gameObject.SetActive(true);
-        
     }
     public void IncrementConvo()
     {
@@ -26,5 +28,4 @@ public class ConversationSwitcher : MonoBehaviour
         converstaions[activeConvo].gameObject.SetActive(true);
     }
 
-    
 }
