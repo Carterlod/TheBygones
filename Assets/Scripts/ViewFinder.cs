@@ -21,16 +21,19 @@ public class ViewFinder : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] Camera screenshotCamera;
     [SerializeField] AudioClip takePicture;
-    [SerializeField] GameObject picturePrint;
+    [SerializeField] Renderer pictureRenderer;
+    private Material pictureMat;
     [SerializeField] Texture2D pictureTexture;
     [SerializeField] GameObject shutter;
     private FirstPersonController player;
+    [SerializeField] bool savePictures = false;
     
 
     private void Start()
     {
         controller = GetComponentInParent<FirstPersonController>();
         player = GetComponentInParent<FirstPersonController>();
+        
         //tilterTarget.rotation = tilter.rotation;
     }
 
@@ -116,6 +119,7 @@ public class ViewFinder : MonoBehaviour
   
         */
 
+        // This renders a screenshot and sends it to the in-world picture print
         StartCoroutine(ShutterRoutine());
         AudioSource asrc = GetComponent<AudioSource>();
         asrc.PlayOneShot(takePicture);
@@ -124,25 +128,28 @@ public class ViewFinder : MonoBehaviour
         cam.targetTexture = screenTexture;
         RenderTexture.active = screenTexture;
         cam.Render();
-        picturePrint.GetComponent<Renderer>().material.mainTexture = screenTexture; //applies render to "photo" object in scene
 
+        pictureMat = pictureRenderer.GetComponent<Renderer>().material;
+        pictureMat.mainTexture = screenTexture; //applies render to "photo" object in scene
 
+        /*
         // This saves the renered screenshot to a folder
+        if (savePictures)
+        {
+            Texture2D renderedTexture = new Texture2D(Screen.width, Screen.height);
+            renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            byte[] byteArray = renderedTexture.EncodeToPNG();
+            RenderTexture.active = null;
+            System.IO.File.WriteAllBytes(Application.dataPath + "/screenshots/" + DateTime.Now.ToString("yyy-MM-dd HH-mm-ss") + ".png", byteArray);
         
-        Texture2D renderedTexture = new Texture2D(Screen.width, Screen.height);
-        renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        byte[] byteArray = renderedTexture.EncodeToPNG();
-        RenderTexture.active = null;
-        System.IO.File.WriteAllBytes(Application.dataPath + "/screenshots/" + DateTime.Now.ToString("yyy-MM-dd HH-mm-ss") + ".png", byteArray);
-        
-        
-
-        UnityEditor.AssetDatabase.Refresh();
-        
+            UnityEditor.AssetDatabase.Refresh();
+        }
+        */
     }
 
     IEnumerator ShutterRoutine()
     {
+        
         shutter.SetActive(true);
         yield return new WaitForSeconds(shutterVisualDuration);
         shutter.SetActive(false);

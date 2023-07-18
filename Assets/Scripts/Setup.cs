@@ -13,6 +13,7 @@ public class Setup : MonoBehaviour
     [SerializeField] LightSwitchPreset[] lightSwitches;
     [SerializeField] ConversationSwitcher convoSwitcher;
     [SerializeField] bool fireFirstConvoOnEnable = true;
+    [SerializeField] FirstPersonController playerController;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class Setup : MonoBehaviour
         {
             convoSwitcher.BeginFirstConversation();
         }
+        
     }
 
     private void OnEnable()
@@ -35,6 +37,8 @@ public class Setup : MonoBehaviour
                 lsp.lightSwitch.TurnOff(false);
             }
         }
+        playerController.isZoomed = false;
+        playerController.isCrouched = false;
     }
     
 }

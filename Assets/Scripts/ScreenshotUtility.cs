@@ -18,12 +18,12 @@ public class ScreenshotUtility : MonoBehaviour
 
     public KeyCode _pressForSingleScreenshot = KeyCode.L;
 
-    private int _screenshotNumber;
+    //private int _screenshotNumber;
     private bool _autoScreenshotOn;
 
     void Start()
     {
-        _screenshotNumber = 0;
+        //_screenshotNumber = 0;
         _autoScreenshotOn = false;
         StartCoroutine(AutomaticScreenshot());
     }
