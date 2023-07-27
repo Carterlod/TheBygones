@@ -27,12 +27,18 @@ public class ViewFinder : MonoBehaviour
     [SerializeField] GameObject shutter;
     private FirstPersonController player;
     [SerializeField] bool savePictures = false;
+    [SerializeField] Transform rotator;
+    private bool vertical = false;
+    private Quaternion rotationHorizontal;
+    private Quaternion rotationVertical;
     
 
     private void Start()
     {
         controller = GetComponentInParent<FirstPersonController>();
         player = GetComponentInParent<FirstPersonController>();
+        rotationHorizontal = rotator.transform.localRotation;
+        rotationVertical = Quaternion.Euler(rotationHorizontal.x, rotationHorizontal.y, rotationHorizontal.z + 90);
         
         //tilterTarget.rotation = tilter.rotation;
     }
@@ -51,7 +57,19 @@ public class ViewFinder : MonoBehaviour
         if (cameraActive)
         {
             viewFinderObject.SetActive(true);
-            
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (vertical)
+                {
+                    rotator.localRotation = rotationHorizontal;
+                    vertical = false;
+                }
+                else
+                {
+                    rotator.localRotation = rotationVertical;
+                    vertical = true;
+                }
+            }
         }
         else
         {
@@ -123,8 +141,20 @@ public class ViewFinder : MonoBehaviour
         StartCoroutine(ShutterRoutine());
         AudioSource asrc = GetComponent<AudioSource>();
         asrc.PlayOneShot(takePicture);
-        
-        RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
+        int screenWidth;
+        int screenHeight;
+        if (!vertical)
+        {
+            screenWidth = Screen.width;
+            screenHeight = Screen.height;
+        }
+        else
+        {
+            screenWidth = Screen.height;
+            screenHeight = Screen.width;
+        }
+        RenderTexture screenTexture = new RenderTexture(screenWidth, screenHeight, 16);
+
         cam.targetTexture = screenTexture;
         RenderTexture.active = screenTexture;
         cam.Render();
