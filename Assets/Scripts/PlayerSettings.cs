@@ -8,6 +8,8 @@ public class PlayerSettings : MonoBehaviour
     [SerializeField] FirstPersonController playerController;
     [SerializeField] Interactor interactor;
     public bool dialogueAdvanceable = true;
+    public bool handsFull = false;
+    public bool cameraActive = false;
 
     public void Start()
     {

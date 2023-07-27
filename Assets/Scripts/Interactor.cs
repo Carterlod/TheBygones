@@ -10,10 +10,14 @@ public class Interactor : MonoBehaviour
     [SerializeField] GameObject interactIcon;
     int layerMask;
     int layerMask2;
+    int layerMask3;
     [SerializeField] TMP_Text npcNameField;
     [SerializeField] bool showNames = false;
     public bool allowed = true;
     [SerializeField] float distance = 2;
+    [SerializeField] ObjectGrabber grabber;
+    [SerializeField] PlayerSettings playerSettings;
+   
     
 
     
@@ -23,6 +27,7 @@ public class Interactor : MonoBehaviour
         interactIcon.SetActive(false);
         layerMask = LayerMask.NameToLayer("Interactable");
         layerMask2 = LayerMask.NameToLayer("NPC");
+        layerMask3 = LayerMask.NameToLayer("Grabbable");
     }
 
     private void Update()
@@ -30,10 +35,24 @@ public class Interactor : MonoBehaviour
         interactIcon.SetActive(false);
         npcNameField.gameObject.SetActive(false);
 
+        if (playerSettings.handsFull)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                grabber.Release();
+                playerSettings.handsFull = false;
+            }
+            return;
+        }
+        if (playerSettings.cameraActive)
+        {
+            return;
+        }
+        
         RaycastHit hit2;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, distance) && allowed)
         {
-            if (hit2.collider.gameObject.layer == layerMask) // INTERACT
+            if (hit2.collider.gameObject.layer == layerMask && !playerSettings.handsFull) // INTERACT
             {
                 interactIcon.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E))
@@ -50,6 +69,18 @@ public class Interactor : MonoBehaviour
                     npcNameField.text = n;
                 }
             }
+
+            if(hit2.collider.gameObject.layer == layerMask3) //GRABBABLE
+            {
+                Grabbable obj = hit2.collider.gameObject.GetComponent<Grabbable>();
+                interactIcon.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    playerSettings.handsFull = true;
+                    grabber.Grab(obj);
+                }
+            }
         }
+
     }
 }

@@ -232,7 +232,7 @@ public class FirstPersonController : MonoBehaviour
         {
             // Changes isZoomed when key is pressed
             // Behavior for toogle zoom
-            if(Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting)
+            if(Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting && !PlayerSettings.i.handsFull)
             {
                 if (!isZoomed)
                 {

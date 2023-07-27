@@ -27,7 +27,7 @@ public class ViewFinder : MonoBehaviour
     private Material pictureMat;
     [SerializeField] Texture2D pictureTexture;
     [SerializeField] GameObject shutter;
-    private FirstPersonController player;
+    [SerializeField] PlayerSettings playerSettings;
     [SerializeField] bool savePictures = false;
     [SerializeField] Transform rotator;
     private bool vertical = false;
@@ -49,7 +49,7 @@ public class ViewFinder : MonoBehaviour
     private void Start()
     {
         controller = GetComponentInParent<FirstPersonController>();
-        player = GetComponentInParent<FirstPersonController>();
+       
         rotationHorizontal = rotator.transform.localRotation;
         rotationVertical = Quaternion.Euler(rotationHorizontal.x, rotationHorizontal.y, rotationHorizontal.z + 90);
         
@@ -66,6 +66,7 @@ public class ViewFinder : MonoBehaviour
         
 
         cameraActive = controller.isZoomed;
+        playerSettings.cameraActive = cameraActive;
 
         if (cameraActive && Input.GetMouseButtonDown(0))
         {
