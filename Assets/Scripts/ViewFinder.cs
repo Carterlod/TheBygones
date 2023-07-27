@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+
 public class ViewFinder : MonoBehaviour
 {
     [SerializeField] GameObject viewFinderObject;
@@ -20,8 +21,9 @@ public class ViewFinder : MonoBehaviour
     [SerializeField] float shutterVisualDuration = 0.1f;
     [SerializeField] Camera mainCamera;
     [SerializeField] Camera screenshotCamera;
-    [SerializeField] AudioClip takePicture;
-    [SerializeField] Renderer pictureRenderer;
+    private int screenShotFOV = 20;
+    [SerializeField] Renderer pictureRendererH;
+    [SerializeField] Renderer pictureRendererV;
     private Material pictureMat;
     [SerializeField] Texture2D pictureTexture;
     [SerializeField] GameObject shutter;
@@ -29,9 +31,20 @@ public class ViewFinder : MonoBehaviour
     [SerializeField] bool savePictures = false;
     [SerializeField] Transform rotator;
     private bool vertical = false;
+    private bool flipping = false;
     private Quaternion rotationHorizontal;
     private Quaternion rotationVertical;
-    
+
+    [Header("Audio")]
+    [SerializeField] AudioSource asrc;
+    [SerializeField] AudioClip takePicture;
+    [SerializeField] AudioClip sfxTakeOut;
+    [SerializeField] AudioClip sfxPutAway;
+    [SerializeField] AudioClip sfxFlip1;
+    [SerializeField] AudioClip sfxFlip2;
+
+
+
 
     private void Start()
     {
@@ -41,6 +54,11 @@ public class ViewFinder : MonoBehaviour
         rotationVertical = Quaternion.Euler(rotationHorizontal.x, rotationHorizontal.y, rotationHorizontal.z + 90);
         
         //tilterTarget.rotation = tilter.rotation;
+    }
+
+    private void ToggleViewfinder()
+    {
+
     }
 
     private void Update()
@@ -57,23 +75,27 @@ public class ViewFinder : MonoBehaviour
         if (cameraActive)
         {
             viewFinderObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && !flipping)
             {
-                if (vertical)
-                {
-                    rotator.localRotation = rotationHorizontal;
-                    vertical = false;
-                }
-                else
-                {
-                    rotator.localRotation = rotationVertical;
-                    vertical = true;
-                }
+                StartCoroutine(FlipCamera());
             }
         }
         else
         {
             viewFinderObject.SetActive(false);
+        }
+
+        //hacky sfx
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            if (cameraActive)
+            {
+                asrc.PlayOneShot(sfxTakeOut);
+            }
+            else
+            {
+                asrc.PlayOneShot(sfxPutAway);
+            }
         }
 
         //Tilt Viewfinder
@@ -139,28 +161,42 @@ public class ViewFinder : MonoBehaviour
 
         // This renders a screenshot and sends it to the in-world picture print
         StartCoroutine(ShutterRoutine());
-        AudioSource asrc = GetComponent<AudioSource>();
+        //AudioSource asrc = GetComponent<AudioSource>();
         asrc.PlayOneShot(takePicture);
         int screenWidth;
         int screenHeight;
         if (!vertical)
         {
-            screenWidth = Screen.width;
+            screenWidth = Screen.width - 100;
             screenHeight = Screen.height;
         }
         else
         {
             screenWidth = Screen.height;
-            screenHeight = Screen.width;
+            screenHeight = Screen.width - 100;
         }
         RenderTexture screenTexture = new RenderTexture(screenWidth, screenHeight, 16);
-
+        if (!vertical)
+        {
+            cam.fieldOfView = 22;
+        }
+        else
+        {
+            cam.fieldOfView = 35;
+        }
         cam.targetTexture = screenTexture;
         RenderTexture.active = screenTexture;
         cam.Render();
-
-        pictureMat = pictureRenderer.GetComponent<Renderer>().material;
-        pictureMat.mainTexture = screenTexture; //applies render to "photo" object in scene
+        if (!vertical)
+        {
+            pictureMat = pictureRendererH.GetComponent<Renderer>().material;
+            pictureMat.mainTexture = screenTexture; //applies render to "photo" object in scene
+        }
+        else
+        {
+            pictureMat = pictureRendererV.GetComponent<Renderer>().material;
+            pictureMat.mainTexture = screenTexture; //applies render to "photo" object in scene
+        }
 
         /*
         // This saves the renered screenshot to a folder
@@ -183,6 +219,40 @@ public class ViewFinder : MonoBehaviour
         shutter.SetActive(true);
         yield return new WaitForSeconds(shutterVisualDuration);
         shutter.SetActive(false);
+        yield return null;
+    }
+
+    IEnumerator FlipCamera()
+    {
+        Quaternion targetRot;
+        Quaternion startingRot = rotator.localRotation;
+        flipping = true;
+        if (vertical)
+        {
+            vertical = false;
+            targetRot = rotationHorizontal;
+            asrc.PlayOneShot(sfxFlip1);
+        }
+        else
+        {
+            vertical = true;
+            targetRot = rotationVertical;
+            asrc.PlayOneShot(sfxFlip2);
+        }
+        float t = 0;
+        float d = 0.08f;
+        while(t < d)
+        {
+            t += Time.deltaTime;
+            if(t > d)
+            {
+                t = d;
+            }
+            rotator.localRotation = Quaternion.Lerp(startingRot, targetRot, t / d);
+            yield return null;
+        } 
+
+        flipping = false;
         yield return null;
     }
 
