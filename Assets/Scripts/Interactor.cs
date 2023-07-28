@@ -70,7 +70,7 @@ public class Interactor : MonoBehaviour
                 }
             }
 
-            if(hit2.collider.gameObject.layer == layerMask3) //GRABBABLE
+            if (hit2.collider.gameObject.layer == layerMask3 && hit2.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) //GRABBABLE
             {
                 Grabbable obj = hit2.collider.gameObject.GetComponent<Grabbable>();
                 interactIcon.SetActive(true);

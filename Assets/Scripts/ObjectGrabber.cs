@@ -4,57 +4,94 @@ using UnityEngine;
 
 public class ObjectGrabber : MonoBehaviour
 {
+    [SerializeField] Transform holdParent;
     [SerializeField] private Transform holdTransform;
+    [SerializeField] Transform camTransform;
     private Grabbable heldObject;
     private Transform originalParent;
-    private Transform originalTransform;
+    
     private Quaternion originalRot;
     private Vector3 originalPos;
-    [SerializeField] Transform camTransform;
     private Collider[] cols;
+    private bool lettingGo = false;
 
     public void Grab(Grabbable obj)
     {
-        heldObject = obj;
-        originalParent = heldObject.transform.parent;
-        originalTransform = heldObject.gameObject.transform;
-        originalRot = originalTransform.rotation;
-        originalPos = originalTransform.position;
-        obj.gameObject.transform.SetParent(holdTransform);
-        //obj.rb.isKinematic = true;
+
+
         obj.rb.Sleep();
         cols = obj.GetComponents<Collider>();
         foreach(Collider col in cols)
         {
             col.enabled = false;
         }
+
+        heldObject = obj;
+
+        // initialize return transform values
+        originalParent = heldObject.transform.parent;
+        originalRot = heldObject.originalRot;
+        originalPos = obj.originalPos;
+
+        obj.gameObject.transform.SetParent(holdParent);
+
+        // set position and rotation with grab handle offset
+        Transform grab = heldObject.grabHandle;
+        //heldObject.transform.position = holdTransform.position - grab.localPosition;
+        grab.SetParent(holdParent);
+        heldObject.transform.SetParent(grab);
+        grab.rotation = holdTransform.rotation;
+        grab.position = holdTransform.position;
+        heldObject.transform.SetParent(holdTransform);
+        grab.SetParent(heldObject.transform);
+
+
+        heldObject.rb.isKinematic = true;
     }
     public void Release()
     {
-        heldObject.gameObject.transform.position = originalPos;
-        heldObject.gameObject.transform.rotation = originalRot;
-
-        heldObject.gameObject.transform.SetParent(originalParent);
-
-
-        heldObject.rb.WakeUp();
-        foreach(Collider col in cols)
-        {
-            col.enabled = true;
-        }
-        cols = null;
-        heldObject = null;
+        StartCoroutine(LerpObjectHome());
     }
 
     private void LateUpdate()
     {
-        holdTransform.localRotation = Quaternion.Euler(-camTransform.localEulerAngles.x, 0, 0);
-        
-        if(heldObject != null)
+        // keep held object level
+        if(heldObject != null && heldObject.keepLevel)
         {
-            //Debug.Log(heldObject.grabHandle.localPosition);
-            heldObject.gameObject.transform.position = holdTransform.position - heldObject.grabHandle.localPosition ;
-            heldObject.gameObject.transform.rotation = holdTransform.rotation;
+            holdTransform.localRotation = Quaternion.Euler(-camTransform.localEulerAngles.x, 0, 0);
         }
+    }
+
+    IEnumerator LerpObjectHome()
+    {
+        lettingGo = true;
+        heldObject.gameObject.transform.SetParent(originalParent);
+        Vector3 startingPos = heldObject.gameObject.transform.position;
+        Vector3 originalPosRaised = new Vector3(originalPos.x, originalPos.y + 0.1f, originalPos.z);
+        Quaternion startingRot = heldObject.gameObject.transform.rotation;
+
+        float t = 0;
+        float d = 0.1f;
+        while (t < d)
+        {
+            t += Time.deltaTime;
+            if (t > d)
+            {
+                t = d;
+            }
+            heldObject.gameObject.transform.position = Vector3.Lerp(startingPos, originalPosRaised, t / d);
+            heldObject.gameObject.transform.rotation = Quaternion.Lerp(startingRot, originalRot, t / d);
+            yield return null;
+        }
+        foreach(Collider col in cols)
+        {
+            col.enabled = true;
+        }
+        heldObject.rb.isKinematic = false;
+        cols = null;
+        heldObject = null;
+        lettingGo = false;
+
+        yield return null;
     }
 }
