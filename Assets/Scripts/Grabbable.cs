@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Grabbable : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Grabbable : MonoBehaviour
     public Vector3 originalPos;
     public Quaternion originalRot;
     public bool keepLevel = true;
+    public string objectKey;
+    [SerializeField] UnityEvent onGrab;
+    [SerializeField] UnityEvent onRelease;
 
     private void OnEnable()
     {
@@ -25,5 +29,15 @@ public class Grabbable : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         originalPos = gameObject.transform.position;
         originalRot = gameObject.transform.rotation;
+    }
+
+    public void Grabbed()
+    {
+        onGrab.Invoke();
+    }
+
+    public void Released()
+    {
+        onRelease.Invoke();
     }
 }

@@ -133,6 +133,7 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
   keepLevel: 1
+  objectKey: teakettle
 --- !u!1 &1816209298670546118
 GameObject:
   m_ObjectHideFlags: 0

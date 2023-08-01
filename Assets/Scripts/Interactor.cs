@@ -8,26 +8,25 @@ public class Interactor : MonoBehaviour
 {
     [SerializeField] GameObject cam;
     [SerializeField] GameObject interactIcon;
-    int layerMask;
-    int layerMask2;
-    int layerMask3;
+    int layerMaskInteractable;
+    int layerMaskNPC;
+    int layerMaskGrabbable;
     [SerializeField] TMP_Text npcNameField;
     [SerializeField] bool showNames = false;
     public bool allowed = true;
     [SerializeField] float distance = 2;
     [SerializeField] ObjectGrabber grabber;
     [SerializeField] PlayerSettings playerSettings;
+    private bool canUseObject = false;
+    
    
-    
-
-    
 
     private void Start()
     {
         interactIcon.SetActive(false);
-        layerMask = LayerMask.NameToLayer("Interactable");
-        layerMask2 = LayerMask.NameToLayer("NPC");
-        layerMask3 = LayerMask.NameToLayer("Grabbable");
+        layerMaskInteractable = LayerMask.NameToLayer("Interactable");
+        layerMaskNPC = LayerMask.NameToLayer("NPC");
+        layerMaskGrabbable = LayerMask.NameToLayer("Grabbable");
     }
 
     private void Update()
@@ -35,32 +34,63 @@ public class Interactor : MonoBehaviour
         interactIcon.SetActive(false);
         npcNameField.gameObject.SetActive(false);
 
-        if (playerSettings.handsFull)
+        if (playerSettings.handsFull && !canUseObject)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 grabber.Release();
                 playerSettings.handsFull = false;
+                return;
             }
-            return;
         }
         if (playerSettings.cameraActive)
         {
+            Debug.Log("camera active");
             return;
         }
-        
+
+        canUseObject = false;
+
         RaycastHit hit2;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, distance) && allowed)
         {
-            if (hit2.collider.gameObject.layer == layerMask && !playerSettings.handsFull) // INTERACT
+            if (hit2.collider.gameObject.layer == layerMaskInteractable) // INTERACT
             {
-                interactIcon.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.E))
+                Interactable i = hit2.collider.gameObject.GetComponent<Interactable>();
+                if(!i.oneShot || i.oneShot && !i.spent)
                 {
-                    hit2.collider.gameObject.GetComponent<Interactable>().Interact();
+                    if (!i.objectRequired)
+                    {
+                        if (!playerSettings.handsFull)
+                        {
+                            interactIcon.SetActive(true);
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                i.Interact();
+                            }
+                        }
+                    }
+                    if (i.objectRequired)
+                    {
+                        Debug.Log("ObjectRequired = true");
+                        if(grabber.heldObject != null)
+                        {
+                            Debug.Log("you have an object");
+                            if(grabber.heldObject.objectKey == i.objectKey)
+                            {
+                                canUseObject = true;
+                                Debug.Log("object key validated");
+                                interactIcon.SetActive(true);
+                                if (Input.GetKeyDown(KeyCode.E))
+                                {
+                                    i.Interact();
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            if(hit2.collider.gameObject.layer == layerMask2) // SHOW NAME
+            if(hit2.collider.gameObject.layer == layerMaskNPC) // SHOW NAME
             {
                 string n = hit2.collider.gameObject.GetComponentInParent<NPC>().characterName;
                 if (n != null && showNames)
@@ -70,10 +100,13 @@ public class Interactor : MonoBehaviour
                 }
             }
 
-            if (hit2.collider.gameObject.layer == layerMask3 && hit2.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) //GRABBABLE
+            if (hit2.collider.gameObject.layer == layerMaskGrabbable && hit2.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) //GRABBABLE
             {
                 Grabbable obj = hit2.collider.gameObject.GetComponent<Grabbable>();
-                interactIcon.SetActive(true);
+                if (!playerSettings.handsFull || canUseObject)
+                {
+                    interactIcon.SetActive(true);
+                }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     playerSettings.handsFull = true;

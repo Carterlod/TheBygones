@@ -7,7 +7,7 @@ public class ObjectGrabber : MonoBehaviour
     [SerializeField] Transform holdParent;
     [SerializeField] private Transform holdTransform;
     [SerializeField] Transform camTransform;
-    private Grabbable heldObject;
+    public Grabbable heldObject;
     private Transform originalParent;
     
     private Quaternion originalRot;
@@ -45,8 +45,9 @@ public class ObjectGrabber : MonoBehaviour
         heldObject.transform.SetParent(holdTransform);
         grab.SetParent(heldObject.transform);
 
-
         heldObject.rb.isKinematic = true;
+
+        heldObject.Grabbed();
     }
     public void Release()
     {
@@ -69,6 +70,7 @@ public class ObjectGrabber : MonoBehaviour
         Vector3 startingPos = heldObject.gameObject.transform.position;
         Vector3 originalPosRaised = new Vector3(originalPos.x, originalPos.y + 0.1f, originalPos.z);
         Quaternion startingRot = heldObject.gameObject.transform.rotation;
+        heldObject.Released();
 
         float t = 0;
         float d = 0.1f;
