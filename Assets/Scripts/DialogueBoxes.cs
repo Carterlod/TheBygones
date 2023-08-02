@@ -25,10 +25,14 @@ public class DialogueBoxes : MonoBehaviour
     [Header("DialogueSlot")]
     public TMP_Text dialogueSlot;
 
+    [Header("Other")]
+    FirstPersonController player;
+
     private void Start()
     {
         cam = Camera.main;
         canvas = canvas.rootCanvas;
+        player = GetComponentInParent<FirstPersonController>();
         
         //nameSlot.text = npc.characterName;
 
@@ -45,7 +49,11 @@ public class DialogueBoxes : MonoBehaviour
         //RectTransform bg_rect = box.GetComponent<RectTransform>();
         this_rect.position = cam.WorldToScreenPoint(npc.characterHead.position);
         liftedPos = this_rect.position;
-        liftedPos.y += 300;
+        float distanceToNPC = Vector3.Distance(player.gameObject.transform.position, npc.gameObject.transform.position);
+        //Debug.Log("distance to NPC = " + distanceToNPC);
+        distanceToNPC = Mathf.Clamp(distanceToNPC, 0.5f, 3);
+        float lerpAmt = distanceToNPC / 3;
+        liftedPos.y += Mathf.Lerp(800, 300, lerpAmt);
         ClampToWindow(liftedPos, this_rect, canvas.GetComponent<RectTransform>());
 
     }

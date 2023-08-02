@@ -28,8 +28,8 @@ public class DialogueTester : MonoBehaviour
     [System.Serializable]
     public class CharacterLine
     {
-        public string line;
         public Characters character;
+        public string line;
         public bool thought = false;
     }
 
