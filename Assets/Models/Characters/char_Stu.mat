@@ -102,8 +102,8 @@ Material:
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Rim_Brightness: 0.88
-    - _Rim_Power: 0.34
+    - _Rim_Brightness: 0.8
+    - _Rim_Power: 0.3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -114,7 +114,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ToonRampTinting: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0}
+    - _ToonRampTinting: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4553430908115771314
 MonoBehaviour:
