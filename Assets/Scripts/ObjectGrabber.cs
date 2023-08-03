@@ -12,10 +12,7 @@ public class ObjectGrabber : MonoBehaviour
     private Quaternion originalRot;
     private Vector3 originalPos;
     private bool lettingGo = false;
-    private void Start()
-    {
-        
-    }
+
     public void Grab(Grabbable obj)
     {
         obj.rb.Sleep();
