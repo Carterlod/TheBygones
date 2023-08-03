@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class DialogueTester : MonoBehaviour
 {
@@ -11,13 +12,14 @@ public class DialogueTester : MonoBehaviour
     [SerializeField] NPC mick;
     [SerializeField] NPC nigel;
     [SerializeField] DialogueBoxes dialogueBox;
-    private int dialogueStep = 0;
-    private bool conversationInProgress = false;
-    private bool conversationFinished = false;
+    [SerializeField] int dialogueStep = 0;
+    [SerializeField] bool conversationInProgress = false;
+    [SerializeField] bool conversationFinished = false;
     public bool highjackCamera = false;
     [SerializeField] NPC speakingNPC;
     [SerializeField] Transform camLookAtTarget;
     [SerializeField] float camPivotDuration = 1;
+    
 
     [SerializeField] FirstPersonController player;
     [SerializeField] Camera cam;
@@ -37,18 +39,29 @@ public class DialogueTester : MonoBehaviour
 
     [SerializeField] UnityEvent conversationEndEvent;
 
-    
-
-    private void Start()
+    private void Awake()
     {
         dialogueStep = 0;
         dialogueBox.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
         cam = player.playerCamera;
         convoSwitcher = GetComponentInParent<ConversationSwitcher>();
     }
 
    
-
+    public void StartConversation()
+    {
+        if (!conversationInProgress)
+        {
+            conversationInProgress = true;
+            //DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().color = Color.red ;
+            DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = true;
+        }
+        AdvanceDialogue();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !conversationFinished && PlayerSettings.i.dialogueAdvanceable)
@@ -56,6 +69,7 @@ public class DialogueTester : MonoBehaviour
             if (!conversationInProgress)
             {
                 conversationInProgress = true;
+                
             }
             AdvanceDialogue();
         }
@@ -71,6 +85,7 @@ public class DialogueTester : MonoBehaviour
 
         if (dialogueStep >= lineOfDialogue.Length)
         {
+            DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = false;
             conversationInProgress = false;
             conversationFinished = true;
             dialogueStep = 0;

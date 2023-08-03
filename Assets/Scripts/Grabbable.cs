@@ -13,6 +13,7 @@ public class Grabbable : MonoBehaviour
     public string objectKey;
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;
+    public Collider[] cols;
 
     private void OnEnable()
     {
@@ -22,6 +23,8 @@ public class Grabbable : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cols = gameObject.GetComponentsInChildren<Collider>();
+        
     }
     
     IEnumerator Settle()
@@ -34,10 +37,18 @@ public class Grabbable : MonoBehaviour
     public void Grabbed()
     {
         onGrab.Invoke();
+        foreach(Collider col in cols)
+        {
+            col.enabled = false; ;
+        }
     }
 
     public void Released()
     {
         onRelease.Invoke();
+        foreach (Collider col in cols)
+        {
+            col.enabled = true ;
+        }
     }
 }

@@ -20,6 +20,7 @@ public class Setup : MonoBehaviour
         if (fireFirstConvoOnEnable)
         {
             convoSwitcher.BeginFirstConversation();
+            
         }
         
     }

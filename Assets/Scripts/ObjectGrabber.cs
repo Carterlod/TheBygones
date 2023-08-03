@@ -9,23 +9,17 @@ public class ObjectGrabber : MonoBehaviour
     [SerializeField] Transform camTransform;
     public Grabbable heldObject;
     private Transform originalParent;
-    
     private Quaternion originalRot;
     private Vector3 originalPos;
-    private Collider[] cols;
     private bool lettingGo = false;
-
+    private void Start()
+    {
+        
+    }
     public void Grab(Grabbable obj)
     {
-
-
         obj.rb.Sleep();
-        cols = obj.GetComponents<Collider>();
-        foreach(Collider col in cols)
-        {
-            col.enabled = false;
-        }
-
+      
         heldObject = obj;
 
         // initialize return transform values
@@ -85,12 +79,8 @@ public class ObjectGrabber : MonoBehaviour
             heldObject.gameObject.transform.rotation = Quaternion.Lerp(startingRot, originalRot, t / d);
             yield return null;
         }
-        foreach(Collider col in cols)
-        {
-            col.enabled = true;
-        }
+        
         heldObject.rb.isKinematic = false;
-        cols = null;
         heldObject = null;
         lettingGo = false;
 
