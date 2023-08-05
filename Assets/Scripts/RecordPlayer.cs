@@ -69,7 +69,7 @@ public class RecordPlayer : MonoBehaviour
         //play new record
         if (record == null)
         {
-            Debug.Log("recognized new record");
+            //Debug.Log("recognized new record");
             record = i.objectLastUsed.GetComponent<Record>();
             record.record.gameObject.SetActive(false);
             playingRecordMesh.SetActive(true);
@@ -86,7 +86,7 @@ public class RecordPlayer : MonoBehaviour
         else if (record != null && record == i.objectLastUsed.GetComponent<Record>() )
         {
             //turn record art back on
-            Debug.Log("recognized record to return");
+            //Debug.Log("recognized record to return");
             Record oldRecord = i.objectLastUsed.GetComponent<Record>();
             playingRecordMesh.SetActive(false);
             oldRecord.currentlyPlaying = false;
@@ -100,7 +100,7 @@ public class RecordPlayer : MonoBehaviour
         //swap for a new record
         if(record != null && record != i.objectLastUsed.GetComponent<Record>())
         {
-            Debug.Log("Recognized new record when old one wasn't returned");
+            //Debug.Log("Recognized new record when old one wasn't returned");
 
             //stop the music
             speaker.Stop();

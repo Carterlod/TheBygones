@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ui_ViewFinderHUD
-  m_Shader: {fileID: 4800000, guid: 8bcfa7f685678dd4e994da4786d6d08f, type: 3}
+  m_Shader: {fileID: 10764, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHATEST_ON
