@@ -10,7 +10,7 @@ public class AutoFocus : MonoBehaviour
     [SerializeField] Transform camera;
     [SerializeField] VolumeProfile profile;
     private DepthOfField dof;
-    LayerMask maskInteractables = 1 << 6;
+    public LayerMask maskInteractables = 1 << 6 & 1 << 2;
   
 
     private void Start()

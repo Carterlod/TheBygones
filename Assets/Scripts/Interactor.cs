@@ -13,11 +13,12 @@ public class Interactor : MonoBehaviour
     int layerMaskGrabbable;
     [SerializeField] TMP_Text npcNameField;
     [SerializeField] bool showNames = false;
-    public bool allowed = true;
+    public bool playerPaused = true;
     [SerializeField] float distance = 2;
     [SerializeField] ObjectGrabber grabber;
     [SerializeField] PlayerSettings playerSettings;
     private bool canUseObject = false;
+
     
    
 
@@ -45,14 +46,14 @@ public class Interactor : MonoBehaviour
         }
         if (playerSettings.cameraActive)
         {
-            Debug.Log("camera active");
+            //Debug.Log("camera active");
             return;
         }
 
         canUseObject = false;
 
         RaycastHit hit2;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, distance) && allowed)
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, distance) && playerPaused)
         {
             if (hit2.collider.gameObject.layer == layerMaskInteractable) // INTERACT
             {
@@ -72,18 +73,18 @@ public class Interactor : MonoBehaviour
                     }
                     if (i.objectRequired)
                     {
-                        Debug.Log("ObjectRequired = true");
+                        //Debug.Log("ObjectRequired = true");
                         if(grabber.heldObject != null)
                         {
-                            Debug.Log("you have an object");
+                            //Debug.Log("you have an object");
                             if(grabber.heldObject.objectKey == i.objectKey)
                             {
                                 canUseObject = true;
-                                Debug.Log("object key validated");
+                                //Debug.Log("object key validated");
                                 interactIcon.SetActive(true);
                                 if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    i.Interact();
+                                    i.InteractWithObject(grabber.heldObject);
                                 }
                             }
                         }

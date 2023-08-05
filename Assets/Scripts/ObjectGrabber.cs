@@ -15,8 +15,6 @@ public class ObjectGrabber : MonoBehaviour
 
     public void Grab(Grabbable obj)
     {
-        obj.rb.Sleep();
-      
         heldObject = obj;
 
         // initialize return transform values
@@ -36,7 +34,6 @@ public class ObjectGrabber : MonoBehaviour
         heldObject.transform.SetParent(holdTransform);
         grab.SetParent(heldObject.transform);
 
-        heldObject.rb.isKinematic = true;
 
         heldObject.Grabbed();
     }
@@ -61,7 +58,6 @@ public class ObjectGrabber : MonoBehaviour
         Vector3 startingPos = heldObject.gameObject.transform.position;
         Vector3 originalPosRaised = new Vector3(originalPos.x, originalPos.y + 0.1f, originalPos.z);
         Quaternion startingRot = heldObject.gameObject.transform.rotation;
-        heldObject.Released();
 
         float t = 0;
         float d = 0.1f;
@@ -76,8 +72,8 @@ public class ObjectGrabber : MonoBehaviour
             heldObject.gameObject.transform.rotation = Quaternion.Lerp(startingRot, originalRot, t / d);
             yield return null;
         }
-        
-        heldObject.rb.isKinematic = false;
+        heldObject.Released();
+        PlayerSettings.i.handsFull = false;
         heldObject = null;
         lettingGo = false;
 

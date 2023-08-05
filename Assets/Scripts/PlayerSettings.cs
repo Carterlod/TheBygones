@@ -19,7 +19,7 @@ public class PlayerSettings : MonoBehaviour
     {
         playerController.playerCanMove = false;
         playerController.cameraCanMove = false;
-        interactor.allowed = false;
+        interactor.playerPaused = false;
         dialogueAdvanceable = false;
         
     }
@@ -27,7 +27,7 @@ public class PlayerSettings : MonoBehaviour
     {
         playerController.playerCanMove = true;
         playerController.cameraCanMove = true;
-        interactor.allowed = true;
+        interactor.playerPaused = true;
         dialogueAdvanceable = true;
     }
 }

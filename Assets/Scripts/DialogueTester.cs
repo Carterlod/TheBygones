@@ -23,6 +23,8 @@ public class DialogueTester : MonoBehaviour
 
     [SerializeField] FirstPersonController player;
     [SerializeField] Camera cam;
+
+    private Coroutine DialoguePromptCountdown;
     public enum Characters { Stu, Ted, Mick, Nigel};
 
     private ConversationSwitcher convoSwitcher;
@@ -57,8 +59,9 @@ public class DialogueTester : MonoBehaviour
         if (!conversationInProgress)
         {
             conversationInProgress = true;
-            //DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().color = Color.red ;
-            DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = true;
+            DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = false;
+            DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
+            
         }
         AdvanceDialogue();
     }
@@ -69,7 +72,6 @@ public class DialogueTester : MonoBehaviour
             if (!conversationInProgress)
             {
                 conversationInProgress = true;
-                
             }
             AdvanceDialogue();
         }
@@ -82,10 +84,10 @@ public class DialogueTester : MonoBehaviour
     public void AdvanceDialogue()
     {
         dialogueBox.gameObject.SetActive(false);
+        DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = false;
 
         if (dialogueStep >= lineOfDialogue.Length)
         {
-            DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = false;
             conversationInProgress = false;
             conversationFinished = true;
             dialogueStep = 0;
@@ -131,6 +133,11 @@ public class DialogueTester : MonoBehaviour
         {
             StartCoroutine(PivotCamTowardCharacter());
         }
+        if(DialoguePromptCountdown != null)
+        {
+            StopCoroutine(DialoguePromptCountdown);
+        }
+        DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
     }
 
     IEnumerator PivotCamTowardCharacter()
@@ -151,5 +158,10 @@ public class DialogueTester : MonoBehaviour
         yield return null;
     }
 
-
+    IEnumerator DialogueIconCountdown()
+    {
+        yield return new WaitForSeconds(3);
+        DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = true;
+        yield return null;
+    }
 }

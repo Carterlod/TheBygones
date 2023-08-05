@@ -5,15 +5,17 @@ using UnityEngine.Events;
 
 public class Grabbable : MonoBehaviour
 {
-    public Rigidbody rb;
     public Transform grabHandle;
-    public Vector3 originalPos;
-    public Quaternion originalRot;
-    public bool keepLevel = true;
     public string objectKey;
+    public bool keepLevel = true;
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;
-    public Collider[] cols;
+    public Vector3 originalPos;
+    public Quaternion originalRot;
+    public bool grabbed;
+
+    private Rigidbody rb;
+    private Collider[] cols;
 
     private void OnEnable()
     {
@@ -36,7 +38,9 @@ public class Grabbable : MonoBehaviour
 
     public void Grabbed()
     {
+        grabbed = true;
         onGrab.Invoke();
+        rb.isKinematic = true;
         foreach(Collider col in cols)
         {
             col.enabled = false; ;
@@ -45,7 +49,9 @@ public class Grabbable : MonoBehaviour
 
     public void Released()
     {
+        grabbed = false;
         onRelease.Invoke();
+        rb.isKinematic = false;
         foreach (Collider col in cols)
         {
             col.enabled = true ;
