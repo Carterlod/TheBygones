@@ -26,7 +26,6 @@ public class ObjectGrabber : MonoBehaviour
 
         // set position and rotation with grab handle offset
         Transform grab = heldObject.grabHandle;
-        //heldObject.transform.position = holdTransform.position - grab.localPosition;
         grab.SetParent(holdParent);
         heldObject.transform.SetParent(grab);
         grab.rotation = holdTransform.rotation;

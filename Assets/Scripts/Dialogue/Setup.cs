@@ -14,13 +14,13 @@ public class Setup : MonoBehaviour
     [SerializeField] ConversationSwitcher convoSwitcher;
     [SerializeField] bool fireFirstConvoOnEnable = true;
     [SerializeField] FirstPersonController playerController;
+    
 
-    private void Awake()
+    private void Start()
     {
         if (fireFirstConvoOnEnable)
         {
             convoSwitcher.BeginFirstConversation();
-            
         }
         
     }

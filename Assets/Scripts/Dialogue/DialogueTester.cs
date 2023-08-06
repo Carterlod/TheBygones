@@ -11,18 +11,26 @@ public class DialogueTester : MonoBehaviour
     [SerializeField] NPC ted;
     [SerializeField] NPC mick;
     [SerializeField] NPC nigel;
-    [SerializeField] DialogueBoxes dialogueBox;
-    [SerializeField] int dialogueStep = 0;
+
+    [Header("Settings")]
     [SerializeField] bool conversationInProgress = false;
     [SerializeField] bool conversationFinished = false;
-    public bool highjackCamera = false;
+    [SerializeField] bool autoIncrementConvos = false;
+    [SerializeField] int dialogueStep = 0;
+
+    //[Header("Auto-Camera")]
+    //public bool highjackCamera = false;
+    //[SerializeField] float camPivotDuration = 1;
+
+
+    [Header("References")]
     [SerializeField] NPC speakingNPC;
     [SerializeField] Transform camLookAtTarget;
-    [SerializeField] float camPivotDuration = 1;
-    
-
+    [SerializeField] DialogueBoxes dialogueBox;
     [SerializeField] FirstPersonController player;
     [SerializeField] Camera cam;
+
+    [SerializeField] UnityEvent conversationEndEvent;
 
     private Coroutine DialoguePromptCountdown;
     public enum Characters { Stu, Ted, Mick, Nigel};
@@ -32,14 +40,14 @@ public class DialogueTester : MonoBehaviour
     [System.Serializable]
     public class CharacterLine
     {
-        public Characters character;
+        [TextArea]
         public string line;
-        public bool thought = false;
+        public Characters character;
+        public BaseDialogueAction baseAction;
     }
 
     public CharacterLine[] lineOfDialogue;
 
-    [SerializeField] UnityEvent conversationEndEvent;
 
     private void Awake()
     {
@@ -49,7 +57,7 @@ public class DialogueTester : MonoBehaviour
 
     private void Start()
     {
-        cam = player.playerCamera;
+        //cam = player.playerCamera;
         convoSwitcher = GetComponentInParent<ConversationSwitcher>();
     }
 
@@ -86,21 +94,36 @@ public class DialogueTester : MonoBehaviour
         dialogueBox.gameObject.SetActive(false);
         DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = false;
 
+        if(dialogueStep > 0 && lineOfDialogue[dialogueStep - 1].baseAction != null)
+        {
+            lineOfDialogue[dialogueStep - 1].baseAction.OnDialogueEnd();
+        }
+
+        //end conversation
         if (dialogueStep >= lineOfDialogue.Length)
         {
+           
             conversationInProgress = false;
             conversationFinished = true;
             dialogueStep = 0;
             dialogueBox.gameObject.SetActive(false);
-            convoSwitcher.IncrementConvo();
+            if (autoIncrementConvos)
+            {
+                convoSwitcher.IncrementConvo();
+            }
             if(conversationEndEvent != null)
             {
                 conversationEndEvent.Invoke();
             }
+            if (DialoguePromptCountdown != null)
+            {
+                StopCoroutine(DialoguePromptCountdown);
+            }
             
             return;
         }
-
+        
+        //assign NPC to this line
         Characters speakingCharacter = lineOfDialogue[dialogueStep].character;
 
         if (speakingCharacter == Characters.Stu)
@@ -120,32 +143,45 @@ public class DialogueTester : MonoBehaviour
             speakingNPC = nigel;
         }
         dialogueBox.npc = speakingNPC;
-
         dialogueBox.nameSlot.text = speakingNPC.characterName;
         dialogueBox.dialogueSlot.text = lineOfDialogue[dialogueStep].line;
-        dialogueBox.UpdateBoxArt(!lineOfDialogue[dialogueStep].thought);
+
+        
+        //dialogueBox.UpdateBoxArt(!lineOfDialogue[dialogueStep].thought);
+        if(lineOfDialogue[dialogueStep].baseAction != null)
+        {
+            lineOfDialogue[dialogueStep].baseAction.OnDialogueStart();
+        }
 
         dialogueBox.gameObject.SetActive(true);
 
         dialogueStep += 1;
 
-        if (highjackCamera)
-        {
-            StartCoroutine(PivotCamTowardCharacter());
-        }
+        //if (highjackCamera)
+        //{
+        //    StartCoroutine(PivotCamTowardCharacter());
+        //}
+
         if(DialoguePromptCountdown != null)
         {
             StopCoroutine(DialoguePromptCountdown);
         }
         DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
     }
-
+    IEnumerator DialogueIconCountdown()
+    {
+        yield return new WaitForSeconds(3);
+        DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = true;
+        yield return null;
+    }
+    /*
     IEnumerator PivotCamTowardCharacter()
     {
 
         player.cameraCanMove = false;
         float t = 0;
         Quaternion initialRot = cam.transform.rotation;
+
         while(t < camPivotDuration)
         {
             t += Time.deltaTime;
@@ -157,11 +193,5 @@ public class DialogueTester : MonoBehaviour
         player.cameraCanMove = true;
         yield return null;
     }
-
-    IEnumerator DialogueIconCountdown()
-    {
-        yield return new WaitForSeconds(3);
-        DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = true;
-        yield return null;
-    }
+    */
 }

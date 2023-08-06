@@ -7,37 +7,42 @@ public class Grabbable : MonoBehaviour
 {
     public Transform grabHandle;
     public string objectKey;
+    public bool grabbed;
     public bool keepLevel = true;
+    [SerializeField] bool bypassSettling = false;
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;
     public Vector3 originalPos;
     public Quaternion originalRot;
-    public bool grabbed;
 
     private Rigidbody rb;
     private Collider[] cols;
 
     private void OnEnable()
     {
-        StartCoroutine(Settle());
-    }
-
-    private void Start()
-    {
         rb = GetComponent<Rigidbody>();
         cols = gameObject.GetComponentsInChildren<Collider>();
-        
+        StartCoroutine(Settle());
     }
     
     IEnumerator Settle()
     {
-        yield return new WaitForSeconds(.5f);
-        originalPos = gameObject.transform.position;
-        originalRot = gameObject.transform.rotation;
+        if(bypassSettling)
+        {
+            originalPos = transform.position;
+            originalRot = transform.rotation;
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+            originalPos = gameObject.transform.position;
+            originalRot = gameObject.transform.rotation;
+        }
     }
 
     public void Grabbed()
     {
+
         grabbed = true;
         onGrab.Invoke();
         rb.isKinematic = true;

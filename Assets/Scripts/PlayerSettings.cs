@@ -11,7 +11,7 @@ public class PlayerSettings : MonoBehaviour
     public bool handsFull = false;
     public bool cameraActive = false;
 
-    public void Start()
+    public void OnEnable()
     {
         i = this;
     }

@@ -55,9 +55,14 @@ public class Interactor : MonoBehaviour
         RaycastHit hit2;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, distance) && playerPaused)
         {
-            if (hit2.collider.gameObject.layer == layerMaskInteractable) // INTERACT
+
+        // INTERACT
+
+            if (hit2.collider.gameObject.layer == layerMaskInteractable) 
             {
+                //Debug.Log(hit2.collider.gameObject.name);
                 Interactable i = hit2.collider.gameObject.GetComponent<Interactable>();
+
                 if(!i.oneShot || i.oneShot && !i.spent)
                 {
                     if (!i.objectRequired)
@@ -91,7 +96,10 @@ public class Interactor : MonoBehaviour
                     }
                 }
             }
-            if(hit2.collider.gameObject.layer == layerMaskNPC) // SHOW NAME
+
+        // SHOW NAME
+
+            if (hit2.collider.gameObject.layer == layerMaskNPC) 
             {
                 string n = hit2.collider.gameObject.GetComponentInParent<NPC>().characterName;
                 if (n != null && showNames)
@@ -101,7 +109,9 @@ public class Interactor : MonoBehaviour
                 }
             }
 
-            if (hit2.collider.gameObject.layer == layerMaskGrabbable && hit2.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) //GRABBABLE
+        //GRABBABLE
+
+            if (hit2.collider.gameObject.layer == layerMaskGrabbable && hit2.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) 
             {
                 Grabbable obj = hit2.collider.gameObject.GetComponent<Grabbable>();
                 if (!playerSettings.handsFull || canUseObject)
@@ -110,11 +120,10 @@ public class Interactor : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    playerSettings.handsFull = true;
+                    PlayerSettings.i.handsFull = true;
                     grabber.Grab(obj);
                 }
             }
         }
-
     }
 }

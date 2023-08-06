@@ -16,6 +16,7 @@ public class ConversationSwitcher : MonoBehaviour
     public void BeginFirstConversation()
     {
         converstaions[activeConvo].gameObject.SetActive(true);
+        converstaions[activeConvo].StartConversation();
     }
     public void IncrementConvo()
     {
