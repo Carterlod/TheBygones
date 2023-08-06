@@ -14,10 +14,13 @@ public class Interactor : MonoBehaviour
     [SerializeField] TMP_Text npcNameField;
     [SerializeField] bool showNames = false;
     public bool playerPaused = true;
-    [SerializeField] float distance = 2;
+    [SerializeField] float shortDistance = 2;
+    [SerializeField] float longDistance = 4;
     [SerializeField] ObjectGrabber grabber;
     [SerializeField] PlayerSettings playerSettings;
     private bool canUseObject = false;
+
+    [SerializeField] NPC storedNPC;
 
     
    
@@ -52,8 +55,10 @@ public class Interactor : MonoBehaviour
 
         canUseObject = false;
 
-        RaycastHit hit2;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, distance) && playerPaused)
+        
+
+        RaycastHit hit2; 
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, longDistance) && playerPaused)
         {
 
         // INTERACT
@@ -101,11 +106,31 @@ public class Interactor : MonoBehaviour
 
             if (hit2.collider.gameObject.layer == layerMaskNPC) 
             {
-                string n = hit2.collider.gameObject.GetComponentInParent<NPC>().characterName;
-                if (n != null && showNames)
+                NPC npc = hit2.collider.gameObject.GetComponentInParent<NPC>();
+                if(storedNPC == null)
+                {
+                    storedNPC = npc;
+                }
+                else if(npc == storedNPC)
+                {
+                    storedNPC.isLookedAt = false;
+                    storedNPC = npc;
+                }
+
+                string n = npc.characterName;
+                npc.isLookedAt = true;
+                if (n != null && npc.clearedToShowName)
                 {
                     npcNameField.gameObject.SetActive(true);
                     npcNameField.text = n;
+                }
+            }
+            else
+            {
+                if(storedNPC != null)
+                {
+                    storedNPC.isLookedAt = false;
+                    storedNPC = null;
                 }
             }
 

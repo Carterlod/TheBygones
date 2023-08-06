@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class TitleCards : MonoBehaviour
 {
@@ -29,8 +30,8 @@ public class TitleCards : MonoBehaviour
     [SerializeField] private float lingerOnBlack = 0f;
     [SerializeField] private float soundFadeDelay = 0f;
     [SerializeField] private float soundFadeDuration = 1f;
-    
-    
+
+    [SerializeField] UnityEvent onEndEvent;
 
     
     private void Start()
@@ -78,6 +79,10 @@ public class TitleCards : MonoBehaviour
         }
         m_player.UnpausePlayer();
         m_Image.gameObject.SetActive(false);
+        if(onEndEvent != null)
+        {
+            onEndEvent.Invoke();
+        }
 
         yield return null;
     }
