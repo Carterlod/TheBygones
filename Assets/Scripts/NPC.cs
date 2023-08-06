@@ -8,4 +8,5 @@ public class NPC : MonoBehaviour
 {
     public string characterName;
     public Transform characterHead;
+    public Animator animator;
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 654121570537759571}
   - component: {fileID: 654121570537759572}
   m_Layer: 0
-  m_Name: Cigarette
+  m_Name: Prop_Cigarette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

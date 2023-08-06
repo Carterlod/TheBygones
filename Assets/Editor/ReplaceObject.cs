@@ -3,7 +3,7 @@ using UnityEditor;
 public class ReplaceWithPrefab : EditorWindow
 {
     [SerializeField] private GameObject prefab;
-    [MenuItem("Turnfollow/Tools/Replace With Prefab")]
+    [MenuItem("Tools/Replace With Prefab")]
     static void CreateReplaceWithPrefab()
     {
         EditorWindow.GetWindow<ReplaceWithPrefab>();

@@ -26,6 +26,7 @@ public class TitleCards : MonoBehaviour
 
     [SerializeField] private float textOnDelay = 0.5f;
     [SerializeField] private float cardDuration = 1f;
+    [SerializeField] private float lingerOnBlack = 0f;
     [SerializeField] private float soundFadeDelay = 0f;
     [SerializeField] private float soundFadeDuration = 1f;
     
@@ -72,7 +73,7 @@ public class TitleCards : MonoBehaviour
             m_Text.gameObject.SetActive(true);
             yield return new WaitForSeconds(cardDuration + card.durationOverride);
             m_Text.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(lingerOnBlack);
             yield return null;
         }
         m_player.UnpausePlayer();

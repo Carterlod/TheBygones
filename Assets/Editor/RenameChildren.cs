@@ -8,7 +8,7 @@ public class RenameChildren : EditorWindow
     private static readonly Vector2Int size = new Vector2Int(250, 100);
     private string childrenPrefix;
     private int startIndex;
-    [MenuItem("Turnfollow/Tools/Rename children")]
+    [MenuItem("Tools/Rename children")]
     public static void ShowWindow()
     {
         EditorWindow window = GetWindow<RenameChildren>();
