@@ -47,6 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 
   characterHead: {fileID: 0}
+  animator: {fileID: 0}
+  isLookedAt: 0
+  showMyName: 0
+  countdownFinished: 0
+  clearedToShowName: 0
+  countdownUnderway: 0
+  doSomethingWhenObserved: 0
+  somethingToDoWhenObserved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4477221842940607162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eyeRenderer: {fileID: 0}
   blinkDuration: 0.2
-  delayTilNextBlink: 3
+  delayTilNextBlink: 5
   blinkBlendShapeIndex: 0
   curve:
     serializedVersion: 2
