@@ -78,7 +78,7 @@ PrefabInstance:
     - target: {fileID: 5869515662630703904, guid: 4e5ca713aee96c84d96bc04554b0b2d8, type: 3}
       propertyPath: song
       value: 
-      objectReference: {fileID: 8300000, guid: 67caf0a69f9e2714c892e8e66cb19766, type: 3}
+      objectReference: {fileID: 8300000, guid: 4dd6a982de5f9494488e0f1cadfa82da, type: 3}
     - target: {fileID: 6779962903330434492, guid: 4e5ca713aee96c84d96bc04554b0b2d8, type: 3}
       propertyPath: song
       value: 
