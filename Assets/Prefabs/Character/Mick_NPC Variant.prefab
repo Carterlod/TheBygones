@@ -97,6 +97,37 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.62
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &5763541631195144075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8522591522862336064}
+  m_Layer: 8
+  m_Name: EyelineTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8522591522862336064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5763541631195144075}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7232224541633583284}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4586171608517685872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -116,6 +147,10 @@ PrefabInstance:
       propertyPath: characterName
       value: Mick
       objectReference: {fileID: 0}
+    - target: {fileID: 790044376239573318, guid: aeac2db96f7452a4e83cf26d93b13d27, type: 3}
+      propertyPath: eyelineTransform
+      value: 
+      objectReference: {fileID: 8522591522862336064}
     - target: {fileID: 2600846271232679201, guid: aeac2db96f7452a4e83cf26d93b13d27, type: 3}
       propertyPath: m_Name
       value: Mick_NPC Variant

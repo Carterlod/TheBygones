@@ -97,6 +97,37 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.32
   m_Center: {x: 0, y: 0.18, z: 0}
+--- !u!1 &538198369201053113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6658568499883192158}
+  m_Layer: 8
+  m_Name: EyelineTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6658568499883192158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538198369201053113}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.062, z: 0.078}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 336168171689056757}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3801478846609313348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,6 +1013,10 @@ PrefabInstance:
       propertyPath: characterName
       value: Stu
       objectReference: {fileID: 0}
+    - target: {fileID: 790044376239573318, guid: aeac2db96f7452a4e83cf26d93b13d27, type: 3}
+      propertyPath: eyelineTransform
+      value: 
+      objectReference: {fileID: 6658568499883192158}
     - target: {fileID: 2600846271232679201, guid: aeac2db96f7452a4e83cf26d93b13d27, type: 3}
       propertyPath: m_Name
       value: Stu_NPC Variant

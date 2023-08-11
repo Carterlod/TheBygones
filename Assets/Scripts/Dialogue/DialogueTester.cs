@@ -7,10 +7,10 @@ using TMPro;
 public class DialogueTester : MonoBehaviour
 {
     [Header("Characters")]
-    [SerializeField] NPC stu;
-    [SerializeField] NPC ted;
-    [SerializeField] NPC mick;
-    [SerializeField] NPC nigel;
+    public NPC stu;
+    public NPC ted;
+    public NPC mick;
+    public NPC nigel;
 
     [Header("Settings")]
     [SerializeField] bool conversationInProgress = false;
@@ -24,7 +24,7 @@ public class DialogueTester : MonoBehaviour
 
 
     [Header("References")]
-    [SerializeField] NPC speakingNPC;
+    public NPC speakingNPC;
     [SerializeField] Transform camLookAtTarget;
     [SerializeField] DialogueBoxes dialogueBox;
     [SerializeField] FirstPersonController player;

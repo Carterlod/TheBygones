@@ -10,18 +10,30 @@ public class NPC : MonoBehaviour
     public string characterName;
     public Transform characterHead;
     public Animator animator;
+    public Transform eyelineTransform;
+    public Transform lookAtTarget; 
     public bool isLookedAt = false;
     public bool showMyName = false;
     private Coroutine countDown;
     public bool countdownFinished = false;
     public bool clearedToShowName = false;
-    [SerializeField] bool countdownUnderway = false;
-    [SerializeField] bool doSomethingWhenObserved = false;
+    private bool countdownUnderway = false;
+    private bool doSomethingWhenObserved = false;
     private bool eventFired = false;
     [SerializeField] UnityEvent somethingToDoWhenObserved;
+    [SerializeField] GameObject headGoal;
+    [SerializeField] GameObject prevFramesHead;
+    [SerializeField] float headTurnDuration = 1;
+    [SerializeField] float headTurnTime = 0;
 
+    
 
-
+    private void Start()
+    {
+        headGoal = new GameObject("headGoal");
+        prevFramesHead = new GameObject("lastFramesHead");
+        prevFramesHead.transform.rotation = characterHead.rotation;
+    }
     private void Update()
     {
         if (showMyName)
@@ -56,8 +68,43 @@ public class NPC : MonoBehaviour
             }
            // isLookedAt = false;
         }
+        if(lookAtTarget == null)
+        {
+            headGoal.transform.rotation = characterHead.transform.rotation;
+        }
     }
-    
+    public void SetLookAtTarget(Transform target)
+    {
+        lookAtTarget = target;
+        headTurnTime = 0;
+    }
+
+    public void ClearLookAtTarget()
+    {
+        lookAtTarget = null;
+        headTurnTime = 0;
+    }
+
+    private void LateUpdate()
+    {
+        headTurnTime += Time.deltaTime;
+        if(headTurnTime > headTurnDuration)
+        {
+            headTurnTime = headTurnDuration;
+        }
+
+        headGoal.transform.position = characterHead.transform.position;
+        prevFramesHead.transform.position = characterHead.transform.position;
+
+        if (lookAtTarget != null)
+        {
+            headGoal.transform.LookAt(lookAtTarget);
+        }
+        
+
+        characterHead.rotation = Quaternion.Lerp(prevFramesHead.transform.rotation, headGoal.transform.rotation, headTurnTime/headTurnDuration);
+        prevFramesHead.transform.rotation = characterHead.rotation;
+    }
 
     IEnumerator countDownRoutine()
     {
@@ -75,4 +122,6 @@ public class NPC : MonoBehaviour
         countdownUnderway = false;
         yield return null;
     }
+
+    
 }
