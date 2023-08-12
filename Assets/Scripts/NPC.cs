@@ -8,10 +8,18 @@ using UnityEngine.Events;
 public class NPC : MonoBehaviour
 {
     public string characterName;
-    public Transform characterHead;
     public Animator animator;
+    public Transform characterHead;
+
+    [Header("Looking At Each Other")]
     public Transform eyelineTransform;
     public Transform lookAtTarget; 
+    [SerializeField] float headTurnDuration = 1;
+    private GameObject headGoal;
+    private GameObject prevFramesHead;
+    private float headTurnTime = 0;
+
+    [Header("Player Looking At Me")]
     public bool isLookedAt = false;
     public bool showMyName = false;
     private Coroutine countDown;
@@ -21,12 +29,6 @@ public class NPC : MonoBehaviour
     private bool doSomethingWhenObserved = false;
     private bool eventFired = false;
     [SerializeField] UnityEvent somethingToDoWhenObserved;
-    [SerializeField] GameObject headGoal;
-    [SerializeField] GameObject prevFramesHead;
-    [SerializeField] float headTurnDuration = 1;
-    [SerializeField] float headTurnTime = 0;
-
-    
 
     private void Start()
     {
@@ -66,13 +68,12 @@ public class NPC : MonoBehaviour
                     somethingToDoWhenObserved.Invoke();
                 }
             }
-           // isLookedAt = false;
         }
-        if(lookAtTarget == null)
-        {
-            headGoal.transform.rotation = characterHead.transform.rotation;
-        }
+
+        //resets head rotation goal to match animation
+        
     }
+
     public void SetLookAtTarget(Transform target)
     {
         lookAtTarget = target;
@@ -87,23 +88,24 @@ public class NPC : MonoBehaviour
 
     private void LateUpdate()
     {
-        headTurnTime += Time.deltaTime;
-        if(headTurnTime > headTurnDuration)
-        {
-            headTurnTime = headTurnDuration;
-        }
+            headTurnTime += Time.deltaTime;
+            if(headTurnTime > headTurnDuration)
+            {
+                headTurnTime = headTurnDuration;
+            }
 
-        headGoal.transform.position = characterHead.transform.position;
-        prevFramesHead.transform.position = characterHead.transform.position;
+            headGoal.transform.position = characterHead.transform.position;
+            headGoal.transform.rotation = characterHead.transform.rotation;
 
-        if (lookAtTarget != null)
-        {
-            headGoal.transform.LookAt(lookAtTarget);
-        }
+            if (lookAtTarget != null)
+                {
+                    headGoal.transform.LookAt(lookAtTarget);
+                }
         
-
-        characterHead.rotation = Quaternion.Lerp(prevFramesHead.transform.rotation, headGoal.transform.rotation, headTurnTime/headTurnDuration);
-        prevFramesHead.transform.rotation = characterHead.rotation;
+            characterHead.rotation = Quaternion.Lerp(prevFramesHead.transform.rotation, headGoal.transform.rotation, headTurnTime/headTurnDuration);
+        
+            prevFramesHead.transform.position = characterHead.position;
+            prevFramesHead.transform.rotation = characterHead.rotation;
     }
 
     IEnumerator countDownRoutine()
@@ -115,10 +117,8 @@ public class NPC : MonoBehaviour
         {
             t += Time.deltaTime;
             yield return null;
-
         }
         countdownFinished = true;
-
         countdownUnderway = false;
         yield return null;
     }

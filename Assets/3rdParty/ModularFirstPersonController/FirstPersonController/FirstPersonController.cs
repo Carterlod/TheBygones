@@ -481,7 +481,7 @@ public class FirstPersonController : MonoBehaviour
         }
     }
 
-    private void Crouch()
+    public void Crouch()
     {
         // Stands player up to full height
         // Brings walkSpeed back up to original speed
@@ -490,7 +490,8 @@ public class FirstPersonController : MonoBehaviour
         {
             joint.localPosition = jointOriginalPos;
             //transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
-            walkSpeed /= speedReduction;
+            //walkSpeed /= speedReduction;
+            walkSpeed = 1.5f;
 
             isCrouched = false;
         }
@@ -502,7 +503,8 @@ public class FirstPersonController : MonoBehaviour
            
             float heightAdjustment = jointOriginalPos.y + -.5f;
             joint.localPosition = new Vector3(jointOriginalPos.x, heightAdjustment, jointOriginalPos.z);
-            walkSpeed *= speedReduction;
+            //walkSpeed *= speedReduction;
+            walkSpeed = .75f;
 
             isCrouched = true;
         }

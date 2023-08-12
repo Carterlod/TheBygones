@@ -13,6 +13,7 @@ public class Setup : MonoBehaviour
     [SerializeField] LightSwitchPreset[] lightSwitches;
     [SerializeField] ConversationSwitcher convoSwitcher;
     [SerializeField] bool fireFirstConvoOnEnable = true;
+    [SerializeField] bool startCrouched = false;
     [SerializeField] FirstPersonController playerController;
     
 
@@ -22,11 +23,14 @@ public class Setup : MonoBehaviour
         {
             convoSwitcher.BeginFirstConversation();
         }
-        
     }
 
     private void OnEnable()
     {
+        if (startCrouched)
+        {
+            playerController.Crouch();
+        }
         foreach (LightSwitchPreset lsp in lightSwitches)
         {
             if (lsp.startOn)
