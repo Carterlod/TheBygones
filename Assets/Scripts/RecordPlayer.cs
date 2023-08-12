@@ -10,24 +10,32 @@ public class RecordPlayer : MonoBehaviour
     [SerializeField] RotateObject rotator;
     [SerializeField] GameObject playingRecordMesh;
     private Vector3 initialRotation;
-    private float savedTime;
+    [SerializeField] float savedTime = 0;
     public ObjectGrabber grabber;
     [SerializeField] Record record;
     [SerializeField] AnimationCurve recordReturnArc;
-    //[SerializeField] bool startOn = true;
 
+    //[SerializeField] bool startOn = true;
+    private void Update()
+    {
+        //Debug.Log("speaker.time is " + speaker.time);
+        //savedTime = speaker.time;
+    }
     private void Awake()
     {
         i = this;
-        
     }
     private void Start()
     {
         initialRotation = rotator.angle;
+    }
+    private void OnEnable()
+    {
         if (record != null)
         {
             speaker.clip = record.song;
             speaker.Play();
+            speaker.time = savedTime;
             playingRecordMesh.SetActive(true);
 
         }
@@ -36,11 +44,10 @@ public class RecordPlayer : MonoBehaviour
             playingRecordMesh.gameObject.SetActive(false);
         }
     }
-
+    
     public void PlaySong()
     {
         StartCoroutine(SwitchRecord());
-
     }
     public void OnOff()
     {
@@ -61,8 +68,6 @@ public class RecordPlayer : MonoBehaviour
     }
     IEnumerator SwitchRecord()
     {
-        
-
         yield return new WaitForSeconds(0.1f);
         Interactable i = GetComponentInChildren<Interactable>();
 

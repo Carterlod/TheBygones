@@ -16,21 +16,24 @@ public class Setup : MonoBehaviour
     [SerializeField] bool startCrouched = false;
     [SerializeField] FirstPersonController playerController;
     
+    public List<Transform> carryIntoNextScene;
+    
 
     private void Start()
     {
+        Debug.Log("Setup Start() was called on " + this.name) ;
         if (fireFirstConvoOnEnable)
         {
             convoSwitcher.BeginFirstConversation();
+        }
+        if (startCrouched)
+        {
+            playerController.Crouch();
         }
     }
 
     private void OnEnable()
     {
-        if (startCrouched)
-        {
-            playerController.Crouch();
-        }
         foreach (LightSwitchPreset lsp in lightSwitches)
         {
             if (lsp.startOn)

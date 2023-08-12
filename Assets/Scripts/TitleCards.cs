@@ -44,7 +44,10 @@ public class TitleCards : MonoBehaviour
         //m_Text1[2].gameObject.SetActive(false);
         m_player.PausePlayer();
 
-        StartCoroutine(IntroCardSoundFade());
+        if(soundFadeDuration > 0)
+        {
+            StartCoroutine(IntroCardSoundFade());
+        }
         StartCoroutine(IntroCardVisuals());
     }
 
@@ -57,6 +60,7 @@ public class TitleCards : MonoBehaviour
         while (t < soundFadeDuration)
         {
             t += Time.deltaTime;
+
             AudioListener.volume = Mathf.Lerp(0, 1, t / soundFadeDuration);
             yield return null;
         }

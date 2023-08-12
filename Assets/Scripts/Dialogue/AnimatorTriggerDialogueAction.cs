@@ -10,7 +10,14 @@ public class AnimatorTriggerDialogueAction : BaseDialogueAction
     public override void OnDialogueStart()
     {
         base.OnDialogueStart();
-        animator.SetTrigger(trigger);
+        StartCoroutine(SetAndResetTrigger());
        
+    }
+    IEnumerator SetAndResetTrigger()
+    {
+        animator.SetTrigger(trigger);
+        yield return new WaitForEndOfFrame();
+        animator.ResetTrigger(trigger);
+        yield return null;
     }
 }

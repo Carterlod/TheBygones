@@ -121,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5763541631195144075}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.08, z: 0}
+  m_LocalPosition: {x: -0.032, y: -0.017, z: 0.082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -135,6 +135,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 790044376239573318, guid: aeac2db96f7452a4e83cf26d93b13d27, type: 3}
+      propertyPath: mouth
+      value: 
+      objectReference: {fileID: 3838074733060575876}
     - target: {fileID: 790044376239573318, guid: aeac2db96f7452a4e83cf26d93b13d27, type: 3}
       propertyPath: animator
       value: 
@@ -1212,6 +1216,11 @@ CapsuleCollider:
   m_Height: 0.39
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!137 &3838074733060575876 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 9123227915805651376, guid: 22194c77ce2a7a2439f4f84f71e7e259, type: 3}
+  m_PrefabInstance: {fileID: 5467268593580221236}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5476249306508799413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9214320395491996031, guid: 22194c77ce2a7a2439f4f84f71e7e259, type: 3}

@@ -28,12 +28,28 @@ public class SetupSwitcher : MonoBehaviour
     }
     public void IncrementSetup()
     {
-        setups[activeSetup].setupParent.gameObject.SetActive(false);
+        Setup oldSet = setups[activeSetup].setupParent;
+        if(oldSet.carryIntoNextScene.Count > 0)
+        {
+            foreach (Transform tr in oldSet.carryIntoNextScene)
+            {
+                tr.parent = this.transform;
+            }
+        }
+        oldSet.gameObject.SetActive(false);
         activeSetup++;
         if (activeSetup > setups.Length - 1)
         {
             return;
         }
-        setups[activeSetup].setupParent.gameObject.SetActive(true);
+        Setup newSet = setups[activeSetup].setupParent;
+        newSet.gameObject.SetActive(true);
+        if(oldSet.carryIntoNextScene.Count > 0)
+        {
+            foreach(Transform tr in oldSet.carryIntoNextScene)
+            {
+                tr.parent = newSet.gameObject.transform;
+            }
+        }
     }
 }

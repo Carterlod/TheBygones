@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour
     public string characterName;
     public Animator animator;
     public Transform characterHead;
+    public SkinnedMeshRenderer mouth;
 
     [Header("Looking At Each Other")]
     public Transform eyelineTransform;
@@ -18,6 +19,7 @@ public class NPC : MonoBehaviour
     private GameObject headGoal;
     private GameObject prevFramesHead;
     private float headTurnTime = 0;
+    public bool showDotDebug = false;
 
     [Header("Player Looking At Me")]
     public bool isLookedAt = false;
@@ -33,7 +35,9 @@ public class NPC : MonoBehaviour
     private void Start()
     {
         headGoal = new GameObject("headGoal");
+        headGoal.transform.parent = this.transform;
         prevFramesHead = new GameObject("lastFramesHead");
+        prevFramesHead.transform.parent = this.transform;
         prevFramesHead.transform.rotation = characterHead.rotation;
     }
     private void Update()
@@ -68,10 +72,7 @@ public class NPC : MonoBehaviour
                     somethingToDoWhenObserved.Invoke();
                 }
             }
-        }
-
-        //resets head rotation goal to match animation
-        
+        } 
     }
 
     public void SetLookAtTarget(Transform target)
@@ -88,24 +89,28 @@ public class NPC : MonoBehaviour
 
     private void LateUpdate()
     {
-            headTurnTime += Time.deltaTime;
-            if(headTurnTime > headTurnDuration)
-            {
-                headTurnTime = headTurnDuration;
-            }
+        headTurnTime += Time.deltaTime;
+        if(headTurnTime > headTurnDuration)
+        {
+            headTurnTime = headTurnDuration;
+        }
 
-            headGoal.transform.position = characterHead.transform.position;
-            headGoal.transform.rotation = characterHead.transform.rotation;
+        headGoal.transform.position = characterHead.transform.position;
+        headGoal.transform.rotation = characterHead.transform.rotation;
 
-            if (lookAtTarget != null)
-                {
-                    headGoal.transform.LookAt(lookAtTarget);
-                }
+        if (lookAtTarget != null)
+        {
+            headGoal.transform.LookAt(lookAtTarget);
+        }
+        if(showDotDebug)
+        {
+            //Debug.Log(Quaternion.Dot(characterHead.transform.rotation, headGoal.transform.rotation));
+        }
         
-            characterHead.rotation = Quaternion.Lerp(prevFramesHead.transform.rotation, headGoal.transform.rotation, headTurnTime/headTurnDuration);
+        characterHead.rotation = Quaternion.Lerp(prevFramesHead.transform.rotation, headGoal.transform.rotation, headTurnTime/headTurnDuration);
         
-            prevFramesHead.transform.position = characterHead.position;
-            prevFramesHead.transform.rotation = characterHead.rotation;
+        prevFramesHead.transform.position = characterHead.position;
+        prevFramesHead.transform.rotation = characterHead.rotation;
     }
 
     IEnumerator countDownRoutine()

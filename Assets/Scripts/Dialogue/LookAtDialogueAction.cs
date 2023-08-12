@@ -37,6 +37,8 @@ public class LookAtDialogueAction : BaseDialogueAction
     }
     public override void OnDialogueStart()
     {
+        base.OnDialogueStart();
+
         if (clearAllFirst)
         {
             dialogue.stu.ClearLookAtTarget();
@@ -44,8 +46,6 @@ public class LookAtDialogueAction : BaseDialogueAction
             dialogue.nigel.ClearLookAtTarget();
             dialogue.ted.ClearLookAtTarget();
         }
-
-        base.OnDialogueStart();
         if (stu)
         {
             dialogue.stu.SetLookAtTarget(targetEyeline);
