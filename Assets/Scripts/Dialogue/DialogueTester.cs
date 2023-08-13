@@ -51,8 +51,8 @@ public class DialogueTester : MonoBehaviour
 
     private void Awake()
     {
-        dialogueStep = 0;
-        dialogueBox.gameObject.SetActive(false);
+        //dialogueStep = 0;
+        //dialogueBox.gameObject.SetActive(false);
     }
 
     private void Start()
