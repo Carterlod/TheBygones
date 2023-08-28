@@ -481,6 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2706222957039336550}
   - component: {fileID: 7677378907423296921}
+  - component: {fileID: 2516002184730499042}
   m_Layer: 0
   m_Name: SETUP - Template
   m_TagString: Untagged
@@ -531,7 +532,23 @@ MonoBehaviour:
     startOn: 0
   convoSwitcher: {fileID: 7619945522038085543}
   fireFirstConvoOnEnable: 0
+  startCrouched: 0
   playerController: {fileID: 0}
+  carryIntoNextScene: []
+--- !u!114 &2516002184730499042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8808125920098661139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db970f44d8a459a469a0ac5d479bece4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: []
+  parent: {fileID: 0}
 --- !u!1 &9100565980080855278
 GameObject:
   m_ObjectHideFlags: 0
