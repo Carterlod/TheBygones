@@ -14,6 +14,7 @@ public class LookAtDialogueAction : BaseDialogueAction
     [SerializeField] bool mick = false;
     [SerializeField] bool nigel = false;
     [SerializeField] bool ted = false;
+    [SerializeField] float turnSpeed = 0.5f;
 
     private void Awake()
     {
@@ -41,26 +42,38 @@ public class LookAtDialogueAction : BaseDialogueAction
 
         if (clearAllFirst)
         {
-            dialogue.stu.ClearLookAtTarget();
-            dialogue.mick.ClearLookAtTarget();
-            dialogue.nigel.ClearLookAtTarget();
-            dialogue.ted.ClearLookAtTarget();
+            dialogue.stu.ClearLookAtTarget(turnSpeed);
+            dialogue.mick.ClearLookAtTarget(turnSpeed);
+            dialogue.nigel.ClearLookAtTarget(turnSpeed);
+            dialogue.ted.ClearLookAtTarget(turnSpeed);
         }
+        StartCoroutine(LookAtRoutine());
+    }
+
+    IEnumerator LookAtRoutine()
+    {
+
         if (stu)
         {
-            dialogue.stu.SetLookAtTarget(targetEyeline);
+            dialogue.stu.SetLookAtTarget(targetEyeline, turnSpeed);
+            yield return new WaitForSeconds(Random.Range(.2f, .6f));
         }
         if (mick)
         {
-            dialogue.mick.SetLookAtTarget(targetEyeline);
+            dialogue.mick.SetLookAtTarget(targetEyeline, turnSpeed);
+            yield return new WaitForSeconds(Random.Range(.2f, .6f));
         }
         if (nigel)
         {
-            dialogue.nigel.SetLookAtTarget(targetEyeline);
+            dialogue.nigel.SetLookAtTarget(targetEyeline, turnSpeed);
+            yield return new WaitForSeconds(Random.Range(.2f, .6f));
         }
         if (ted)
         {
-            dialogue.ted.SetLookAtTarget(targetEyeline);
+            dialogue.ted.SetLookAtTarget(targetEyeline, turnSpeed);
         }
+
+        yield return null;
+
     }
 }

@@ -8,7 +8,8 @@ public class AudioVolumeTrigger : MonoBehaviour
     [SerializeField] float vol = 0.5f;
     [SerializeField] float fadeDuration = 0.3f;
     [SerializeField] private Transform newSourceTransform;
-    private Transform originalSourceTransform;
+    private Vector3 originalSourceTransform;
+    private Coroutine lerp;
 
 
     private void Start()
@@ -23,9 +24,15 @@ public class AudioVolumeTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
+
         if(other.gameObject.tag == "Player")
         {
-            StartCoroutine(LerpVolume(vol));
+            if(lerp != null)
+            {
+                StopCoroutine(lerp);
+            }
+
+            lerp = StartCoroutine(LerpVolume(vol));
         }
     }
     /*
@@ -39,14 +46,18 @@ public class AudioVolumeTrigger : MonoBehaviour
     */
     IEnumerator LerpVolume(float volTarget)
     {
-        originalSourceTransform = speaker.gameObject.transform;
+        originalSourceTransform = speaker.gameObject.transform.position;
         float t = 0;
         float initialVol = speaker.volume;
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
+            if (t > fadeDuration)
+            {
+                t = fadeDuration;
+            }
             speaker.volume = Mathf.Lerp(initialVol, volTarget, t / fadeDuration);
-            speaker.gameObject.transform.position = Vector3.Lerp(originalSourceTransform.position, newSourceTransform.position, t / fadeDuration);
+            speaker.gameObject.transform.position = Vector3.Lerp(originalSourceTransform, newSourceTransform.position, t / fadeDuration);
             yield return null;
         }
         

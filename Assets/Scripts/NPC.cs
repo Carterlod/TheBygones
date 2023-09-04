@@ -19,7 +19,10 @@ public class NPC : MonoBehaviour
     private GameObject headGoal;
     private GameObject prevFramesHead;
     private float headTurnTime = 0;
+    public float headTurnSpeed = 1;
     public bool showDotDebug = false;
+    private bool skippedInitialHeadTurn = false;
+    public bool headControlled = false;
 
     [Header("Player Looking At Me")]
     public bool isLookedAt = false;
@@ -38,7 +41,7 @@ public class NPC : MonoBehaviour
         headGoal.transform.parent = this.transform;
         prevFramesHead = new GameObject("lastFramesHead");
         prevFramesHead.transform.parent = this.transform;
-        prevFramesHead.transform.rotation = characterHead.rotation;
+        
     }
     private void Update()
     {
@@ -75,21 +78,25 @@ public class NPC : MonoBehaviour
         } 
     }
 
-    public void SetLookAtTarget(Transform target)
+    public void SetLookAtTarget(Transform target, float speed)
     {
+        headControlled = true;
         lookAtTarget = target;
         headTurnTime = 0;
+        headTurnSpeed = speed;
     }
 
-    public void ClearLookAtTarget()
+    public void ClearLookAtTarget(float speed)
     {
         lookAtTarget = null;
         headTurnTime = 0;
+        headTurnSpeed = speed;
+        headControlled = false;
     }
 
     private void LateUpdate()
     {
-        headTurnTime += Time.deltaTime;
+        headTurnTime += Time.deltaTime * headTurnSpeed;
         if(headTurnTime > headTurnDuration)
         {
             headTurnTime = headTurnDuration;
@@ -102,13 +109,19 @@ public class NPC : MonoBehaviour
         {
             headGoal.transform.LookAt(lookAtTarget);
         }
-        if(showDotDebug)
+        if (!skippedInitialHeadTurn)
         {
-            //Debug.Log(Quaternion.Dot(characterHead.transform.rotation, headGoal.transform.rotation));
+            skippedInitialHeadTurn = true;
         }
-        
-        characterHead.rotation = Quaternion.Lerp(prevFramesHead.transform.rotation, headGoal.transform.rotation, headTurnTime/headTurnDuration);
-        
+        else
+        {
+            characterHead.rotation = Quaternion.Lerp(
+                prevFramesHead.transform.rotation, 
+                headGoal.transform.rotation, 
+                headTurnTime/headTurnDuration
+                );
+        }
+
         prevFramesHead.transform.position = characterHead.position;
         prevFramesHead.transform.rotation = characterHead.rotation;
     }

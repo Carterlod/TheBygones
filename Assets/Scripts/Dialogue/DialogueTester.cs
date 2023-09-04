@@ -79,7 +79,8 @@ public class DialogueTester : MonoBehaviour
         {
             if (!conversationInProgress)
             {
-                conversationInProgress = true;
+                return;
+                //conversationInProgress = true;
             }
             AdvanceDialogue();
         }

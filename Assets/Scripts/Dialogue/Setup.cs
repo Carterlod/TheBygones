@@ -28,7 +28,26 @@ public class Setup : MonoBehaviour
         }
         if (startCrouched)
         {
-            playerController.Crouch();
+            if (playerController.isCrouched)
+            {
+                return;
+            }
+            else
+            {
+                playerController.Crouch();
+            }
+            
+        }
+        else
+        {
+            if (playerController.isCrouched)
+            {
+                playerController.Crouch();
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
@@ -46,7 +65,7 @@ public class Setup : MonoBehaviour
             }
         }
         playerController.isZoomed = false;
-        playerController.isCrouched = false;
+        
     }
     
 }
