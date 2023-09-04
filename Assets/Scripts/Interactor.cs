@@ -13,7 +13,6 @@ public class Interactor : MonoBehaviour
     int layerMaskGrabbable;
     [SerializeField] TMP_Text npcNameField;
     [SerializeField] bool showNames = false;
-    public bool playerPaused = true;
     [SerializeField] float shortDistance = 2;
     [SerializeField] float longDistance = 4;
     [SerializeField] ObjectGrabber grabber;
@@ -58,7 +57,7 @@ public class Interactor : MonoBehaviour
         
 
         RaycastHit hit2; 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, longDistance) && playerPaused)
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, longDistance) && !PlayerSettings.i.playerPaused)
         {
 
         // INTERACT

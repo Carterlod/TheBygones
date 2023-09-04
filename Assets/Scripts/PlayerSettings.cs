@@ -10,6 +10,7 @@ public class PlayerSettings : MonoBehaviour
     public bool dialogueAdvanceable = true;
     public bool handsFull = false;
     public bool cameraActive = false;
+    public bool playerPaused = false;
 
     public void OnEnable()
     {
@@ -19,7 +20,7 @@ public class PlayerSettings : MonoBehaviour
     {
         playerController.playerCanMove = false;
         playerController.cameraCanMove = false;
-        interactor.playerPaused = false;
+        playerPaused = true;
         dialogueAdvanceable = false;
         
     }
@@ -27,7 +28,7 @@ public class PlayerSettings : MonoBehaviour
     {
         playerController.playerCanMove = true;
         playerController.cameraCanMove = true;
-        interactor.playerPaused = true;
+        playerPaused = false;
         dialogueAdvanceable = true;
     }
 }

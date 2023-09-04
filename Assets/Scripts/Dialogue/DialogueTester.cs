@@ -29,6 +29,7 @@ public class DialogueTester : MonoBehaviour
     [SerializeField] DialogueBoxes dialogueBox;
     [SerializeField] FirstPersonController player;
     [SerializeField] Camera cam;
+    [SerializeField] AudioSource src;
 
     [SerializeField] UnityEvent conversationEndEvent;
 
@@ -37,6 +38,10 @@ public class DialogueTester : MonoBehaviour
 
     private ConversationSwitcher convoSwitcher;
 
+    //[SerializeField] bool autoPlay = false;
+    private bool autoPlayCountdownActive = false;
+    Coroutine AutoPlayCountdownRoutine;
+
     [System.Serializable]
     public class CharacterLine
     {
@@ -44,6 +49,7 @@ public class DialogueTester : MonoBehaviour
         public string line;
         public Characters character;
         public BaseDialogueAction baseAction;
+        public AudioClip vo;
     }
 
     public CharacterLine[] lineOfDialogue;
@@ -59,6 +65,12 @@ public class DialogueTester : MonoBehaviour
     {
         //cam = player.playerCamera;
         convoSwitcher = GetComponentInParent<ConversationSwitcher>();
+        /*
+        if (GameSettings.i.autoPlayDialogue)
+        {
+            AutoPlayCountdownRoutine = StartCoroutine(AutoPlayCountdown());
+        }
+        */
     }
 
    
@@ -69,12 +81,21 @@ public class DialogueTester : MonoBehaviour
             conversationInProgress = true;
             DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = false;
             DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
+            if (GameSettings.i.autoPlayDialogue)
+            {
+                AutoPlayCountdownRoutine = StartCoroutine(AutoPlayCountdown());
+            }
             
         }
         AdvanceDialogue();
     }
     private void Update()
     {
+        if (GameSettings.i.autoPlayDialogue && !autoPlayCountdownActive && conversationInProgress)
+        {
+            AutoPlayCountdownRoutine = StartCoroutine(AutoPlayCountdown());
+            AdvanceDialogue();
+        }
         if (Input.GetKeyDown(KeyCode.Space) && !conversationFinished && PlayerSettings.i.dialogueAdvanceable)
         {
             if (!conversationInProgress)
@@ -147,6 +168,11 @@ public class DialogueTester : MonoBehaviour
         dialogueBox.nameSlot.text = speakingNPC.characterName;
         dialogueBox.dialogueSlot.text = lineOfDialogue[dialogueStep].line;
 
+        //dialogue audio
+        if(lineOfDialogue[dialogueStep].vo != null)
+        {
+            PlayVOClip();
+        }
         
         //dialogueBox.UpdateBoxArt(!lineOfDialogue[dialogueStep].thought);
         if(lineOfDialogue[dialogueStep].baseAction != null)
@@ -163,16 +189,52 @@ public class DialogueTester : MonoBehaviour
         //    StartCoroutine(PivotCamTowardCharacter());
         //}
 
+
         if(DialoguePromptCountdown != null)
         {
             StopCoroutine(DialoguePromptCountdown);
         }
-        DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
+
+        if (!GameSettings.i.autoPlayDialogue)
+        {
+            DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
+        }
+    }
+
+    private void PlayVOClip()
+    {
+        if (src.isPlaying)
+        {
+            src.Stop();
+        }
+        src.gameObject.transform.position = speakingNPC.eyelineTransform.position;
+        src.clip = lineOfDialogue[dialogueStep].vo;
+        src.Play();
     }
     IEnumerator DialogueIconCountdown()
     {
         yield return new WaitForSeconds(3);
         DialogueAdvanceIcon.i.GetComponent<TextMeshProUGUI>().enabled = true;
+        yield return null;
+    }
+
+    IEnumerator AutoPlayCountdown()
+    {
+        autoPlayCountdownActive = true;
+        float d = lineOfDialogue[dialogueStep].line.Length * 0.08f;
+        /*
+        */
+        if (d < 1.5f)
+        {
+            d = 1.5f;
+        }
+        if(lineOfDialogue[dialogueStep].vo != null)
+        {
+            d = lineOfDialogue[dialogueStep].vo.length;
+        }
+        yield return new WaitForSeconds(d);
+        autoPlayCountdownActive = false;
+
         yield return null;
     }
     /*
