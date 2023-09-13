@@ -7,6 +7,7 @@ public class PlayerSettings : MonoBehaviour
     public static PlayerSettings i;
     [SerializeField] FirstPersonController playerController;
     [SerializeField] Interactor interactor;
+    [SerializeField] LetterboxBars stationaryCameraUI;
     public bool dialogueAdvanceable = true;
     public bool handsFull = false;
     public bool cameraActive = false;
@@ -22,13 +23,32 @@ public class PlayerSettings : MonoBehaviour
         playerController.cameraCanMove = false;
         playerPaused = true;
         dialogueAdvanceable = false;
+        UpdatePlayerUI();
         
     }
     public  void UnpausePlayer()
     {
-        playerController.playerCanMove = true;
+        Setup setup = SetupSwitcher.i.setups[SetupSwitcher.i.activeSetup].setupParent;
+        if (setup.allowPlayerMovement)
+        {
+            playerController.playerCanMove = true; 
+        }
         playerController.cameraCanMove = true;
         playerPaused = false;
         dialogueAdvanceable = true;
+        UpdatePlayerUI();
+    }
+
+    private void UpdatePlayerUI()
+    {
+        if (playerController.playerCanMove)
+        {
+            stationaryCameraUI.HideBars();
+
+        }
+        else
+        {
+            stationaryCameraUI.ShowBars();
+        }
     }
 }

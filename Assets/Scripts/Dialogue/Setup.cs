@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Setup : MonoBehaviour
 {
+    [Header("Conversation")]
+    [SerializeField] ConversationSwitcher convoSwitcher;
+    [SerializeField] bool fireFirstConvoOnEnable = true;
+    [Header("Player")]
+    [SerializeField] FirstPersonController playerController;
+    private PlayerSettings playerSettings;
+    [SerializeField] bool startCrouched = false;
+    public bool allowPlayerMovement = true;
+
     [System.Serializable]
     public class LightSwitchPreset
     {
@@ -11,17 +20,15 @@ public class Setup : MonoBehaviour
         public bool startOn = true;
     }
     [SerializeField] LightSwitchPreset[] lightSwitches;
-    [SerializeField] ConversationSwitcher convoSwitcher;
-    [SerializeField] bool fireFirstConvoOnEnable = true;
-    [SerializeField] bool startCrouched = false;
-    [SerializeField] FirstPersonController playerController;
     
     public List<Transform> carryIntoNextScene;
     
 
     private void Start()
     {
-        Debug.Log("Setup Start() was called on " + this.name) ;
+        //Debug.Log("Setup Start() was called on " + this.name) ;
+        playerSettings = playerController.GetComponent<PlayerSettings>();
+
         if (fireFirstConvoOnEnable)
         {
             convoSwitcher.BeginFirstConversation();
@@ -49,6 +56,15 @@ public class Setup : MonoBehaviour
                 return;
             }
         }
+        if (allowPlayerMovement)
+        {
+            playerController.playerCanMove = true;
+        }
+        else
+        {
+            playerController.playerCanMove = false;
+        }
+        playerSettings.UnpausePlayer();
     }
 
     private void OnEnable()
@@ -65,7 +81,5 @@ public class Setup : MonoBehaviour
             }
         }
         playerController.isZoomed = false;
-        
     }
-    
 }

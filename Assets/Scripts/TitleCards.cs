@@ -48,6 +48,7 @@ public class TitleCards : MonoBehaviour
         {
             StartCoroutine(IntroCardSoundFade());
         }
+
         StartCoroutine(IntroCardVisuals());
     }
 

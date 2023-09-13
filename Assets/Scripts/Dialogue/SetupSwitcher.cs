@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class SetupSwitcher : MonoBehaviour
 {
-    private int activeSetup;
+    public static SetupSwitcher i;
+    public int activeSetup;
+
     [System.Serializable]
     public class SetupSettings
     {
-        //public bool armDialogueOnEnable = true;
         public Setup setupParent;
     }
-    [SerializeField] SetupSettings[] setups;
+    public SetupSettings[] setups;
+
+
     private void Awake()
     {
+        i = this;
         activeSetup = 0;
         for (int i = 0; i < setups.Length - 1; i++)
         {
@@ -22,9 +26,7 @@ public class SetupSwitcher : MonoBehaviour
                 activeSetup = i;
             }
         }
-        
-        //setups[activeSetup].setupParent.gameObject.SetActive(true);
-        
+               
     }
     public void IncrementSetup()
     {
