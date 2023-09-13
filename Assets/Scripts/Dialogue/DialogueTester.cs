@@ -17,6 +17,10 @@ public class DialogueTester : MonoBehaviour
     [SerializeField] bool conversationFinished = false;
     [SerializeField] bool autoIncrementConvos = false;
     [SerializeField] int dialogueStep = 0;
+    // auto play
+    private bool autoPlayCountdownActive = false;
+    private Coroutine AutoPlayCountdownRoutine;
+    [SerializeField] AnimationCurve autoPlayCurve;
 
     //[Header("Auto-Camera")]
     //public bool highjackCamera = false;
@@ -38,9 +42,7 @@ public class DialogueTester : MonoBehaviour
 
     private ConversationSwitcher convoSwitcher;
 
-    //[SerializeField] bool autoPlay = false;
-    private bool autoPlayCountdownActive = false;
-    Coroutine AutoPlayCountdownRoutine;
+
 
     [System.Serializable]
     public class CharacterLine
@@ -55,22 +57,10 @@ public class DialogueTester : MonoBehaviour
     public CharacterLine[] lineOfDialogue;
 
 
-    private void Awake()
-    {
-        //dialogueStep = 0;
-        //dialogueBox.gameObject.SetActive(false);
-    }
-
     private void Start()
     {
         //cam = player.playerCamera;
         convoSwitcher = GetComponentInParent<ConversationSwitcher>();
-        /*
-        if (GameSettings.i.autoPlayDialogue)
-        {
-            AutoPlayCountdownRoutine = StartCoroutine(AutoPlayCountdown());
-        }
-        */
     }
 
    
@@ -174,7 +164,7 @@ public class DialogueTester : MonoBehaviour
             PlayVOClip();
         }
         
-        //dialogueBox.UpdateBoxArt(!lineOfDialogue[dialogueStep].thought);
+   
         if(lineOfDialogue[dialogueStep].baseAction != null)
         {
             lineOfDialogue[dialogueStep].baseAction.OnDialogueStart();
@@ -184,11 +174,8 @@ public class DialogueTester : MonoBehaviour
 
         dialogueStep += 1;
 
-        //if (highjackCamera)
-        //{
-        //    StartCoroutine(PivotCamTowardCharacter());
-        //}
-
+       
+        // Dialogue prompt button
 
         if(DialoguePromptCountdown != null)
         {
@@ -221,17 +208,25 @@ public class DialogueTester : MonoBehaviour
     IEnumerator AutoPlayCountdown()
     {
         autoPlayCountdownActive = true;
-        float d = lineOfDialogue[dialogueStep].line.Length * 0.08f;
-        /*
-        */
-        if (d < 1.5f)
-        {
-            d = 1.5f;
-        }
+
+        float d;
+
         if(lineOfDialogue[dialogueStep].vo != null)
         {
             d = lineOfDialogue[dialogueStep].vo.length;
         }
+        else // adjust the wait time with a curve that lengthens short lines and shortens long lines 
+        {
+            float lineLength = lineOfDialogue[dialogueStep].line.Length;
+            
+            d = lineLength * 0.1f * autoPlayCurve.Evaluate(lineLength/100);
+            
+            if (d < 1f) // sets wait time to have a minimum
+            {
+                d = 1f;
+            }
+        }
+
         yield return new WaitForSeconds(d);
         autoPlayCountdownActive = false;
 

@@ -483,6 +483,7 @@ MonoBehaviour:
   dialogueBox: {fileID: 0}
   player: {fileID: 0}
   cam: {fileID: 0}
+  src: {fileID: 0}
   conversationEndEvent:
     m_PersistentCalls:
       m_Calls:
@@ -498,10 +499,53 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  autoPlayCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: -0.1674525
+      outSlope: -0.1674525
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1008655
+    - serializedVersion: 3
+      time: 0.2135845
+      value: 1.0579664
+      inSlope: -0.83374625
+      outSlope: -0.83374625
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.090961844
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.75
+      inSlope: -0.437981
+      outSlope: -0.437981
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.23479252
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: -0.81309474
+      outSlope: -0.81309474
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2299302
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   lineOfDialogue:
   - line: What am I doing here?
     character: 0
     baseAction: {fileID: 0}
+    vo: {fileID: 0}
 --- !u!1 &8808125920098661139
 GameObject:
   m_ObjectHideFlags: 0

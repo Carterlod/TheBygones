@@ -7,8 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: env_Brick01
+    second: {fileID: 2100000, guid: 5d884f932171d9244989c01714057df1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Street
+    second: {fileID: 2100000, guid: d71f50d75a00bd04a98c990c3bba7066, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_TerracottaRoof
+    second: {fileID: 2100000, guid: bc0621d422ca2724ca743f3b9654c210, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: env_Wall
     second: {fileID: 2100000, guid: 6d67bb9333af6b3469a6f98863f9d21f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_snowdrift
+    second: {fileID: 2100000, guid: 51c9582b475326c4d9cffd8762402b23, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
