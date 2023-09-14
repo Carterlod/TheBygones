@@ -5,14 +5,20 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] UnityEvent interactEvent;
     
-    public bool objectRequired = false;
-    public string objectKey;
     public bool oneShot = false;
     public bool spent = false;
+    [SerializeField] UnityEvent interactEvent;
 
+    [Header("Key Object")]
+    public bool objectRequired = false;
+    public string objectKey;
     public Grabbable objectLastUsed;
+
+    [Header("Name")]
+    public bool hasName = false;
+    public string displayedName;
+
 
 
     public void Interact()

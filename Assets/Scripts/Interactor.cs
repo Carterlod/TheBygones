@@ -60,11 +60,10 @@ public class Interactor : MonoBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, longDistance) && !PlayerSettings.i.playerPaused)
         {
 
-        // INTERACT
+        // INTERACT / INTERACT NAME
 
             if (hit2.collider.gameObject.layer == layerMaskInteractable) 
             {
-                //Debug.Log(hit2.collider.gameObject.name);
                 Interactable i = hit2.collider.gameObject.GetComponent<Interactable>();
 
                 if(!i.oneShot || i.oneShot && !i.spent)
@@ -82,14 +81,11 @@ public class Interactor : MonoBehaviour
                     }
                     if (i.objectRequired)
                     {
-                        //Debug.Log("ObjectRequired = true");
                         if(grabber.heldObject != null)
                         {
-                            //Debug.Log("you have an object");
                             if(grabber.heldObject.objectKey == i.objectKey)
                             {
                                 canUseObject = true;
-                                //Debug.Log("object key validated");
                                 interactIcon.SetActive(true);
                                 if (Input.GetKeyDown(KeyCode.E))
                                 {
@@ -98,10 +94,15 @@ public class Interactor : MonoBehaviour
                             }
                         }
                     }
+                    if (i.hasName)
+                    {
+                        npcNameField.gameObject.SetActive(true);
+                        npcNameField.text = i.displayedName;
+                    }
                 }
             }
 
-        // SHOW NAME
+        // SHOW NAME NPC
 
             if (hit2.collider.gameObject.layer == layerMaskNPC) 
             {
@@ -132,6 +133,7 @@ public class Interactor : MonoBehaviour
                     storedNPC = null;
                 }
             }
+
 
         //GRABBABLE
 
