@@ -37,7 +37,7 @@ public class Interactor : MonoBehaviour
         interactIcon.SetActive(false);
         npcNameField.gameObject.SetActive(false);
 
-        if (playerSettings.handsFull && !canUseObject)
+        if (playerSettings.handsFull && !canUseObject && !grabber.heldObject.cannotDrop && !grabber.heldObject.isPerformingAction)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {

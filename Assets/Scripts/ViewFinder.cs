@@ -86,18 +86,8 @@ public class ViewFinder : MonoBehaviour
             viewFinderObject.SetActive(false);
         }
 
-        //hacky sfx
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            if (cameraActive)
-            {
-                asrc.PlayOneShot(sfxTakeOut);
-            }
-            else
-            {
-                asrc.PlayOneShot(sfxPutAway);
-            }
-        }
+   
+        
 
         //Tilt Viewfinder
         float yawTarget = 0;

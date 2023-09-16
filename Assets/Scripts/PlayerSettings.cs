@@ -12,6 +12,7 @@ public class PlayerSettings : MonoBehaviour
     public bool handsFull = false;
     public bool cameraActive = false;
     public bool playerPaused = false;
+    public bool isHoldingCamera = false;
 
     public void OnEnable()
     {
@@ -39,6 +40,8 @@ public class PlayerSettings : MonoBehaviour
         UpdatePlayerUI();
     }
 
+   
+
     private void UpdatePlayerUI()
     {
         if (playerController.playerCanMove)
@@ -50,5 +53,15 @@ public class PlayerSettings : MonoBehaviour
         {
             stationaryCameraUI.ShowBars();
         }
+    }
+
+
+    public void HoldingCameraOn()
+    {
+        isHoldingCamera = true;
+    }
+    public void HoldingCameraOff()
+    {
+        isHoldingCamera = false;
     }
 }

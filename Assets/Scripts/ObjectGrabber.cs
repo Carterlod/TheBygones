@@ -5,13 +5,13 @@ using UnityEngine;
 public class ObjectGrabber : MonoBehaviour
 {
     [SerializeField] Transform holdParent;
-    [SerializeField] private Transform holdTransform;
+    public Transform holdTransform;
     [SerializeField] Transform camTransform;
     public Grabbable heldObject;
     private Transform originalParent;
     private Quaternion originalRot;
     private Vector3 originalPos;
-    private bool lettingGo = false;
+    public bool lettingGo = false;
 
     public void Grab(Grabbable obj)
     {
@@ -38,6 +38,7 @@ public class ObjectGrabber : MonoBehaviour
     }
     public void Release()
     {
+        
         StartCoroutine(LerpObjectHome());
     }
 

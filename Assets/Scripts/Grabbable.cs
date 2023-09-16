@@ -18,6 +18,13 @@ public class Grabbable : MonoBehaviour
     private Rigidbody rb;
     private Collider[] cols;
 
+    public bool isPerformingAction = false;
+
+    public Vector3 grabbedPos;
+    public Quaternion grabbedRot;
+
+    public bool cannotDrop = false;
+
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,6 +57,8 @@ public class Grabbable : MonoBehaviour
         {
             col.enabled = false; ;
         }
+        grabbedPos = gameObject.transform.localPosition;
+        grabbedRot = gameObject.transform.localRotation;
     }
 
     public void Released()

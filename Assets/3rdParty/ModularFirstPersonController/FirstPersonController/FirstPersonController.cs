@@ -200,6 +200,27 @@ public class FirstPersonController : MonoBehaviour
 
     float camRotation;
 
+    public void ManualZoomEnable()
+    {
+        if (enableZoom)
+        {
+            // Changes isZoomed when key is pressed
+            // Behavior for toogle zoom
+            if (!holdToZoom && !isSprinting)
+            {
+                if (!isZoomed)
+                {
+                    isZoomed = true;
+                    crosshairObject.gameObject.SetActive(false);
+                }
+                else
+                {
+                    isZoomed = false;
+                    crosshairObject.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
     private void Update()
     {
         #region Camera
@@ -225,62 +246,28 @@ public class FirstPersonController : MonoBehaviour
             transform.localEulerAngles = new Vector3(0, yaw, 0);
             playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
         }
+        #endregion
 
-        #region Camera Zoom
-
+        #region Zoom
         if (enableZoom)
         {
-            // Changes isZoomed when key is pressed
-            // Behavior for toogle zoom
-            if(Input.GetKeyDown(zoomKey) && !holdToZoom && !isSprinting && !PlayerSettings.i.handsFull)
-            {
-                if (!isZoomed)
-                {
-                    isZoomed = true;
-                    crosshairObject.gameObject.SetActive(false);
-                }
-                else
-                {
-                    isZoomed = false;
-                    crosshairObject.gameObject.SetActive(true);
-                }
-            }
-
-            // Changes isZoomed when key is pressed
-            // Behavior for hold to zoom
-            if(holdToZoom && !isSprinting)
-            {
-                if(Input.GetKeyDown(zoomKey))
-                {
-                    isZoomed = true;
-                    crosshairObject.gameObject.SetActive(false);
-                }
-                else if(Input.GetKeyUp(zoomKey))
-                {
-                    isZoomed = false;
-                    crosshairObject.gameObject.SetActive(true);
-                }
-            }
-
             // Lerps camera.fieldOfView to allow for a smooth transistion
-            if(isZoomed)
+            if (isZoomed)
             {
-                
+
                 playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, zoomFOV, zoomStepTime * Time.deltaTime);
             }
-            else if(!isZoomed && !isSprinting)
+            else if (!isZoomed && !isSprinting)
             {
-               
+
                 playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
             }
         }
-
-        #endregion
         #endregion
 
         #region Sprint
 
-        if(enableSprint)
+        if (enableSprint)
         {
             if(isSprinting)
             {
@@ -544,7 +531,6 @@ public class FirstPersonController : MonoBehaviour
         }
     }
 }
-
 
 
 // Custom Editor
