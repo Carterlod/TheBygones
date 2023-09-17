@@ -5,28 +5,29 @@ using UnityEngine;
 public class Faucet : MonoBehaviour
 {
 
-    [SerializeField] ParticleSystem ps;
     [SerializeField] bool on = true;
+    [SerializeField] GameObject nozzleMesh;
+    [SerializeField] ParticleSystem ps;
     AudioSource speaker;
     [SerializeField] AudioClip clipOff;
     [SerializeField] AudioClip clipOn;
     [SerializeField] GameObject[] onArt;
     [SerializeField] GameObject[] offArt;
+    private Vector3 newRot;
 
     private void Start()
     {
         speaker = GetComponent<AudioSource>();
         updateArt(on);
+        newRot = nozzleMesh.transform.localEulerAngles;
         //on = true ? light.enabled = true : light.enabled = false; //this is now handled on Setup.cs
-
     }
     public void Interact(bool withSFX)
     {
-
         if (on)
         {
             on = false;
-            
+            StartCoroutine(TurnNozzle(-150, 0));            
             if (withSFX)
             {
                 speaker.PlayOneShot(clipOff);
@@ -35,8 +36,8 @@ public class Faucet : MonoBehaviour
         }
         else
         {
-            on = true;
-           
+            on = true;           
+            StartCoroutine(TurnNozzle(0, -150));
             if (withSFX)
             {
                 speaker.PlayOneShot(clipOn);
@@ -57,7 +58,6 @@ public class Faucet : MonoBehaviour
         }
         updateArt(on);
     }
-
     public void TurnOff(bool withSFX)
     {
         on = false;
@@ -79,5 +79,23 @@ public class Faucet : MonoBehaviour
         {
             obj.SetActive(!on);
         }
+    }
+    IEnumerator TurnNozzle(float startRot, float endRot)
+    {
+        
+        float t = 0;
+        float d = 0.2f;
+        while (t < d)
+        {
+            t += Time.deltaTime;
+            if (t > d)
+            {
+                t = d;
+            }
+            newRot.y = Mathf.Lerp(startRot, endRot, t / d);
+            nozzleMesh.transform.localEulerAngles = newRot;
+            yield return null;
+        }
+        yield return null;
     }
 }

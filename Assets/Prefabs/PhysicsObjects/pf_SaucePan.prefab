@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 1638228496227681603}
   - component: {fileID: 4673858939273068246}
   - component: {fileID: 7437719767482845724}
+  - component: {fileID: 5410367713405676970}
+  - component: {fileID: 2528162770341423235}
   m_Layer: 9
   m_Name: pf_SaucePan
   m_TagString: Untagged
@@ -91,6 +93,10 @@ MonoBehaviour:
       m_Calls: []
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
+  isPerformingAction: 0
+  grabbedPos: {x: 0, y: 0, z: 0}
+  grabbedRot: {x: 0, y: 0, z: 0, w: 0}
+  cannotDrop: 0
 --- !u!33 &4673858939273068246
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -141,3 +147,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &5410367713405676970
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951162408158161865}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &2528162770341423235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951162408158161865}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37036848, y: 0.09862218, z: 0.21466404}
+  m_Center: {x: -0.077852696, y: 0.052686673, z: 0.00000023841858}

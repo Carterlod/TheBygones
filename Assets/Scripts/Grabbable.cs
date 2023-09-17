@@ -10,6 +10,9 @@ public class Grabbable : MonoBehaviour
     public bool grabbed;
     public bool keepLevel = true;
     [SerializeField] bool bypassSettling = false;
+    public bool isPerformingAction = false;
+    public bool cannotDrop = false;
+
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;
     public Vector3 originalPos;
@@ -18,12 +21,10 @@ public class Grabbable : MonoBehaviour
     private Rigidbody rb;
     private Collider[] cols;
 
-    public bool isPerformingAction = false;
 
     public Vector3 grabbedPos;
     public Quaternion grabbedRot;
 
-    public bool cannotDrop = false;
 
     private void OnEnable()
     {

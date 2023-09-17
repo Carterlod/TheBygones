@@ -8,25 +8,27 @@ public class Tea : MonoBehaviour
     [SerializeField] FirstPersonController controller;
     [SerializeField] AnimationCurve settleWiggle;
     [SerializeField] ParticleSystem steam;
-    private bool playerRecentlyMoved = false;
-    private bool playerIsMoving = false;
-    private Coroutine wiggleRoutineX;
-    private Coroutine wiggleRoutineZ;
-    private Grabbable grabbable;
     [SerializeField] Transform teaLevel3;
     [SerializeField] Transform teaLevel2;
     [SerializeField] Transform teaLevel1;
     [SerializeField] Transform teaLevel0;
+    public Interactable interactable;
+    private Grabbable grabbable;
 
-    [SerializeField] float magnitude = 0;
-    [SerializeField] float mouseX = 0;
-    private float mouseCoolDownTime = 0;
     private bool isSipping = false;
+
+    // Water wiggle settings
+    private float wiggleDamper = 0;
+    private float liquidWiggleAttack = 2;
+    private float liquidWiggleRelease = 0.5f;
+    private float t = 0;
+    private float mouseCoolDownTime = 0;
+
 
     [Header("Settings")]
     [SerializeField] bool empty = true;
-    [SerializeField] bool full = false;
-    [SerializeField] int teaLevel = 3;
+    public bool full = false;
+    private int teaLevel = 3;
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class Tea : MonoBehaviour
         }
         else
         {
+            full = true;
             liquidSurface.GetComponent<Renderer>().enabled = true;
             liquidSurface.transform.position = teaLevel3.transform.position;
             liquidSurface.transform.localScale = teaLevel3.transform.localScale;
@@ -50,38 +53,42 @@ public class Tea : MonoBehaviour
     {
         if (grabbable.grabbed && !empty)
         {
-            magnitude = controller.GetComponent<Rigidbody>().velocity.magnitude;
-            mouseX = Input.GetAxis("Mouse X");
-            if(Mathf.Abs(Input.GetAxis("Mouse X")) > 0.5f)
+            if(Mathf.Abs(Input.GetAxis("Mouse X")) > 0.5f) 
             {
                 mouseCoolDownTime = .1f;
             }
             mouseCoolDownTime -= Time.deltaTime;
         
-
             if (controller.GetComponent<Rigidbody>().velocity.magnitude > 1 || mouseCoolDownTime > 0)
             {
-                playerIsMoving = true;
-                playerRecentlyMoved = true;
-            }
-            else
-            {
-                playerIsMoving = false;
-            }
-            if(!playerIsMoving && playerRecentlyMoved)
-            {
-                playerRecentlyMoved = false;
-                if(wiggleRoutineX != null)
+                wiggleDamper += Time.deltaTime * liquidWiggleAttack;
+                if(wiggleDamper > 1)
                 {
-                    StopCoroutine(wiggleRoutineX);
+                    wiggleDamper = 1;
                 }
-                wiggleRoutineX = StartCoroutine(SettleRoutineX());
             }
+
+            wiggleDamper -= Time.deltaTime * liquidWiggleRelease;
+            if(wiggleDamper < 0)
+            {
+                wiggleDamper = 0;
+            }
+
+            Vector3 targetRotation = new Vector3(0, 0, 0);
+            t += Time.deltaTime;
+            if (t > 1)
+            {
+                t = 0;
+            }
+
+            targetRotation.z += settleWiggle.Evaluate(t) * wiggleDamper;
+            liquidSurface.transform.localEulerAngles = targetRotation;
+
             if (Input.GetMouseButtonDown(0))
             {
                 Sip();
             }
-        }
+        } 
     }
 
     public void FillCup()
@@ -125,11 +132,11 @@ public class Tea : MonoBehaviour
         else if (lvl == 1)
         {
             targetLevel = teaLevel1;
+            steam.Stop();
         }
         else 
         {
             targetLevel = teaLevel0;
-            steam.Stop();
         }
 
         while (t < d)
@@ -146,46 +153,7 @@ public class Tea : MonoBehaviour
         isSipping = false;
         yield return null;
     }
-    IEnumerator SettleRoutineX()
-    {
-        float t = 0;
-        float d = 1;
-        
-        while (t < d)
-        {
-            t += Time.deltaTime;            
-            if (t > d)
-            {
-                t = d;
-            }
-            Vector3 targetRotation = new Vector3(0,0,0);
-            targetRotation.z += settleWiggle.Evaluate(t/d);
-            liquidSurface.transform.localEulerAngles = targetRotation;
-            yield return null;
-        }
-        yield return null;
-    }
-    IEnumerator SettleRoutineZ()
-    {
-        Debug.Log("coroutine begun");
-        float t = 0;
-        float d = 1;
-
-        while (t < d)
-        {
-            t += Time.deltaTime;
-            if (t > d)
-            {
-                t = d;
-            }
-            Vector3 targetRotation = new Vector3(0, 0, 0);
-            targetRotation.z += settleWiggle.Evaluate(t / d);
-            liquidSurface.transform.localEulerAngles = targetRotation;
-            yield return null;
-        }
-        yield return null;
-    }
-
+    
     IEnumerator FillCupRoutine()
     {
         empty = false;
