@@ -137,6 +137,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   mesh: {fileID: 1751208736437368262}
   eyeTransform: {fileID: 3992106047941620907}
+  grabber: {fileID: 0}
   asrc: {fileID: 1792003084320849638}
   readyClip: {fileID: 8300000, guid: 3a026a911065bc648a2045102003e939, type: 3}
   putAwayClip: {fileID: 8300000, guid: 0c14c781be62c1247b3a2824e0d51342, type: 3}
@@ -168,6 +169,7 @@ MonoBehaviour:
   isPerformingAction: 0
   grabbedPos: {x: 0, y: 0, z: 0}
   grabbedRot: {x: 0, y: 0, z: 0, w: 0}
+  cannotDrop: 0
 --- !u!54 &1683712846964113164
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -177,7 +179,7 @@ Rigidbody:
   m_GameObject: {fileID: 1989700671515099739}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.1
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -317,7 +319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7240085010699739881}
   m_LocalRotation: {x: 0.00000004470347, y: 7.1236156e-10, z: 0.000000003387289, w: 1}
-  m_LocalPosition: {x: -0.13999985, y: 0.11600003, z: -0.3829999}
+  m_LocalPosition: {x: -0.14, y: 0.103, z: -0.326}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

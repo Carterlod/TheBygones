@@ -28,6 +28,14 @@ public class SetupSwitcher : MonoBehaviour
         }
                
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            IncrementSetup();
+        }
+    }
     public void IncrementSetup()
     {
         Setup oldSet = setups[activeSetup].setupParent;
@@ -37,6 +45,10 @@ public class SetupSwitcher : MonoBehaviour
             {
                 tr.parent = this.transform;
             }
+        }
+        if (PlayerSettings.i.handsFull && !oldSet.keepHeldObject)
+        {
+            PlayerSettings.i.objectGrabber.Release();
         }
         oldSet.gameObject.SetActive(false);
         activeSetup++;

@@ -6,7 +6,8 @@ public class PlayerSettings : MonoBehaviour
 {
     public static PlayerSettings i;
     [SerializeField] FirstPersonController playerController;
-    [SerializeField] Interactor interactor;
+    public Interactor interactor;
+    public ObjectGrabber objectGrabber;
     [SerializeField] LetterboxBars stationaryCameraUI;
     public bool dialogueAdvanceable = true;
     public bool handsFull = false;

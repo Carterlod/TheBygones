@@ -12,6 +12,7 @@ public class Setup : MonoBehaviour
     private PlayerSettings playerSettings;
     [SerializeField] bool startCrouched = false;
     public bool allowPlayerMovement = true;
+    public bool keepHeldObject = false;
 
     [System.Serializable]
     public class LightSwitchPreset
@@ -22,13 +23,30 @@ public class Setup : MonoBehaviour
     [SerializeField] LightSwitchPreset[] lightSwitches;
     
     public List<Transform> carryIntoNextScene;
+
     
+    private void OnEnable()
+    {
+        foreach (LightSwitchPreset lsp in lightSwitches)
+        {
+            if (lsp.startOn)
+            {
+                lsp.lightSwitch.TurnOn(false);
+            }
+            else
+            {
+                lsp.lightSwitch.TurnOff(false);
+            }
+        }
+        playerController.isZoomed = false;
+    }
 
     private void Start()
     {
         //Debug.Log("Setup Start() was called on " + this.name) ;
         playerSettings = playerController.GetComponent<PlayerSettings>();
 
+        
         if (fireFirstConvoOnEnable)
         {
             convoSwitcher.BeginFirstConversation();
@@ -64,22 +82,9 @@ public class Setup : MonoBehaviour
         {
             playerController.playerCanMove = false;
         }
+
+        // Unpause the player
         playerSettings.UnpausePlayer();
     }
 
-    private void OnEnable()
-    {
-        foreach (LightSwitchPreset lsp in lightSwitches)
-        {
-            if (lsp.startOn)
-            {
-                lsp.lightSwitch.TurnOn(false);
-            }
-            else
-            {
-                lsp.lightSwitch.TurnOff(false);
-            }
-        }
-        playerController.isZoomed = false;
-    }
 }

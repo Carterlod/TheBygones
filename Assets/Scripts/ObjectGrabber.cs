@@ -38,7 +38,7 @@ public class ObjectGrabber : MonoBehaviour
     }
     public void Release()
     {
-        
+        Debug.Log("Release() running");
         StartCoroutine(LerpObjectHome());
     }
 
@@ -72,7 +72,9 @@ public class ObjectGrabber : MonoBehaviour
             heldObject.gameObject.transform.rotation = Quaternion.Lerp(startingRot, originalRot, t / d);
             yield return null;
         }
+
         heldObject.Released();
+        holdTransform.localRotation = Quaternion.Euler(0,0,0);
         PlayerSettings.i.handsFull = false;
         heldObject = null;
         lettingGo = false;

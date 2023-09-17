@@ -15,10 +15,16 @@ public class LookAtDialogueAction : BaseDialogueAction
     [SerializeField] bool nigel = false;
     [SerializeField] bool ted = false;
     [SerializeField] float turnSpeed = 0.5f;
+    [SerializeField] Transform overrideTarget;
 
     private void Awake()
     {
         dialogue = GetComponentInParent<DialogueTester>();
+        if(overrideTarget != null)
+        {
+            targetEyeline = overrideTarget;
+            return;
+        }
         if (objectOfAttention == AttentionTarget.Stu)
         {
             targetEyeline = dialogue.stu.eyelineTransform;
@@ -35,6 +41,7 @@ public class LookAtDialogueAction : BaseDialogueAction
         {
             targetEyeline = dialogue.ted.eyelineTransform;
         }
+        
     }
     public override void OnDialogueStart()
     {

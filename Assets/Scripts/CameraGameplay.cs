@@ -68,7 +68,7 @@ public class CameraGameplay : MonoBehaviour
             asrc.PlayOneShot(putAwayClip);
         }
         float t = 0;
-        float d = .2f;
+        float d = .1f;
         while (t < d)
         {
             t += Time.deltaTime;
