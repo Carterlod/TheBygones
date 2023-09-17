@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340928020714061551}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.42, y: 3.8601542, z: 1.791}
+  m_LocalPosition: {x: 0.8732, y: -0.1493, z: 1.5943}
   m_LocalScale: {x: 1.1931993, y: 1.1931993, z: 1.1931993}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -135,6 +135,8 @@ MonoBehaviour:
   grabbed: 0
   keepLevel: 1
   bypassSettling: 0
+  isPerformingAction: 0
+  cannotDrop: 0
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -143,10 +145,8 @@ MonoBehaviour:
       m_Calls: []
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
-  isPerformingAction: 0
   grabbedPos: {x: 0, y: 0, z: 0}
   grabbedRot: {x: 0, y: 0, z: 0, w: 0}
-  cannotDrop: 0
 --- !u!114 &8872523332976436432
 MonoBehaviour:
   m_ObjectHideFlags: 0

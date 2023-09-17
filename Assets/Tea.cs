@@ -14,6 +14,8 @@ public class Tea : MonoBehaviour
     [SerializeField] Transform teaLevel0;
     public Interactable interactable;
     private Grabbable grabbable;
+    private Coroutine steeping;
+    private Coroutine waterCooling;
 
     private bool isSipping = false;
 
@@ -29,6 +31,13 @@ public class Tea : MonoBehaviour
     [SerializeField] bool empty = true;
     public bool full = false;
     private int teaLevel = 3;
+    [SerializeField] Color clearWater = Color.white;
+    [SerializeField] Color steepedColor = Color.black;
+    [SerializeField] float timeToSteep = 10;
+    [SerializeField] float steepTime = 0;
+    [SerializeField] GameObject teaBagObj;
+    private Vector3 teaBagStartPos;
+    private Renderer liquidRenderer;
 
     private void Awake()
     {
@@ -47,6 +56,8 @@ public class Tea : MonoBehaviour
             liquidSurface.transform.localScale = teaLevel3.transform.localScale;
             steam.Play();
         }
+        teaBagStartPos = teaBagObj.transform.localPosition;
+        liquidRenderer = liquidSurface.GetComponent<Renderer>();
     }
 
     private void Update()
@@ -98,23 +109,34 @@ public class Tea : MonoBehaviour
             return;
         }
         StartCoroutine(FillCupRoutine());
+        
     }
     public void Sip()
     {
-        full = false;
-        if (isSipping)
+        if(full && steeping != null)
         {
-            return;
+            StopCoroutine(steeping);
+            steeping = null;
+            StartCoroutine(LiftBagRoutine());
+            
         }
-        if (teaLevel <= 0)
+        else
         {
-            teaLevel = 0;
-            empty = true;
-            liquidSurface.GetComponent<Renderer>().enabled = false;
-            return;
+            full = false;
+            if (isSipping)
+            {
+                return;
+            }
+            if (teaLevel <= 0)
+            {
+                teaLevel = 0;
+                empty = true;
+                liquidSurface.GetComponent<Renderer>().enabled = false;
+                return;
+            }
+            teaLevel -= 1;
+            StartCoroutine(SipTeaRoutine(teaLevel));
         }
-        teaLevel -= 1;
-        StartCoroutine(SipTeaRoutine(teaLevel));
     }
     IEnumerator SipTeaRoutine(int lvl)
     {
@@ -161,7 +183,8 @@ public class Tea : MonoBehaviour
         float d = 1;
         Vector3 startingPos = liquidSurface.transform.position;
         Vector3 startingScale = liquidSurface.transform.localScale;
-        liquidSurface.GetComponent<Renderer>().enabled = true;
+        liquidRenderer.material.SetColor("_BaseColor", clearWater);
+        liquidRenderer.enabled = true;
         steam.Play();
         while (t < d)
         {
@@ -175,7 +198,41 @@ public class Tea : MonoBehaviour
             yield return null;
         }
         full = true;
-        teaLevel = 3;        
+        teaLevel = 3;
+        teaBagObj.transform.localPosition = teaBagStartPos;
+        teaBagObj.SetActive(true);
+
+        steeping = StartCoroutine(SteepRoutine());
+        
+        yield return null;
+    }
+
+    IEnumerator SteepRoutine()
+    {
+        Debug.Log("steep routine started");
+        float t = 0;
+        float d = timeToSteep;
+        while (t < d)
+        {
+            t += Time.deltaTime;
+            liquidRenderer.material.SetColor("_BaseColor", Color.Lerp(clearWater, steepedColor, t / d));
+            yield return null;
+        }
+
+        yield return null;
+    }
+
+    IEnumerator LiftBagRoutine()
+    {
+        float t = 0;
+        float d = 0.25f;
+        while (t < d)
+        {
+            t += Time.deltaTime;
+            teaBagObj.transform.position += new Vector3(0, 0.5f, 0) * Time.deltaTime;
+            yield return null;
+        }
+        teaBagObj.SetActive(false);
         yield return null;
     }
 }

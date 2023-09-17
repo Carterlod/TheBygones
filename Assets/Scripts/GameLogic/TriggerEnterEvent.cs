@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public class TriggerEnterEvent : MonoBehaviour
 {
+    private bool spent = false;
+    [SerializeField] bool oneShot;
     [SerializeField] UnityEvent enterEvent;
     [SerializeField] UnityEvent exitEvent;
-    [SerializeField] bool oneShot;
-    private bool spent = false;
 
     private void OnTriggerEnter(Collider other)
     {
