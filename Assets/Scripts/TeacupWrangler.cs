@@ -12,7 +12,7 @@ public class TeacupWrangler : MonoBehaviour
 
     public void ActivateAllInteractables()
     {
-        teacups = GetComponentsInChildren<Tea>();
+        //teacups = GetComponentsInChildren<Tea>();
         
         foreach(Tea teacup in teacups)
         {

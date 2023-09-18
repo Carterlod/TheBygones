@@ -99,11 +99,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e611a1a43056a00438f15f97093f14e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   grabHandle: {fileID: 6941155259098806749}
+  objectKey: 
+  grabbed: 0
+  keepLevel: 1
+  bypassSettling: 0
+  isPerformingAction: 0
+  cannotDrop: 0
+  dropOnLetGo: 0
+  onGrab:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
-  keepLevel: 1
+  grabbedPos: {x: 0, y: 0, z: 0}
+  grabbedRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!65 &6145615722271695857
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115,8 +128,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.025096303, y: 0.033136263, z: 0.2605799}
-  m_Center: {x: -0.00089423964, y: 0.0172883, z: -0.00045651174}
+  m_Size: {x: 0.025096303, y: 0.01, z: 0.2605799}
+  m_Center: {x: -0.00089423964, y: 0.0072883, z: -0.00045651174}
 --- !u!54 &3611503656941752198
 Rigidbody:
   m_ObjectHideFlags: 0

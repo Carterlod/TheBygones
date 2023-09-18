@@ -12,6 +12,7 @@ public class Grabbable : MonoBehaviour
     [SerializeField] bool bypassSettling = false;
     public bool isPerformingAction = false;
     public bool cannotDrop = false;
+    public bool dropOnLetGo = false;
 
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;
@@ -25,14 +26,22 @@ public class Grabbable : MonoBehaviour
     public Vector3 grabbedPos;
     public Quaternion grabbedRot;
 
-
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody>();
         cols = gameObject.GetComponentsInChildren<Collider>();
         StartCoroutine(Settle());
     }
-    
+    public void Resettle()
+    {
+        StartCoroutine(ResettleRoutine());
+    }
+
+    public void SetSettleSpot(Transform spot)
+    {
+        originalPos = spot.position;
+        originalRot = spot.rotation;
+    }
     IEnumerator Settle()
     {
         if(bypassSettling)
@@ -46,7 +55,18 @@ public class Grabbable : MonoBehaviour
             originalPos = gameObject.transform.position;
             originalRot = gameObject.transform.rotation;
         }
+        yield return null;
     }
+
+    IEnumerator ResettleRoutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        originalPos = gameObject.transform.position;
+        originalRot = gameObject.transform.rotation;
+        yield return null;
+    }
+
+    
 
     public void Grabbed()
     {

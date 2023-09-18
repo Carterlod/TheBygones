@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 5110618352806872479}
   - component: {fileID: 6208322663164274971}
   - component: {fileID: 8200091578647780817}
-  - component: {fileID: 8950580412844675299}
   - component: {fileID: 4314867935107567320}
+  - component: {fileID: 1397134275948888173}
   m_Layer: 9
   m_Name: pf_Spoon
   m_TagString: Untagged
@@ -85,6 +85,9 @@ MonoBehaviour:
   grabbed: 0
   keepLevel: 1
   bypassSettling: 0
+  isPerformingAction: 0
+  cannotDrop: 0
+  dropOnLetGo: 0
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -93,6 +96,8 @@ MonoBehaviour:
       m_Calls: []
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
+  grabbedPos: {x: 0, y: 0, z: 0}
+  grabbedRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!33 &6208322663164274971
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -143,19 +148,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8950580412844675299
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7695648632499256324}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.06533336, y: 0.033908583, z: 0.26689306}
-  m_Center: {x: 0, y: 0.016075399, z: 0.01471518}
 --- !u!54 &4314867935107567320
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -172,3 +164,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1397134275948888173
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7695648632499256324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.06533336, y: 0.033908583, z: 0.26689306}
+  m_Center: {x: -0.00000047683716, y: 0.01607528, z: 0.01471518}

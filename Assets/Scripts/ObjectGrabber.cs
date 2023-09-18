@@ -10,7 +10,6 @@ public class ObjectGrabber : MonoBehaviour
     public Grabbable heldObject;
     private Transform originalParent;
     private Quaternion originalRot;
-    private Vector3 originalPos;
     public bool lettingGo = false;
 
     public void Grab(Grabbable obj)
@@ -20,7 +19,7 @@ public class ObjectGrabber : MonoBehaviour
         // initialize return transform values
         originalParent = heldObject.transform.parent;
         originalRot = heldObject.originalRot;
-        originalPos = obj.originalPos;
+        
 
         obj.gameObject.transform.SetParent(holdParent);
 
@@ -36,10 +35,22 @@ public class ObjectGrabber : MonoBehaviour
 
         heldObject.Grabbed();
     }
-    public void Release()
+    public void Release(Transform dir)
     {
-        Debug.Log("Release() running");
-        StartCoroutine(LerpObjectHome());
+        //Debug.Log("Release() running");
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            heldObject.gameObject.transform.SetParent(originalParent);
+            heldObject.GetComponent<Rigidbody>().velocity = dir.forward * 2;
+            heldObject.Released();
+            holdTransform.localRotation = Quaternion.Euler(0, 0, 0);
+            PlayerSettings.i.handsFull = false;
+            heldObject = null;
+        }
+        else
+        {
+            StartCoroutine(LerpObjectHome());
+        }
     }
 
     private void LateUpdate()
@@ -54,6 +65,7 @@ public class ObjectGrabber : MonoBehaviour
     IEnumerator LerpObjectHome()
     {
         lettingGo = true;
+        Vector3 originalPos = heldObject.originalPos;
         heldObject.gameObject.transform.SetParent(originalParent);
         Vector3 startingPos = heldObject.gameObject.transform.position;
         Vector3 originalPosRaised = new Vector3(originalPos.x, originalPos.y + 0.1f, originalPos.z);

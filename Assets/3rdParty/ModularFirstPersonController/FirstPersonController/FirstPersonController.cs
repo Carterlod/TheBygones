@@ -332,7 +332,14 @@ public class FirstPersonController : MonoBehaviour
         {
             if(Input.GetKeyDown(crouchKey) && !holdToCrouch)
             {
-                Crouch();
+                if (!PlayerSettings.i.isSeated)
+                {
+                    Crouch();
+                }
+                else
+                {
+                    PlayerSettings.i.sitSpot.GetUp();
+                }
             }
             
             if(Input.GetKeyDown(crouchKey) && holdToCrouch)

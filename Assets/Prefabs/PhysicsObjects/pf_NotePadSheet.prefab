@@ -129,10 +129,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabHandle: {fileID: 2667951726449181121}
-  objectKey: 
+  objectKey: trash
   grabbed: 0
   keepLevel: 1
   bypassSettling: 0
+  isPerformingAction: 0
+  cannotDrop: 0
+  dropOnLetGo: 0
   onGrab:
     m_PersistentCalls:
       m_Calls: []
@@ -141,6 +144,8 @@ MonoBehaviour:
       m_Calls: []
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
+  grabbedPos: {x: 0, y: 0, z: 0}
+  grabbedRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8549554121013541802
 GameObject:
   m_ObjectHideFlags: 0

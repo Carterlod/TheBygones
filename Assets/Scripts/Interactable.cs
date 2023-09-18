@@ -33,8 +33,8 @@ public class Interactable : MonoBehaviour
     public void InteractWithObject(Grabbable grabbedObj)
     {
         
-        interactEvent.Invoke();
         objectLastUsed = grabbedObj;
+        interactEvent.Invoke();
         if (oneShot)
         {
             spent = true;

@@ -39,6 +39,7 @@ public class Setup : MonoBehaviour
             }
         }
         playerController.isZoomed = false;
+       
     }
 
     private void Start()

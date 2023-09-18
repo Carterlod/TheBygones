@@ -90,6 +90,102 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9999998, y: 1, z: 0.9999998}
   m_Center: {x: -0.00000047683707, y: 0, z: -0.00000047683716}
+--- !u!1 &5439116842535490725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1865372182489964939}
+  - component: {fileID: 8081215409481876740}
+  - component: {fileID: 5433511178558274751}
+  - component: {fileID: 4649782939638581571}
+  m_Layer: 6
+  m_Name: Interactable Sitting Spot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1865372182489964939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439116842535490725}
+  m_LocalRotation: {x: -3.3604207e-25, y: -1, z: 2.5849392e-25, w: 0.0000001490116}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9056713034587806826}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &8081215409481876740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439116842535490725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab81ac32c05c7044eb9e302eca0158b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 1865372182489964939}
+  chair: {fileID: 9056713034587806826}
+--- !u!114 &5433511178558274751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439116842535490725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbd83626113eb384c9890f658e380b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneShot: 0
+  spent: 0
+  interactEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8081215409481876740}
+        m_TargetAssemblyTypeName: SitSpot, Assembly-CSharp
+        m_MethodName: SitDown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  objectRequired: 0
+  objectKey: 
+  objectLastUsed: {fileID: 0}
+  hasName: 0
+  displayedName: 
+--- !u!136 &4649782939638581571
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439116842535490725}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.35
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.69, z: 0}
 --- !u!1 &8567034142627317456
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +218,7 @@ Transform:
   m_Children:
   - {fileID: 3161641694015706013}
   - {fileID: 6054362880423522898}
+  - {fileID: 1865372182489964939}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -86.552, z: 0}

@@ -6,6 +6,7 @@ public class SetupSwitcher : MonoBehaviour
 {
     public static SetupSwitcher i;
     public int activeSetup;
+    [SerializeField] Faucet faucet;
 
     [System.Serializable]
     public class SetupSettings
@@ -13,7 +14,6 @@ public class SetupSwitcher : MonoBehaviour
         public Setup setupParent;
     }
     public SetupSettings[] setups;
-
 
     private void Awake()
     {
@@ -25,8 +25,7 @@ public class SetupSwitcher : MonoBehaviour
             {
                 activeSetup = i;
             }
-        }
-               
+        }       
     }
 
     private void Update()
@@ -38,6 +37,7 @@ public class SetupSwitcher : MonoBehaviour
     }
     public void IncrementSetup()
     {
+
         Setup oldSet = setups[activeSetup].setupParent;
         if(oldSet.carryIntoNextScene.Count > 0)
         {
@@ -48,9 +48,17 @@ public class SetupSwitcher : MonoBehaviour
         }
         if (PlayerSettings.i.handsFull && !oldSet.keepHeldObject)
         {
-            PlayerSettings.i.objectGrabber.Release();
+            PlayerSettings.i.objectGrabber.Release(this.transform); //The transform passed here is meaningless. 
         }
         oldSet.gameObject.SetActive(false);
+
+        //clear clean dishes
+        if (faucet.on)
+        {
+            faucet.TurnOff(true);
+        }
+        DirtyDishes.i.ClearCleanDishes();
+
         activeSetup++;
         if (activeSetup > setups.Length - 1)
         {
@@ -65,5 +73,6 @@ public class SetupSwitcher : MonoBehaviour
                 tr.parent = newSet.gameObject.transform;
             }
         }
+
     }
 }

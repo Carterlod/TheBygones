@@ -18,6 +18,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] ObjectGrabber grabber;
     [SerializeField] PlayerSettings playerSettings;
     private bool canUseObject = false;
+    
 
     [SerializeField] NPC storedNPC;
 
@@ -41,7 +42,7 @@ public class Interactor : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                grabber.Release();
+                grabber.Release(this.transform);
                 playerSettings.handsFull = false;
                 return;
             }

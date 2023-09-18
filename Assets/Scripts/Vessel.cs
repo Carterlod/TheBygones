@@ -7,7 +7,7 @@ public class Vessel : MonoBehaviour
 {
     [SerializeField] string myFillerKey;
     [SerializeField] float fillThreshold = 1;
-    [SerializeField] float fillLevel = 0;
+    public float fillLevel = 0;
     [SerializeField] UnityEvent thresholdEvent;
     private bool full = false;
 
@@ -24,8 +24,12 @@ public class Vessel : MonoBehaviour
             {
                 full = true;
                 thresholdEvent.Invoke();
-                
             }
         }
+    }
+    public void ResetFill()
+    {
+        fillLevel = 0;
+        full = false;
     }
 }

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1370131943815414697
 Transform:
   m_ObjectHideFlags: 0
@@ -538,15 +538,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e611a1a43056a00438f15f97093f14e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   grabHandle: {fileID: 7979686131580057915}
-  originalPos: {x: 0, y: 0, z: 0}
-  originalRot: {x: 0, y: 0, z: 0, w: 0}
+  objectKey: trash
+  grabbed: 0
   keepLevel: 1
-  objectKey: 
+  bypassSettling: 0
+  isPerformingAction: 0
+  cannotDrop: 0
+  dropOnLetGo: 0
   onGrab:
     m_PersistentCalls:
       m_Calls: []
   onRelease:
     m_PersistentCalls:
       m_Calls: []
+  originalPos: {x: 0, y: 0, z: 0}
+  originalRot: {x: 0, y: 0, z: 0, w: 0}
+  grabbedPos: {x: 0, y: 0, z: 0}
+  grabbedRot: {x: 0, y: 0, z: 0, w: 0}

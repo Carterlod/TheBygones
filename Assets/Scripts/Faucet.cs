@@ -5,7 +5,7 @@ using UnityEngine;
 public class Faucet : MonoBehaviour
 {
 
-    [SerializeField] bool on = true;
+    public bool on = true;
     [SerializeField] GameObject nozzleMesh;
     [SerializeField] ParticleSystem ps;
     AudioSource speaker;

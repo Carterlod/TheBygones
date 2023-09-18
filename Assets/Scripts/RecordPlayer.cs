@@ -84,7 +84,7 @@ public class RecordPlayer : MonoBehaviour
             speaker.time = 0;
             speaker.clip = record.song;
             speaker.Play();
-            grabber.Release();
+            grabber.Release(this.transform); //the transform passed here is meaningless. It's used by Interactor.cs to launch objects occassionally. 
         }
 
         //return record
@@ -145,7 +145,7 @@ public class RecordPlayer : MonoBehaviour
             speaker.time = 0;
             speaker.clip = record.song;
             speaker.Play();
-            grabber.Release();
+            grabber.Release(this.transform); //The transform passed here is meaningless. (see line 87)
             yield return null;
         }
 

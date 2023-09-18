@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerSettings : MonoBehaviour
 {
     public static PlayerSettings i;
-    [SerializeField] FirstPersonController playerController;
+    public FirstPersonController playerController;
     public Interactor interactor;
     public ObjectGrabber objectGrabber;
     [SerializeField] LetterboxBars stationaryCameraUI;
@@ -14,6 +14,8 @@ public class PlayerSettings : MonoBehaviour
     public bool cameraActive = false;
     public bool playerPaused = false;
     public bool isHoldingCamera = false;
+    public bool isSeated = false;
+    public SitSpot sitSpot;
 
     public void OnEnable()
     {
@@ -43,19 +45,17 @@ public class PlayerSettings : MonoBehaviour
 
    
 
-    private void UpdatePlayerUI()
+    public void UpdatePlayerUI()
     {
         if (playerController.playerCanMove)
         {
             stationaryCameraUI.HideBars();
-
         }
         else
         {
             stationaryCameraUI.ShowBars();
         }
     }
-
 
     public void HoldingCameraOn()
     {
