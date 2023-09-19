@@ -8,6 +8,7 @@ public class Interactor : MonoBehaviour
 {
     [SerializeField] GameObject cam;
     [SerializeField] GameObject interactIcon;
+    [SerializeField] GameObject interactIconChair;
     int layerMaskInteractable;
     int layerMaskNPC;
     int layerMaskGrabbable;
@@ -16,7 +17,6 @@ public class Interactor : MonoBehaviour
     [SerializeField] float shortDistance = 2;
     [SerializeField] float longDistance = 4;
     [SerializeField] ObjectGrabber grabber;
-    [SerializeField] PlayerSettings playerSettings;
     private bool canUseObject = false;
     
 
@@ -36,18 +36,20 @@ public class Interactor : MonoBehaviour
     private void Update()
     {
         interactIcon.SetActive(false);
+        interactIconChair.SetActive(false);
+        PlayerSettings.i.playerIsTargettingSitSpot = false;
         npcNameField.gameObject.SetActive(false);
 
-        if (playerSettings.handsFull && !canUseObject && !grabber.heldObject.cannotDrop && !grabber.heldObject.isPerformingAction)
+        if (PlayerSettings.i.handsFull && !canUseObject && !grabber.heldObject.cannotDrop && !grabber.heldObject.isPerformingAction)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 grabber.Release(this.transform);
-                playerSettings.handsFull = false;
+                PlayerSettings.i.handsFull = false;
                 return;
             }
         }
-        if (playerSettings.cameraActive)
+        if (PlayerSettings.i.cameraActive)
         {
             //Debug.Log("camera active");
             return;
@@ -57,21 +59,30 @@ public class Interactor : MonoBehaviour
 
         
 
-        RaycastHit hit2; 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit2, longDistance) && !PlayerSettings.i.playerPaused)
+        RaycastHit hit; 
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, longDistance) && !PlayerSettings.i.playerPaused)
         {
 
         // INTERACT / INTERACT NAME
 
-            if (hit2.collider.gameObject.layer == layerMaskInteractable) 
+            if (hit.collider.gameObject.layer == layerMaskInteractable) 
             {
-                Interactable i = hit2.collider.gameObject.GetComponent<Interactable>();
+                Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
 
                 if(!i.oneShot || i.oneShot && !i.spent)
                 {
                     if (!i.objectRequired)
                     {
-                        if (!playerSettings.handsFull)
+                        if(i.GetComponent<SitSpot>() != null)
+                        {
+                            interactIconChair.SetActive(true);
+                            PlayerSettings.i.playerIsTargettingSitSpot = true;
+                            if (Input.GetKeyDown(PlayerSettings.i.playerController.crouchKey))
+                            {
+                                i.GetComponent<SitSpot>().SitDown();
+                            }
+                        }
+                        else if (!PlayerSettings.i.handsFull)
                         {
                             interactIcon.SetActive(true);
                             if (Input.GetKeyDown(KeyCode.E))
@@ -105,9 +116,9 @@ public class Interactor : MonoBehaviour
 
         // SHOW NAME NPC
 
-            if (hit2.collider.gameObject.layer == layerMaskNPC) 
+            if (hit.collider.gameObject.layer == layerMaskNPC) 
             {
-                NPC npc = hit2.collider.gameObject.GetComponentInParent<NPC>();
+                NPC npc = hit.collider.gameObject.GetComponentInParent<NPC>();
                 if(storedNPC == null)
                 {
                     storedNPC = npc;
@@ -138,10 +149,10 @@ public class Interactor : MonoBehaviour
 
         //GRABBABLE
 
-            if (hit2.collider.gameObject.layer == layerMaskGrabbable && hit2.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) 
+            if (hit.collider.gameObject.layer == layerMaskGrabbable && hit.collider.gameObject.GetComponent<Grabbable>().isActiveAndEnabled) 
             {
-                Grabbable obj = hit2.collider.gameObject.GetComponent<Grabbable>();
-                if (!playerSettings.handsFull || canUseObject)
+                Grabbable obj = hit.collider.gameObject.GetComponent<Grabbable>();
+                if (!PlayerSettings.i.handsFull || canUseObject)
                 {
                     interactIcon.SetActive(true);
                 }

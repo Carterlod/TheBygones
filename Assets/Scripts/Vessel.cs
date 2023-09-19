@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Vessel : MonoBehaviour
 {
     [SerializeField] string myFillerKey;
-    [SerializeField] float fillThreshold = 1;
+    public float fillThreshold = 1;
     public float fillLevel = 0;
     [SerializeField] UnityEvent thresholdEvent;
     private bool full = false;

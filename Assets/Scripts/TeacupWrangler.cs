@@ -13,12 +13,15 @@ public class TeacupWrangler : MonoBehaviour
     public void ActivateAllInteractables()
     {
         //teacups = GetComponentsInChildren<Tea>();
-        
-        foreach(Tea teacup in teacups)
+        Vessel kettle = PlayerSettings.i.objectGrabber.heldObject.GetComponent<Vessel>();
+        if(kettle.fillLevel >= kettle.fillThreshold)
         {
-            if (!teacup.full)
+            foreach(Tea teacup in teacups)
             {
-                teacup.interactable.gameObject.SetActive(true) ;
+                if (!teacup.full)
+                {
+                    teacup.interactable.gameObject.SetActive(true) ;
+                }
             }
         }
     }

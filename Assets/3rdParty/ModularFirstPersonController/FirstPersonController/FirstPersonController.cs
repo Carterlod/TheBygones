@@ -113,7 +113,7 @@ public class FirstPersonController : MonoBehaviour
 
     // Internal Variables
     public bool isCrouched = false;
-    private Vector3 originalScale;
+   
 
     #endregion
     #endregion
@@ -139,7 +139,6 @@ public class FirstPersonController : MonoBehaviour
 
         // Set internal variables
         playerCamera.fieldOfView = fov;
-        originalScale = transform.localScale;
         jointOriginalPos = joint.localPosition;
 
         if (!unlimitedSprint)
@@ -330,7 +329,7 @@ public class FirstPersonController : MonoBehaviour
 
         if (enableCrouch)
         {
-            if(Input.GetKeyDown(crouchKey) && !holdToCrouch)
+            if(Input.GetKeyDown(crouchKey) && !holdToCrouch && !PlayerSettings.i.playerIsTargettingSitSpot)
             {
                 if (!PlayerSettings.i.isSeated)
                 {
@@ -340,17 +339,6 @@ public class FirstPersonController : MonoBehaviour
                 {
                     PlayerSettings.i.sitSpot.GetUp();
                 }
-            }
-            
-            if(Input.GetKeyDown(crouchKey) && holdToCrouch)
-            {
-                isCrouched = false;
-                Crouch();
-            }
-            else if(Input.GetKeyUp(crouchKey) && holdToCrouch)
-            {
-                isCrouched = true;
-                Crouch();
             }
         }
 

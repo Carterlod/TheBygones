@@ -38,7 +38,10 @@ public class SitSpot : MonoBehaviour
         {
             col.enabled = false;
         }
-        player.Crouch();
+        if (!player.isCrouched)
+        {
+            player.Crouch();
+        }
         float t = 0;
         float d = .5f;
         while (t < d)
