@@ -1503,7 +1503,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "584bed145f4b41acbe0a67cdbbac2332",
     "m_Id": 0,
-    "m_DisplayName": "ToonRampTinting",
+    "m_DisplayName": "GLOBAL_ToonRampTint",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2531,12 +2531,12 @@
     "m_Guid": {
         "m_GuidSerialized": "86daf7af-d3cb-43a6-89f8-f419758679f9"
     },
-    "m_Name": "ToonRampTinting",
+    "m_Name": "GLOBAL_ToonRampTint",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "ToonRampTinting",
-    "m_DefaultReferenceName": "_ToonRampTinting",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
+    "m_RefNameGeneratedByDisplayName": "GLOBAL_ToonRampTint",
+    "m_DefaultReferenceName": "_GLOBAL_ToonRampTint",
+    "m_OverrideReferenceName": "GLOBAL_ToonRampTint",
+    "m_GeneratePropertyBlock": false,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_Precision": 0,
@@ -3274,9 +3274,6 @@
             "m_Id": "0db2086ae2934856a3ff754ab9d14d68"
         },
         {
-            "m_Id": "b030af524ee24ad3a66134ecc0999a43"
-        },
-        {
             "m_Id": "c214c08ed5c145f9800871eb2dd9d803"
         },
         {
@@ -3287,6 +3284,9 @@
         },
         {
             "m_Id": "8f142fa26588426f9a82d9c90f531986"
+        },
+        {
+            "m_Id": "b030af524ee24ad3a66134ecc0999a43"
         }
     ]
 }
