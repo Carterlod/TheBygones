@@ -2,7 +2,7 @@
 void ToonShadingPoint_float(
     in float3 Normal,
     in float ToonRampSmoothness,
-    in float3 ClipSpacePos,
+    in float PointStrength,
     in float3 WorldPos,
     in float4 ToonRampTinting,
     in float ToonRampOffset,
@@ -47,6 +47,8 @@ void ToonShadingPoint_float(
             pointDiffuse += pointColor;
         }
 
+        pointDiffuse *= PointStrength;
+    
         // dot product for toonramp
         half d = dot(Normal, light.direction) * 0.5 + 0.5;
         // toonramp in a smoothstep
