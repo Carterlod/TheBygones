@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
     
     public bool oneShot = false;
     public bool spent = false;
+    public bool handsFullOK = false;
     [SerializeField] UnityEvent interactEvent;
 
     [Header("Key Object")]

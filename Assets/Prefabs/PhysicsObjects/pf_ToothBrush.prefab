@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabHandle: {fileID: 6941155259098806749}
-  objectKey: 
+  objectKey: toothbrush
   grabbed: 0
   keepLevel: 1
   bypassSettling: 0

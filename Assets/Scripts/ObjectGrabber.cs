@@ -31,8 +31,6 @@ public class ObjectGrabber : MonoBehaviour
         grab.position = holdTransform.position;
         heldObject.transform.SetParent(holdTransform);
         grab.SetParent(heldObject.transform);
-
-
         heldObject.Grabbed();
     }
     public void Release(Transform dir)
@@ -66,6 +64,7 @@ public class ObjectGrabber : MonoBehaviour
     {
         lettingGo = true;
         Vector3 originalPos = heldObject.originalPos;
+        originalRot = heldObject.originalRot;
         heldObject.gameObject.transform.SetParent(originalParent);
         Vector3 startingPos = heldObject.gameObject.transform.position;
         Vector3 originalPosRaised = new Vector3(originalPos.x, originalPos.y + 0.1f, originalPos.z);

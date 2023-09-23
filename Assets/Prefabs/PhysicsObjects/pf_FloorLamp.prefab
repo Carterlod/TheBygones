@@ -60,6 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd83626113eb384c9890f658e380b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oneShot: 0
+  spent: 0
+  handsFullOK: 1
   interactEvent:
     m_PersistentCalls:
       m_Calls:
@@ -77,9 +80,9 @@ MonoBehaviour:
         m_CallState: 2
   objectRequired: 0
   objectKey: 
-  oneShot: 0
-  spent: 0
   objectLastUsed: {fileID: 0}
+  hasName: 0
+  displayedName: 
 --- !u!114 &7363608142855465168
 MonoBehaviour:
   m_ObjectHideFlags: 0

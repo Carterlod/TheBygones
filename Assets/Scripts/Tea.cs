@@ -42,6 +42,8 @@ public class Tea : MonoBehaviour
     private void Awake()
     {
         grabbable = GetComponent<Grabbable>();
+        teaBagStartPos = teaBagObj.transform.localPosition;
+        liquidRenderer = liquidSurface.GetComponent<Renderer>();
         if (empty)
         {
             liquidSurface.GetComponent<Renderer>().enabled = false;
@@ -54,10 +56,9 @@ public class Tea : MonoBehaviour
             liquidSurface.GetComponent<Renderer>().enabled = true;
             liquidSurface.transform.position = teaLevel3.transform.position;
             liquidSurface.transform.localScale = teaLevel3.transform.localScale;
+            liquidRenderer.material.SetColor("_BaseColor", Color.Lerp(clearWater, steepedColor, 1));
             steam.Play();
         }
-        teaBagStartPos = teaBagObj.transform.localPosition;
-        liquidRenderer = liquidSurface.GetComponent<Renderer>();
     }
 
     private void Update()

@@ -16,6 +16,7 @@ public class PlayerSettings : MonoBehaviour
     public bool isHoldingCamera = false;
     public bool isSeated = false;
     public bool playerIsTargettingSitSpot = false;
+    public bool targettedInteractableIsHandsFullOK = false;
     public SitSpot sitSpot;
      
 

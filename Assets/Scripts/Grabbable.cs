@@ -36,6 +36,13 @@ public class Grabbable : MonoBehaviour
     {
         StartCoroutine(ResettleRoutine());
     }
+    IEnumerator ResettleRoutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        originalPos = gameObject.transform.position;
+        originalRot = gameObject.transform.rotation;
+        yield return null;
+    }
 
     public void SetSettleSpot(Transform spot)
     {
@@ -58,14 +65,8 @@ public class Grabbable : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator ResettleRoutine()
-    {
-        yield return new WaitForSeconds(.5f);
-        originalPos = gameObject.transform.position;
-        originalRot = gameObject.transform.rotation;
-        yield return null;
-    }
-
+    
+    
     
 
     public void Grabbed()

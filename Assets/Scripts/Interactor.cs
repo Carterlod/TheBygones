@@ -44,11 +44,15 @@ public class Interactor : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                grabber.Release(this.transform);
-                PlayerSettings.i.handsFull = false;
-                return;
+                if (!PlayerSettings.i.targettedInteractableIsHandsFullOK)
+                {
+                    grabber.Release(this.transform);
+                    PlayerSettings.i.handsFull = false;
+                    return;
+                }
             }
         }
+        PlayerSettings.i.targettedInteractableIsHandsFullOK = false;
         if (PlayerSettings.i.cameraActive)
         {
             //Debug.Log("camera active");
@@ -82,8 +86,12 @@ public class Interactor : MonoBehaviour
                                 i.GetComponent<SitSpot>().SitDown();
                             }
                         }
-                        else if (!PlayerSettings.i.handsFull)
+                        else if (!PlayerSettings.i.handsFull || i.handsFullOK)
                         {
+                            if (i.handsFullOK)
+                            {
+                                PlayerSettings.i.targettedInteractableIsHandsFullOK = true;
+                            }
                             interactIcon.SetActive(true);
                             if (Input.GetKeyDown(KeyCode.E))
                             {
