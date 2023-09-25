@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: char_Jacket
-  m_Shader: {fileID: -6465566751694194690, guid: d9bb89c1fbe1f0547a7653bea45f3695, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 82f2e77b0fb8e47468a5e9669da2ac7f, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -113,6 +113,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PointStrength: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -123,7 +124,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _ToonRampOffst: 0
+    - _ToonRampOffst: 0.75
+    - _ToonRampOverride: 1
     - _ToonRampSmoothness: 0
     - _UVSec: 0
     - _WorkflowMode: 1
@@ -133,5 +135,6 @@ Material:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _ToonRampTinting: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0}
+    - _ToonRampOverrideColor: {r: 0, g: 0, b: 0, a: 0}
+    - _ToonRampTinting: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

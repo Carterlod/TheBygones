@@ -43,10 +43,10 @@ public class SetupIntros : MonoBehaviour
         toggleOffObject.SetActive(false);
         playerController.playerCanMove = false;
         playerController.cameraCanMove = false;
-        auxCamera.enabled = true ;
+        auxCamera.gameObject.SetActive(true) ;
         camLerp.LerpToward();
         yield return new WaitForSeconds(3);
-        auxCamera.enabled = false ;
+        auxCamera.gameObject.SetActive(false) ;
         toggleOnObject.SetActive(false);
         toggleOffObject.SetActive(true);
         playerController.playerCanMove = true;

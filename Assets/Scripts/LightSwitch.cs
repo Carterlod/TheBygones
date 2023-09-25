@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightSwitch : MonoBehaviour
 {
-    [SerializeField] Light light;
+    [SerializeField] Light[] lights;
     //[SerializeField] 
     [SerializeField] bool on = true;
     AudioSource speaker;
@@ -26,7 +26,10 @@ public class LightSwitch : MonoBehaviour
         if (on)
         {
             on = false;
-            light.enabled = false;
+            foreach(Light l in lights)
+            {
+                l.enabled = false;
+            }
             if (withSFX)
             {
                 speaker.PlayOneShot(clipOff);
@@ -36,7 +39,10 @@ public class LightSwitch : MonoBehaviour
         else
         {
             on = true;
-            light.enabled = true;
+            foreach(Light l in lights)
+            {
+                l.enabled = true;
+            }
             if (withSFX)
             {
                 speaker.PlayOneShot(clipOn);
@@ -48,7 +54,10 @@ public class LightSwitch : MonoBehaviour
     public void TurnOn(bool withSFX)
     {
         on = true;
-        light.enabled = true;
+        foreach (Light l in lights)
+        {
+            l.enabled = true;
+        }
         if (withSFX)
         {
             speaker.PlayOneShot(clipOn);
@@ -59,7 +68,10 @@ public class LightSwitch : MonoBehaviour
     public void TurnOff(bool withSFX)
     {
         on = false;
-        light.enabled = false;
+        foreach (Light l in lights)
+        {
+            l.enabled = false;
+        }
         if (withSFX)
         {
             speaker.PlayOneShot(clipOff);

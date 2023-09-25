@@ -7,24 +7,24 @@ public class Grabbable : MonoBehaviour
 {
     public Transform grabHandle;
     public string objectKey;
-    public bool grabbed;
+    [System.NonSerialized] public bool grabbed;
     public bool keepLevel = true;
     [SerializeField] bool bypassSettling = false;
-    public bool isPerformingAction = false;
-    public bool cannotDrop = false;
+    [System.NonSerialized] public bool isPerformingAction = false;
+    [System.NonSerialized] public bool cannotDrop = false;
     public bool dropOnLetGo = false;
 
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;
-    public Vector3 originalPos;
-    public Quaternion originalRot;
+    [System.NonSerialized] public Vector3 originalPos;
+    [System.NonSerialized] public Quaternion originalRot;
 
     private Rigidbody rb;
     private Collider[] cols;
 
 
-    public Vector3 grabbedPos;
-    public Quaternion grabbedRot;
+    [System.NonSerialized] public Vector3 grabbedPos;
+    [System.NonSerialized] public Quaternion grabbedRot;
 
     private void OnEnable()
     {

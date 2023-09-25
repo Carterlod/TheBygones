@@ -3,7 +3,17 @@ guid: a71ac8b503649164daf431e7fe1ec898
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Chrome
+    second: {fileID: 2100000, guid: efe36c5419914b64986f8c3054094f39, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obj_Drums
+    second: {fileID: 2100000, guid: 2fed62156926cb049bfcf4180d9146d4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
