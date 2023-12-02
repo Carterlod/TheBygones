@@ -28,5 +28,4 @@ public class ConversationSwitcher : MonoBehaviour
         }
         converstaions[activeConvo].gameObject.SetActive(true);
     }
-
 }

@@ -27,6 +27,10 @@ public class FirstPersonController : MonoBehaviour
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 50f;
+    public float joystickSensitivity = .65f;
+    private bool controllerConnected = false;
+    private bool turnTowardTalker = false;
+    public Transform camLookAtTarget;
 
     // Crosshair
     public bool lockCursor = true;
@@ -164,7 +168,11 @@ public class FirstPersonController : MonoBehaviour
         {
             crosshairObject.gameObject.SetActive(false);
         }
-
+        var controllers = Input.GetJoystickNames();
+        if(controllers.Length > 0)
+        {
+            controllerConnected = true;
+        }
         #region Sprint Bar
 
         sprintBarCG = GetComponentInChildren<CanvasGroup>();
@@ -223,28 +231,64 @@ public class FirstPersonController : MonoBehaviour
     private void Update()
     {
         #region Camera
+        float camInputX = 0;
+        float camInputY = 0;
+        float sensitivity;
+        float camDriftSpeed = 5;
 
-        // Control camera movement
-        if(cameraCanMove)
+        if (controllerConnected)
         {
-            yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
-
-            if (!invertCamera)
+            camInputX = Input.GetAxis("Horizontal2");
+            camInputY = Input.GetAxis("Vertical2");
+            sensitivity = joystickSensitivity;
+        }
+        else
+        {
+            camInputX = Input.GetAxis("MouseX");
+            camInputY = Input.GetAxis("MouseY");
+            sensitivity = mouseSensitivity;
+        }
+        // Control camera movement
+        if (cameraCanMove)
+        {
+            camLookAtTarget.position = playerCamera.gameObject.transform.position;
+            if(Input.GetAxis("LockOn") > 0 && SetupSwitcher.i.speakingNPC != null)
             {
-                pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
+                Vector3 TargetNPCPos = SetupSwitcher.i.speakingNPC.characterHead.transform.position;
+                camLookAtTarget.LookAt(TargetNPCPos);
+
+                yaw = Mathf.Lerp(transform.localEulerAngles.y, camLookAtTarget.localEulerAngles.y, Time.deltaTime * camDriftSpeed);
+
+                pitch = Mathf.Lerp(playerCamera.transform.localEulerAngles.x, camLookAtTarget.localEulerAngles.x, Time.deltaTime * camDriftSpeed) ;
+
+                transform.localEulerAngles = new Vector3(0, yaw, 0);
+                playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
             }
             else
             {
-                // Inverted Y
-                pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
+                yaw = transform.localEulerAngles.y + camInputX * sensitivity;
+
+                if (!invertCamera)
+                {
+                    pitch -= sensitivity * camInputY;
+                }
+                else
+                {
+                    // Inverted Y
+                    pitch += sensitivity * camInputY;
+                }
+
+                // Clamp pitch between lookAngle
+                pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+
+                transform.localEulerAngles = new Vector3(0, yaw, 0);
+                playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+
+                Debug.Log("shoulder in put = " + Input.GetAxis("LockOn"));
             }
-
-            // Clamp pitch between lookAngle
-            pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
-
-            transform.localEulerAngles = new Vector3(0, yaw, 0);
-            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+            
         }
+        
         #endregion
 
         #region Zoom
@@ -566,6 +610,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.invertCamera = EditorGUILayout.ToggleLeft(new GUIContent("Invert Camera Rotation", "Inverts the up and down movement of the camera."), fpc.invertCamera);
         fpc.mouseSensitivity = EditorGUILayout.Slider(new GUIContent("Look Sensitivity", "Determines how sensitive the mouse movement is."), fpc.mouseSensitivity, .1f, 10f);
         fpc.maxLookAngle = EditorGUILayout.Slider(new GUIContent("Max Look Angle", "Determines the max and min angle the player camera is able to look."), fpc.maxLookAngle, 40, 90);
+        fpc.camLookAtTarget = (Transform)EditorGUILayout.ObjectField(new GUIContent("Look At Target", "alligns camera to speaking npc."), fpc.camLookAtTarget, typeof(Transform), true);
         GUI.enabled = true;
 
         fpc.lockCursor = EditorGUILayout.ToggleLeft(new GUIContent("Lock and Hide Cursor", "Turns off the cursor visibility and locks it to the middle of the screen."), fpc.lockCursor);

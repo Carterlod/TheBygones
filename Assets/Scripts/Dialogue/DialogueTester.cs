@@ -29,7 +29,6 @@ public class DialogueTester : MonoBehaviour
 
     [Header("References")]
     public NPC speakingNPC;
-    [SerializeField] Transform camLookAtTarget;
     [SerializeField] DialogueBoxes dialogueBox;
     [SerializeField] FirstPersonController player;
     [SerializeField] Camera cam;
@@ -86,19 +85,17 @@ public class DialogueTester : MonoBehaviour
             AutoPlayCountdownRoutine = StartCoroutine(AutoPlayCountdown());
             AdvanceDialogue();
         }
-        if (Input.GetKeyDown(KeyCode.Space) && !conversationFinished && PlayerSettings.i.dialogueAdvanceable)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0))
         {
-            if (!conversationInProgress)
+            if(!conversationFinished && PlayerSettings.i.dialogueAdvanceable)
             {
-                return;
-                //conversationInProgress = true;
+                if (!conversationInProgress)
+                {
+                    return;
+                    //conversationInProgress = true;
+                }
+                AdvanceDialogue();
             }
-            AdvanceDialogue();
-        }
-        if(speakingNPC != null)
-        {
-            //cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, camLookAtTarget.rotation, Time.deltaTime * camPivotDuration) ;
-            camLookAtTarget.LookAt(speakingNPC.characterHead.transform.position);
         }
     }
     public void AdvanceDialogue()
@@ -131,6 +128,7 @@ public class DialogueTester : MonoBehaviour
             {
                 StopCoroutine(DialoguePromptCountdown);
             }
+            SetupSwitcher.i.speakingNPC = null;
             
             return;
         }
@@ -155,9 +153,10 @@ public class DialogueTester : MonoBehaviour
             speakingNPC = nigel;
         }
         dialogueBox.npc = speakingNPC;
+        SetupSwitcher.i.speakingNPC = speakingNPC;
         dialogueBox.nameSlot.text = speakingNPC.characterName;
         dialogueBox.dialogueSlot.text = lineOfDialogue[dialogueStep].line;
-
+        
         //dialogue audio
         if(lineOfDialogue[dialogueStep].vo != null)
         {
