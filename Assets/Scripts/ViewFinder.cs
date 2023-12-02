@@ -96,11 +96,11 @@ public class ViewFinder : MonoBehaviour
         tilterTarget.localRotation = Quaternion.Euler(0, 0, 0);
 
         // Set X
-        if (Input.GetAxis("Mouse X") > yawDeadzone)
+        if (Input.GetAxis("LookX") > yawDeadzone)
         {
             pitchTarget = yawTilt ;
         }
-        else if (Input.GetAxis("Mouse X") < -yawDeadzone)
+        else if (Input.GetAxis("LookX") < -yawDeadzone)
         {
             pitchTarget = -yawTilt;
             
@@ -111,11 +111,11 @@ public class ViewFinder : MonoBehaviour
         }
 
         //Set Y
-        if (Input.GetAxis("Mouse Y") > pitchDeadzone)
+        if (Input.GetAxis("LookY") > pitchDeadzone)
         {
             yawTarget = -pitchTilt;
         }
-        else if (Input.GetAxis("Mouse Y") < -pitchDeadzone)
+        else if (Input.GetAxis("LookY") < -pitchDeadzone)
         {
             yawTarget = pitchTilt ;
         }

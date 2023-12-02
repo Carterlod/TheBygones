@@ -13,13 +13,11 @@ public class LetterboxBars : MonoBehaviour
     public void ShowBars()
     {
         StartCoroutine(MoveBars(true));
-        Debug.Log("show bars");
     }
 
     public void HideBars()
     {
         StartCoroutine(MoveBars(false));
-        Debug.Log("hide bars");
     }
 
     IEnumerator MoveBars(bool turnBarsOn)

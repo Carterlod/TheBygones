@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 #if UNITY_EDITOR
     using UnityEditor;
     using System.Net;
@@ -31,6 +32,8 @@ public class FirstPersonController : MonoBehaviour
     private bool controllerConnected = false;
     private bool turnTowardTalker = false;
     public Transform camLookAtTarget;
+    private float autoTargetTime = 0;
+    private float autoTargetTimeTotal = 0.5f;
 
     // Crosshair
     public bool lockCursor = true;
@@ -150,14 +153,29 @@ public class FirstPersonController : MonoBehaviour
             sprintRemaining = sprintDuration;
             sprintCooldownReset = sprintCooldown;
         }
+        
+        if (Input.GetJoystickNames()[0] != null)
+        {
+            controllerConnected = true;
+            IdentifyController();
+            Debug.Log("controller connected");
+        }
+        else
+        {
+            controllerConnected = false;
+            Debug.Log("controller not connected");
+        }
     }
 
+    public string Controller = "";
+    void IdentifyController()
+    {
+        Controller = Input.GetJoystickNames()[0];
+        Debug.Log("controller = " + Controller.ToString()); 
+    }
     void Start()
     {
-        if(lockCursor)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+
 
         if(crosshair)
         {
@@ -168,11 +186,7 @@ public class FirstPersonController : MonoBehaviour
         {
             crosshairObject.gameObject.SetActive(false);
         }
-        var controllers = Input.GetJoystickNames();
-        if(controllers.Length > 0)
-        {
-            controllerConnected = true;
-        }
+        
         #region Sprint Bar
 
         sprintBarCG = GetComponentInChildren<CanvasGroup>();
@@ -202,6 +216,8 @@ public class FirstPersonController : MonoBehaviour
             sprintBar.gameObject.SetActive(false);
         }
 
+        
+
         #endregion
     }
 
@@ -228,65 +244,84 @@ public class FirstPersonController : MonoBehaviour
             }
         }
     }
+    
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+        }
+    }
+    private void LockOnCamera(float camDriftSpeed)
+    {
+        
+        Vector3 TargetNPCPos = SetupSwitcher.i.speakingNPC.characterHead.transform.position;
+        camLookAtTarget.LookAt(TargetNPCPos);
+
+        float targetY = camLookAtTarget.localEulerAngles.y;
+        if (targetY < 0)
+        {
+            targetY *= -1;
+        }
+
+        yaw = Mathf.LerpAngle(transform.localEulerAngles.y, targetY,  Time.deltaTime * camDriftSpeed);
+
+        pitch = Mathf.LerpAngle(playerCamera.transform.localEulerAngles.x, camLookAtTarget.localEulerAngles.x, Time.deltaTime * camDriftSpeed);
+        
+    }
+
     private void Update()
     {
         #region Camera
         float camInputX = 0;
         float camInputY = 0;
         float sensitivity;
-        float camDriftSpeed = 5;
+        float camDriftSpeed = 7;
+        
+        camInputX = Input.GetAxis("LookX");
+        camInputY = Input.GetAxis("LookY");
+        sensitivity = mouseSensitivity;
 
-        if (controllerConnected)
-        {
-            camInputX = Input.GetAxis("Horizontal2");
-            camInputY = Input.GetAxis("Vertical2");
-            sensitivity = joystickSensitivity;
-        }
-        else
-        {
-            camInputX = Input.GetAxis("MouseX");
-            camInputY = Input.GetAxis("MouseY");
-            sensitivity = mouseSensitivity;
-        }
+        
+
         // Control camera movement
         if (cameraCanMove)
         {
-            camLookAtTarget.position = playerCamera.gameObject.transform.position;
-            if(Input.GetAxis("LockOn") > 0 && SetupSwitcher.i.speakingNPC != null)
+            camLookAtTarget.position = joint.gameObject.transform.position;
+            if(SetupSwitcher.i.speakingNPC != null)
             {
-                Vector3 TargetNPCPos = SetupSwitcher.i.speakingNPC.characterHead.transform.position;
-                camLookAtTarget.LookAt(TargetNPCPos);
-
-                yaw = Mathf.Lerp(transform.localEulerAngles.y, camLookAtTarget.localEulerAngles.y, Time.deltaTime * camDriftSpeed);
-
-                pitch = Mathf.Lerp(playerCamera.transform.localEulerAngles.x, camLookAtTarget.localEulerAngles.x, Time.deltaTime * camDriftSpeed) ;
-
-                transform.localEulerAngles = new Vector3(0, yaw, 0);
-                playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
-            }
-            else
-            {
-                yaw = transform.localEulerAngles.y + camInputX * sensitivity;
-
-                if (!invertCamera)
+                if(Input.GetAxis("LockOn") > 0)  // uses lock-on system
                 {
-                    pitch -= sensitivity * camInputY;
+                      LockOnCamera(camDriftSpeed);
                 }
-                else
+                else // normal inputs for looking around
                 {
-                    // Inverted Y
-                    pitch += sensitivity * camInputY;
+                    yaw = transform.localEulerAngles.y + camInputX * sensitivity;
+                    if (!invertCamera)
+                    {
+                        pitch -= sensitivity * camInputY;
+                    }
+                    else
+                    {
+                        // Inverted Y
+                        pitch += sensitivity * camInputY;
+                    }
+
+                    // Clamp pitch between lookAngle
+                    pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
                 }
-
-                // Clamp pitch between lookAngle
-                pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
-
-                transform.localEulerAngles = new Vector3(0, yaw, 0);
-                playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
-
-                Debug.Log("shoulder in put = " + Input.GetAxis("LockOn"));
             }
-            
+
+
+            transform.localEulerAngles = new Vector3(0, yaw, 0);
+            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
         }
         
         #endregion
@@ -395,7 +430,7 @@ public class FirstPersonController : MonoBehaviour
             HeadBob();
         }
     }
-
+    
     void FixedUpdate()
     {
         #region Movement
@@ -613,7 +648,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.camLookAtTarget = (Transform)EditorGUILayout.ObjectField(new GUIContent("Look At Target", "alligns camera to speaking npc."), fpc.camLookAtTarget, typeof(Transform), true);
         GUI.enabled = true;
 
-        fpc.lockCursor = EditorGUILayout.ToggleLeft(new GUIContent("Lock and Hide Cursor", "Turns off the cursor visibility and locks it to the middle of the screen."), fpc.lockCursor);
+       // fpc.lockCursor = EditorGUILayout.ToggleLeft(new GUIContent("Lock and Hide Cursor", "Turns off the cursor visibility and locks it to the middle of the screen."), fpc.lockCursor);
 
         fpc.crosshair = EditorGUILayout.ToggleLeft(new GUIContent("Auto Crosshair", "Determines if the basic crosshair will be turned on, and sets is to the center of the screen."), fpc.crosshair);
 

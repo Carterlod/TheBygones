@@ -8,6 +8,7 @@ public class SetupSwitcher : MonoBehaviour
     public int activeSetup;
     [SerializeField] Faucet faucet;
     public NPC speakingNPC;
+    
 
     [System.Serializable]
     public class SetupSettings

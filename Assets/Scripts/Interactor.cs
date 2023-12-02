@@ -42,7 +42,7 @@ public class Interactor : MonoBehaviour
 
         if (PlayerSettings.i.handsFull && !canUseObject && !grabber.heldObject.cannotDrop && !grabber.heldObject.isPerformingAction)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetButtonDown("Interact"))
             {
                 if (!PlayerSettings.i.targettedInteractableIsHandsFullOK)
                 {
@@ -93,7 +93,7 @@ public class Interactor : MonoBehaviour
                                 PlayerSettings.i.targettedInteractableIsHandsFullOK = true;
                             }
                             interactIcon.SetActive(true);
-                            if (Input.GetKeyDown(KeyCode.E))
+                            if (Input.GetButtonDown("Interact"))
                             {
                                 i.Interact();
                             }
@@ -107,7 +107,7 @@ public class Interactor : MonoBehaviour
                             {
                                 canUseObject = true;
                                 interactIcon.SetActive(true);
-                                if (Input.GetKeyDown(KeyCode.E))
+                                if (Input.GetButtonDown("Interact"))
                                 {
                                     i.InteractWithObject(grabber.heldObject);
                                 }
@@ -164,7 +164,7 @@ public class Interactor : MonoBehaviour
                 {
                     interactIcon.SetActive(true);
                 }
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetButtonDown("Interact"))
                 {
                     PlayerSettings.i.handsFull = true;
                     grabber.Grab(obj);
