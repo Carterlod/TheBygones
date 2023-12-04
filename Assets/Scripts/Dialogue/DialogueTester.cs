@@ -185,6 +185,8 @@ public class DialogueTester : MonoBehaviour
         {
             DialoguePromptCountdown = StartCoroutine(DialogueIconCountdown());
         }
+
+        player.lineIsNew = true;
     }
 
     private void PlayVOClip()

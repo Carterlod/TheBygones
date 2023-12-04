@@ -65,7 +65,7 @@ public class Tea : MonoBehaviour
     {
         if (grabbable.grabbed && !empty)
         {
-            if(Mathf.Abs(Input.GetAxis("Mouse X")) > 0.5f) 
+            if(Mathf.Abs(Input.GetAxis("LookX")) > 0.5f) 
             {
                 mouseCoolDownTime = .1f;
             }
@@ -96,7 +96,7 @@ public class Tea : MonoBehaviour
             targetRotation.z += settleWiggle.Evaluate(t) * wiggleDamper;
             liquidSurface.transform.localEulerAngles = targetRotation;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Use"))
             {
                 Sip();
             }
