@@ -304,6 +304,7 @@ public class FirstPersonController : MonoBehaviour
         camInputY = Input.GetAxis("LookY");
         sensitivity = mouseSensitivity;
 
+        crosshairObject.enabled = true;
 
         // Control camera movement
         if (cameraCanMove)
@@ -322,7 +323,8 @@ public class FirstPersonController : MonoBehaviour
 
             if(SetupSwitcher.i.speakingNPC != null && Input.GetAxis("LockOn") > 0) //same thing as above but checking for lock on button press
             {
-                
+                crosshairObject.enabled = false;
+
                 if (!lerpingCam)
                 {
                     if(completedLerp && !lineIsNew)
