@@ -154,25 +154,9 @@ public class FirstPersonController : MonoBehaviour
             sprintCooldownReset = sprintCooldown;
         }
         
-        if (Input.GetJoystickNames()[0] != null)
-        {
-            controllerConnected = true;
-            IdentifyController();
-            Debug.Log("controller connected");
-        }
-        else
-        {
-            controllerConnected = false;
-            Debug.Log("controller not connected");
-        }
+        
     }
 
-    public string Controller = "";
-    void IdentifyController()
-    {
-        Controller = Input.GetJoystickNames()[0];
-        Debug.Log("controller = " + Controller.ToString()); 
-    }
     void Start()
     {
 
@@ -261,64 +245,77 @@ public class FirstPersonController : MonoBehaviour
     }
     
     private Coroutine LerpCameraToSpeaker;
-    IEnumerator LerpCameraToSpeakerRoutine(float startPitch, float endPitch, float startYaw, float endYaw, float duration)
+    IEnumerator LerpCameraToSpeakerRoutine(float duration)
     {
         lerpingCam = true;
         lineIsNew = false;
         float t = 0;
-
+       
+       
         while(t < camLerpTime)
         {
-            if (Vector3.Angle(camLookAtTarget.forward, playerCamera.gameObject.transform.forward) < .25f || lineIsNew)
+            if (Vector3.Angle(camLookAtTarget.forward, playerCamera.gameObject.transform.forward) < .05f || lineIsNew) // ends early if camera is fully aligned
             {
                 break ;
             }
             
             float easedProgress = EasingFunction.EaseOutExpo(0, 1, t / duration);
 
-            pitch = Mathf.LerpAngle(playerCamera.transform.localEulerAngles.x, camLookAtTarget.localEulerAngles.x, easedProgress);
-
             yaw = Mathf.LerpAngle(transform.localEulerAngles.y, camLookAtTarget.localEulerAngles.y, easedProgress);
-
+            pitch = Mathf.LerpAngle(playerCamera.transform.localEulerAngles.x, camLookAtTarget.localEulerAngles.x, easedProgress);
             transform.localEulerAngles = new Vector3(0, yaw, 0);
             playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
             t += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
             yield return null;
         }
         completedLerp = true;
         lerpingCam = false;
+        LerpCameraToSpeaker = null;
+        //Debug.Log("finished lerp routine");
         yield return null;
     }
     float camLerpTime = 25f;
     public bool lineIsNew = true;
     bool lerpingCam = false;
     bool completedLerp = false;
+    float correctedCamX;
     private void Update()
     {
         #region Camera
         float camInputX = 0;
         float camInputY = 0;
         float sensitivity;
-        
         camInputX = Input.GetAxis("LookX");
         camInputY = Input.GetAxis("LookY");
-        sensitivity = mouseSensitivity;
 
+        sensitivity = mouseSensitivity;
         crosshairObject.enabled = true;
 
+        camLookAtTarget.position = joint.gameObject.transform.position;
+        float unCorrectedCamX = camLookAtTarget.localEulerAngles.x;
+        
+
+        if(SetupSwitcher.i.speakingNPC != null) // DialogueBoxes.cs relies on this part
+        {
+            Vector3 TargetNPCPos = SetupSwitcher.i.speakingNPC.characterHead.transform.position;
+            camLookAtTarget.LookAt(TargetNPCPos);
+            if (unCorrectedCamX > 180) { correctedCamX = unCorrectedCamX - 360; }
+        }
         // Control camera movement
         if (cameraCanMove)
         {
-            camLookAtTarget.position = joint.gameObject.transform.position;
 
-            if(SetupSwitcher.i.speakingNPC != null) // DialogueBoxes.cs relies on this part
+            if(Input.GetAxis("LockOn") == 0)
             {
-                Vector3 TargetNPCPos = SetupSwitcher.i.speakingNPC.characterHead.transform.position;
-                camLookAtTarget.LookAt(TargetNPCPos);
-            }
-            if(completedLerp && Input.GetAxis("LockOn") == 0)
-            {
-                completedLerp = false;
+                if(completedLerp) completedLerp = false;
+                if (isWalking && LerpCameraToSpeaker != null)
+                {
+                    StopCoroutine(LerpCameraToSpeaker);
+                    LerpCameraToSpeaker = null;
+                    lerpingCam = false;
+                }
+
             }
 
             if(SetupSwitcher.i.speakingNPC != null && Input.GetAxis("LockOn") > 0) //same thing as above but checking for lock on button press
@@ -336,34 +333,30 @@ public class FirstPersonController : MonoBehaviour
                     }
                     else
                     {
-                        LerpCameraToSpeaker = StartCoroutine(LerpCameraToSpeakerRoutine(
-                                playerCamera.transform.localEulerAngles.x,
-                                camLookAtTarget.localEulerAngles.x,
-                                transform.localEulerAngles.y,
-                                camLookAtTarget.localEulerAngles.y,
-                                camLerpTime));
-                        Debug.Log("started CameraLerp coroutine");
+                        LerpCameraToSpeaker = StartCoroutine(LerpCameraToSpeakerRoutine(camLerpTime));
+                        //Debug.Log("started CameraLerp coroutine");
                     }
                 }
             }
             else // normal inputs for looking around
             {
+                if(camInputX > 0 || camInputY > 0) // this stops regular cam controls from fighting with a coroutine that's finishing
+                {
+                    if(LerpCameraToSpeaker != null)
+                    {
+                        StopCoroutine(LerpCameraToSpeaker);
+                        lerpingCam = false;
+                        Debug.Log("stopped lerp routine prematurely");
+                    }
+                }
                 yaw = transform.localEulerAngles.y + camInputX * sensitivity;
-                if (!invertCamera)
-                {
-                    pitch -= sensitivity * camInputY;
-                }
-                else
-                {
-                    // Inverted Y
-                    pitch += (sensitivity * camInputY);
-                }
+                pitch -= sensitivity * camInputY;
 
-                //Clamp pitch between lookAngle
-                //pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
-
+                if(pitch > 180) { pitch = pitch - 360; }
+                pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
                 transform.localEulerAngles = new Vector3(0, yaw, 0);
                 playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+
             }
         }
         

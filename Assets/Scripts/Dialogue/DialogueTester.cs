@@ -85,7 +85,7 @@ public class DialogueTester : MonoBehaviour
             AutoPlayCountdownRoutine = StartCoroutine(AutoPlayCountdown());
             AdvanceDialogue();
         }
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetButtonDown("Dialogue"))
         {
             if(!conversationFinished && PlayerSettings.i.dialogueAdvanceable)
             {
