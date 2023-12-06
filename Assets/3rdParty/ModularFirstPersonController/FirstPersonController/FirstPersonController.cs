@@ -309,7 +309,7 @@ public class FirstPersonController : MonoBehaviour
             if(Input.GetAxis("LockOn") == 0)
             {
                 if(completedLerp) completedLerp = false;
-                if (isWalking && LerpCameraToSpeaker != null)
+                if (isWalking && lerpingCam)
                 {
                     StopCoroutine(LerpCameraToSpeaker);
                     LerpCameraToSpeaker = null;
@@ -342,11 +342,11 @@ public class FirstPersonController : MonoBehaviour
             {
                 if(camInputX > 0 || camInputY > 0) // this stops regular cam controls from fighting with a coroutine that's finishing
                 {
-                    if(LerpCameraToSpeaker != null)
+                    if(lerpingCam)
                     {
                         StopCoroutine(LerpCameraToSpeaker);
                         lerpingCam = false;
-                        Debug.Log("stopped lerp routine prematurely");
+                        //Debug.Log("stopped lerp routine prematurely");
                     }
                 }
                 yaw = transform.localEulerAngles.y + camInputX * sensitivity;
@@ -373,7 +373,6 @@ public class FirstPersonController : MonoBehaviour
             }
             else if (!isZoomed && !isSprinting)
             {
-
                 playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
             }
         }
