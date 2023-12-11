@@ -443,7 +443,7 @@ public class FirstPersonController : MonoBehaviour
 
         if (enableCrouch)
         {
-            if(Input.GetKeyDown(crouchKey) && !holdToCrouch && !PlayerSettings.i.playerIsTargettingSitSpot)
+            if(Input.GetButtonDown("Sit") && !holdToCrouch && !PlayerSettings.i.playerIsTargettingSitSpot)
             {
                 if (!PlayerSettings.i.isSeated)
                 {

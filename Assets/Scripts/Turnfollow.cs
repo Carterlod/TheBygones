@@ -10,9 +10,7 @@ public class Turnfollow : MonoBehaviour
         gameObject.transform.LookAt(Camera.main.transform);
         if (flip)
         {
-            Quaternion newRot = gameObject.transform.rotation;
-            newRot.y += 180;
-            gameObject.transform.rotation = newRot;
+            transform.forward = -transform.forward;
         }
     }
 }

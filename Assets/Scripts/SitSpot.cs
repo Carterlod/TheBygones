@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SitSpot : MonoBehaviour
 {
     
@@ -10,6 +11,7 @@ public class SitSpot : MonoBehaviour
     private Quaternion originalRotation;
     private FirstPersonController player;
     [SerializeField] Transform chair;
+    [SerializeField] Transform getUpSpotOverride;
     private Collider[] chairColliders;
 
     private void Start()
@@ -56,20 +58,27 @@ public class SitSpot : MonoBehaviour
             yield return null;
         }
         PlayerSettings.i.UnpausePlayer(); // the order of this and the next two lines have an effect on letterbox bars
-        player.playerCanMove = false;
+        player.playerCanMove = false; 
         yield return null;
     }
 
     IEnumerator GetOutOfSeatRoutine()
     {
         PlayerSettings.i.PausePlayer();
-        player.Crouch();
         float t = 0;
         float d = .5f;
-        Transform getUpSpot = new GameObject().transform;
-        getUpSpot.position = orientation.position;
-        getUpSpot.rotation = orientation.rotation;
-        getUpSpot.position += getUpSpot.forward * .4f ;
+        Transform getUpSpot;
+        if(getUpSpotOverride != null)
+        {
+            getUpSpot = getUpSpotOverride;
+        }
+        else
+        {
+            getUpSpot = new GameObject().transform;
+            getUpSpot.position = orientation.position;
+            getUpSpot.rotation = orientation.rotation;
+            getUpSpot.position += getUpSpot.forward * .4f ;
+        }
         while (t < d)
         {
             t += Time.deltaTime;
@@ -81,6 +90,7 @@ public class SitSpot : MonoBehaviour
             //player.transform.rotation = Quaternion.Lerp(orientation.rotation, originalRotation, t / d);
             yield return null;
         }
+        player.Crouch();
         foreach (Collider col in chairColliders)
         {
             col.enabled = true;

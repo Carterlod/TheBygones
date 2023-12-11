@@ -64,7 +64,7 @@ public class Interactor : MonoBehaviour
         
 
         RaycastHit hit; 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, longDistance) && !PlayerSettings.i.playerPaused)
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, longDistance))
         {
 
         // INTERACT / INTERACT NAME
@@ -81,7 +81,7 @@ public class Interactor : MonoBehaviour
                         {
                             interactIconChair.SetActive(true);
                             PlayerSettings.i.playerIsTargettingSitSpot = true;
-                            if (Input.GetKeyDown(PlayerSettings.i.playerController.crouchKey))
+                            if (Input.GetButtonDown("Sit"))
                             {
                                 i.GetComponent<SitSpot>().SitDown();
                             }
