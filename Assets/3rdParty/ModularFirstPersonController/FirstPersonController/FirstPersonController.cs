@@ -279,6 +279,10 @@ public class FirstPersonController : MonoBehaviour
     public bool lineIsNew = true;
     bool lerpingCam = false;
     bool completedLerp = false;
+    bool lockOn = true;
+    float lockOnToggleTimer = 0;
+    public bool okayToToggleLockOn = true;
+    bool LockOnButtonReleased = true;
     float correctedCamX;
     private void Update()
     {
@@ -305,8 +309,8 @@ public class FirstPersonController : MonoBehaviour
         // Control camera movement
         if (cameraCanMove)
         {
-
-            if(Input.GetAxis("LockOn") == 0)
+            
+            if(!lockOn)
             {
                 if(completedLerp) completedLerp = false;
                 if (isWalking && lerpingCam)
@@ -317,8 +321,16 @@ public class FirstPersonController : MonoBehaviour
                 }
 
             }
-
-            if(SetupSwitcher.i.speakingNPC != null && Input.GetAxis("LockOn") > 0) //same thing as above but checking for lock on button press
+            if(!LockOnButtonReleased && Input.GetAxis("LockOn") == 0) // prevents action from firing multiple times while the Lock On button is held down
+            {
+                LockOnButtonReleased = true;
+            }
+            if(Input.GetAxis("LockOn") > .1f && okayToToggleLockOn && LockOnButtonReleased)
+            {
+                lockOn = !lockOn;
+                LockOnButtonReleased = false;
+            }
+            if(SetupSwitcher.i.speakingNPC != null && lockOn) //same thing as above but checking for lock on button press
             {
                 crosshairObject.enabled = false;
 
@@ -465,7 +477,18 @@ public class FirstPersonController : MonoBehaviour
             HeadBob();
         }
     }
-    
+    IEnumerator LockOnToggleTimerRoutine()
+    {
+        okayToToggleLockOn = false;
+        lockOnToggleTimer = 0;
+        while(lockOnToggleTimer > 1)
+        {
+            lockOnToggleTimer += Time.deltaTime;
+            yield return null;
+        }
+        okayToToggleLockOn = true;
+        yield return null;
+    }
     void FixedUpdate()
     {
         #region Movement
