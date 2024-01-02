@@ -16,8 +16,8 @@ TagManager:
   - NPC
   - Grabbable
   - NoGrabbableCollision
-  - 
-  - 
+  - Player
+  - PlayerOnlyCollision
   - 
   - 
   - 

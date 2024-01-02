@@ -29,10 +29,14 @@ public class EnvironmentProperties : MonoBehaviour
 
         Shader.SetGlobalColor("GLOBAL_ToonRampTint", toonRampTint);
         
-        ReflectionProbe[] probes = probeParent.GetComponentsInChildren<ReflectionProbe>();
-        foreach (ReflectionProbe probe in probes)
+        if(probeParent != null)
         {
-            probe.intensity = reflectionProbeIntensity;
+            ReflectionProbe[] probes = probeParent.GetComponentsInChildren<ReflectionProbe>();
+            foreach (ReflectionProbe probe in probes)
+            {
+                probe.intensity = reflectionProbeIntensity;
+            }
         }
+
     }
 }

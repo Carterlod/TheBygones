@@ -116,14 +116,14 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Rim_Brightness: 1
-    - _Rim_Power: 3
+    - _Rim_Power: 1.68
     - _SampleGI: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _ToonRampOffst: 0
-    - _ToonRampOverride: 0.1
+    - _ToonRampOverride: 0
     - _ToonRampSmoothness: 0
     - _UVSec: 0
     - _ZWrite: 1

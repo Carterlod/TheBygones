@@ -12,7 +12,7 @@ public class Grabbable : MonoBehaviour
     [SerializeField] bool bypassSettling = false;
     [System.NonSerialized] public bool isPerformingAction = false;
     [System.NonSerialized] public bool cannotDrop = false;
-    public bool dropOnLetGo = false;
+    //public bool dropOnLetGo = false;
 
     [SerializeField] UnityEvent onGrab;
     [SerializeField] UnityEvent onRelease;

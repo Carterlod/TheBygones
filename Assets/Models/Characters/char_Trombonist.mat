@@ -100,16 +100,16 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PointStrength: 1
+    - _PointStrength: 0.6
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Rim_Brightness: 5
-    - _Rim_Power: 1
+    - _Rim_Brightness: 10
+    - _Rim_Power: 3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _ToonRampOffst: 0.1
-    - _ToonRampOverride: -0.04
+    - _ToonRampOverride: 0.2
     - _ToonRampSmoothness: 0.044
     - _UVSec: 0
     - _ZWrite: 1
