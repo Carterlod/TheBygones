@@ -18,6 +18,10 @@ public class CameraGameplay : MonoBehaviour
     [SerializeField] AudioClip readyClip;
     [SerializeField] AudioClip putAwayClip;
 
+    private bool okayToToggleViewfinder = true;
+    private bool viewfinderButtonReleased = true;
+    private float viewfinderToggleTimer = 0;
+
     private void Start()
     {
         eyePosition = eyeTransform.localPosition;
@@ -26,18 +30,49 @@ public class CameraGameplay : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q) && grabbable.grabbed && !grabbable.isPerformingAction && !grabber.lettingGo)
+        if(!viewfinderButtonReleased && Input.GetAxis("ObjectFunction") == 0)
         {
-            if (!camActivated)
+            viewfinderButtonReleased = true;
+        }
+        if(grabbable.grabbed && !grabbable.isPerformingAction && !grabber.lettingGo)
+        {
+            if(Input.GetButtonDown("ObjectFunction"))
             {
-                CameraActivate();
+                if (!camActivated)
+                {
+                    CameraActivate();
+                }
+                else
+                {
+                    CameraDeactivate();
+                }
             }
-            else
+            if (Input.GetAxis("ObjectFunction") > .1f && okayToToggleViewfinder && viewfinderButtonReleased)
             {
-                CameraDeactivate();
+                viewfinderButtonReleased = false;
+                if (!camActivated)
+                {
+                    CameraActivate();
+                }
+                else
+                {
+                    CameraDeactivate();
+                }
             }
         }
-       
+    }
+
+    IEnumerator LockOnToggleTimerRoutine()
+    {
+        okayToToggleViewfinder = false;
+        viewfinderToggleTimer = 0;
+        while (viewfinderToggleTimer < 1)
+        {
+            viewfinderToggleTimer += Time.deltaTime;
+            yield return null;
+        }
+        okayToToggleViewfinder = true;
+        yield return null;
     }
 
     public void CameraActivate()

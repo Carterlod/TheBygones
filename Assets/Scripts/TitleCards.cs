@@ -34,7 +34,7 @@ public class TitleCards : MonoBehaviour
     [SerializeField] UnityEvent onEndEvent;
 
     
-    private void Start()
+    private void OnEnable()
     {
         
         Color col = m_Image.color;

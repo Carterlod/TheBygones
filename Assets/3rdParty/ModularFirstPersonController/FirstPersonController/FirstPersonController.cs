@@ -481,7 +481,7 @@ public class FirstPersonController : MonoBehaviour
     {
         okayToToggleLockOn = false;
         lockOnToggleTimer = 0;
-        while(lockOnToggleTimer > 1)
+        while(lockOnToggleTimer < 1)
         {
             lockOnToggleTimer += Time.deltaTime;
             yield return null;

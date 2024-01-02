@@ -56,19 +56,12 @@ public class ViewFinder : MonoBehaviour
         //tilterTarget.rotation = tilter.rotation;
     }
 
-    private void ToggleViewfinder()
-    {
-
-    }
-
     private void Update()
     {
-        
-
         cameraActive = controller.isZoomed;
         playerSettings.cameraActive = cameraActive;
 
-        if (cameraActive && Input.GetMouseButtonDown(0))
+        if (cameraActive && Input.GetButtonDown("Use"))
         {
             SaveCameraView(screenshotCamera);
         }
@@ -76,7 +69,7 @@ public class ViewFinder : MonoBehaviour
         if (cameraActive)
         {
             viewFinderObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F) && !flipping)
+            if (Input.GetButtonDown("ObjectFunction2") && !flipping)
             {
                 StartCoroutine(FlipCamera());
             }
@@ -85,9 +78,6 @@ public class ViewFinder : MonoBehaviour
         {
             viewFinderObject.SetActive(false);
         }
-
-   
-        
 
         //Tilt Viewfinder
         float yawTarget = 0;

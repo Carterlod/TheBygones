@@ -20,7 +20,6 @@ public class SetupSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("awake");
         i = this;
         activeSetup = 0;
         for (int i = 0; i < setups.Length; i++)
@@ -33,10 +32,14 @@ public class SetupSwitcher : MonoBehaviour
         }       
     }
 
+    private bool cooldownActive = false;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetButtonDown("Skip") && !cooldownActive)
         {
+            Debug.Log("skipping scene");
+            StartCoroutine(skipButtonCoolDownRoutine());
             IncrementSetup();
             if(currentConvo!= null)
             {
@@ -44,16 +47,31 @@ public class SetupSwitcher : MonoBehaviour
             }
         }
     }
+
+    IEnumerator skipButtonCoolDownRoutine()
+    {
+        cooldownActive = true;
+        float t = 0;
+        while (t < .25f)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+        cooldownActive = false;
+        yield return null;
+    }
     public void IncrementSetup()
     {
-        
+        Debug.Log("incrementing setup");
         Setup oldSet = setups[activeSetup].setupParent;
         
         activeSetup++; // iterate setups
         if (activeSetup == setups.Length)
         {
-            activeSetup = activeSetup - 1;
-            return;
+            Debug.Log("setting setup int back to 0");
+            //activeSetup = activeSetup - 1;
+            //return;
+            activeSetup = 0;
         }
 
         if(oldSet.carryIntoNextScene.Count > 0) // carry specified objects into next scene

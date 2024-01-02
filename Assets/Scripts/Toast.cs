@@ -12,7 +12,7 @@ public class Toast : MonoBehaviour
     {
         if (grabbable.grabbed && !toastEaten)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Use"))
             {
                 TakeBite();
             }

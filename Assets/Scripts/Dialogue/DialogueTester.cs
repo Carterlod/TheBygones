@@ -201,10 +201,7 @@ public class DialogueTester : MonoBehaviour
         {
             convoSwitcher.IncrementConvo();
         }
-        if (conversationEndEvent != null)
-        {
-            conversationEndEvent.Invoke();
-        }
+        
         if (DialoguePromptCountdown != null)
         {
             StopCoroutine(DialoguePromptCountdown);
