@@ -91,8 +91,16 @@ public class TitleCards : MonoBehaviour
 
         yield return null;
     }
+    
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        m_player.UnpausePlayer();
+        m_Image.gameObject.SetActive(false);
+        m_Text.gameObject.SetActive(false);
 
-   
+    }
+    
 }
 
 

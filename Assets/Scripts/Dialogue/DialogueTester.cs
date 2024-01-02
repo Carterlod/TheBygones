@@ -61,8 +61,11 @@ public class DialogueTester : MonoBehaviour
         //cam = player.playerCamera;
         convoSwitcher = GetComponentInParent<ConversationSwitcher>();
     }
+    private void OnEnable()
+    {
+        SetupSwitcher.i.currentConvo = this;
+    }
 
-   
     public void StartConversation()
     {
         if (!conversationInProgress)
@@ -188,7 +191,26 @@ public class DialogueTester : MonoBehaviour
 
         player.lineIsNew = true;
     }
-
+    public void EndDialogue() //prematurely ends scene. coppied from AdvanceDialogue()
+    {
+        conversationInProgress = false;
+        conversationFinished = true;
+        dialogueStep = 0;
+        dialogueBox.gameObject.SetActive(false);
+        if (autoIncrementConvos)
+        {
+            convoSwitcher.IncrementConvo();
+        }
+        if (conversationEndEvent != null)
+        {
+            conversationEndEvent.Invoke();
+        }
+        if (DialoguePromptCountdown != null)
+        {
+            StopCoroutine(DialoguePromptCountdown);
+        }
+        SetupSwitcher.i.speakingNPC = null;
+    }
     private void PlayVOClip()
     {
         if (src.isPlaying)

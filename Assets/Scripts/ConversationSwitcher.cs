@@ -28,4 +28,20 @@ public class ConversationSwitcher : MonoBehaviour
         }
         converstaions[activeConvo].gameObject.SetActive(true);
     }
+    public void StartNextConvo()
+    {
+        converstaions[activeConvo].StartConversation();
+    }
+
+    public void IncrementAndStartNextConvo()
+    {
+        converstaions[activeConvo].gameObject.SetActive(false);
+        activeConvo++;
+        if (activeConvo > converstaions.Length - 1)
+        {
+            return;
+        }
+        converstaions[activeConvo].gameObject.SetActive(true);
+        converstaions[activeConvo].StartConversation();
+    }
 }

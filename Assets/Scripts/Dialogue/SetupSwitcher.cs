@@ -8,6 +8,7 @@ public class SetupSwitcher : MonoBehaviour
     public int activeSetup;
     [SerializeField] Faucet faucet;
     public NPC speakingNPC;
+    public DialogueTester currentConvo;
     
 
     [System.Serializable]
@@ -19,11 +20,13 @@ public class SetupSwitcher : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("awake");
         i = this;
         activeSetup = 0;
-        for (int i = 0; i < setups.Length - 1; i++)
+        for (int i = 0; i < setups.Length; i++)
         {
-            if (setups[i].setupParent.gameObject.activeSelf == true)
+
+            if (setups[i].setupParent.gameObject.activeInHierarchy == true)
             {
                 activeSetup = i;
             }
@@ -35,20 +38,32 @@ public class SetupSwitcher : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             IncrementSetup();
+            if(currentConvo!= null)
+            {
+                currentConvo.EndDialogue();
+            }
         }
     }
     public void IncrementSetup()
     {
-
+        
         Setup oldSet = setups[activeSetup].setupParent;
-        if(oldSet.carryIntoNextScene.Count > 0)
+        
+        activeSetup++; // iterate setups
+        if (activeSetup == setups.Length)
+        {
+            activeSetup = activeSetup - 1;
+            return;
+        }
+
+        if(oldSet.carryIntoNextScene.Count > 0) // carry specified objects into next scene
         {
             foreach (Transform tr in oldSet.carryIntoNextScene)
             {
                 tr.parent = this.transform;
             }
         }
-        if (PlayerSettings.i.handsFull && !oldSet.keepHeldObject)
+        if (PlayerSettings.i.handsFull && !oldSet.keepHeldObject) 
         {
             PlayerSettings.i.objectGrabber.Release(this.transform); //The transform passed here is meaningless. 
         }
@@ -61,14 +76,9 @@ public class SetupSwitcher : MonoBehaviour
         }
         DirtyDishes.i.ClearCleanDishes();
 
-        activeSetup++;
-        if (activeSetup > setups.Length - 1)
-        {
-            return;
-        }
         Setup newSet = setups[activeSetup].setupParent;
         newSet.gameObject.SetActive(true);
-        if(oldSet.carryIntoNextScene.Count > 0)
+        if(oldSet.carryIntoNextScene.Count > 0) // return old carried through objects back to their original scene?
         {
             foreach(Transform tr in oldSet.carryIntoNextScene)
             {
