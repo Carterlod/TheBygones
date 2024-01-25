@@ -7,7 +7,8 @@ public class SpriteSheetTextureAnimator : MonoBehaviour
     // Scroll the main texture based on time
 
     Renderer rend;
-    [SerializeField] float fps = 12;
+    [SerializeField] float fpsMax = 12;
+    private float fpsCurrent = 0; 
     bool doneWaiting = true;
     [SerializeField] Vector2 RowsAndColumns;
     int currentColumn = 0;
@@ -15,6 +16,8 @@ public class SpriteSheetTextureAnimator : MonoBehaviour
     float xOffset = 0;
     float yOffset = 0;
     [SerializeField] bool randomStartFrame = false;
+    [SerializeField] AnimationCurve curve;
+    private float t = 0;
 
     void Start()
     {
@@ -28,11 +31,19 @@ public class SpriteSheetTextureAnimator : MonoBehaviour
         {
             currentRow = (int)RowsAndColumns.y;
         }
-
+        t = 0;
     }
 
     void Update()
     {
+        float curveProgress = curve.Evaluate(t);
+        fpsCurrent = Mathf.Lerp(2, fpsMax, curveProgress);
+        t += Time.deltaTime * 0.1f;
+        if (t > 1) 
+        { 
+            t = 0; 
+        }
+        
         if (doneWaiting)
         {
             xOffset = currentColumn / RowsAndColumns.x;
@@ -54,14 +65,16 @@ public class SpriteSheetTextureAnimator : MonoBehaviour
             }
 
             //start new countdown
-            StartCoroutine(UpdateFrameRoutine());
+            StartCoroutine(C_UpdateFrameTimer(fpsCurrent));
             doneWaiting = false;
         }
     }
 
-    IEnumerator UpdateFrameRoutine()
+    IEnumerator C_UpdateFrameTimer(float waitTime)
     {
-        yield return new WaitForSeconds(1 / fps);
+        //Debug.Log("update frame wait time is " + waitTime);
+        
+        yield return new WaitForSeconds(1 / waitTime);
         doneWaiting = true;
         yield return null;
     }

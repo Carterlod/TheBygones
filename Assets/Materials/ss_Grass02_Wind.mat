@@ -101,7 +101,7 @@ Material:
     - _AlphaClip: 1
     - _AmbientOcclusion: 0.5
     - _Amount: 1
-    - _Amp: 0.3
+    - _Amp: 0.5
     - _Amp2: 0.05
     - _BUILTIN_AlphaClip: 1
     - _BUILTIN_Blend: 0
@@ -127,14 +127,14 @@ Material:
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _Float: 0.305
-    - _Freq: 0.5
+    - _Freq: 0.49
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _Offset: 0.26
+    - _Offset: 0
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -147,7 +147,7 @@ Material:
     - _SpecSource: 0
     - _SpecularHighlights: 1
     - _Speed: 10
-    - _Speed2: 1.72
+    - _Speed2: 0.5
     - _SrcBlend: 1
     - _Surface: 0
     - _TotalEffect: 0
