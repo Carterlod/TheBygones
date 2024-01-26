@@ -101,7 +101,7 @@ Material:
     - _AlphaClip: 1
     - _AmbientOcclusion: 0.5
     - _Amount: 1
-    - _Amp: 100
+    - _Amp: 65.74
     - _Amp2: 0.05
     - _BUILTIN_AlphaClip: 1
     - _BUILTIN_Blend: 0
@@ -114,6 +114,9 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 0
+    - _BigWindFreq: 0.2
+    - _BigWindPower: 2
+    - _BigWindSpeed: 1
     - _Blend: 0
     - _BlendOp: 0
     - _BumpScale: 0.5
@@ -127,7 +130,7 @@ Material:
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _Float: 0.305
-    - _Freq: 1
+    - _Freq: 2
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
@@ -141,12 +144,14 @@ Material:
     - _ReceiveShadows: 1
     - _SampleGI: 0
     - _Shininess: 0
+    - _SmallWindAmp: 65
+    - _SmallWindSpeed: 7
     - _Smoothness: 0
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
     - _SpecularHighlights: 1
-    - _Speed: 5
+    - _Speed: 7
     - _Speed2: 0.05
     - _SrcBlend: 1
     - _Surface: 0
@@ -158,6 +163,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BigWindFreq: {r: 12.1, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Dist_Amp: {r: 0.02, g: 0.69, b: 0, a: 0}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
